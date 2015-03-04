@@ -11,6 +11,8 @@
         "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta4-12329",
         "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta4-11802",
         "Microsoft.AspNet.Security.Cookies": "1.0.0-beta4-11751",
+		"Microsoft.AspNet.Security.Facebook": "1.0.0-beta4-11751",
+		"Microsoft.AspNet.Security.Google": "1.0.0-beta4-11751",
         "Microsoft.AspNet.Server.IIS": "1.0.0-beta4-11185",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-beta4-11608",
         "Microsoft.AspNet.StaticFiles": "1.0.0-beta4-11410",

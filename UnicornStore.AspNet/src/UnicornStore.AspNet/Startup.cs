@@ -23,6 +23,7 @@ namespace UnicornStore.AspNet
             // Setup configuration sources.
             Configuration = new Configuration()
                 .AddJsonFile("config.json")
+                .AddJsonFile("secrets.json")
                 .AddEnvironmentVariables();
         }
 
@@ -39,6 +40,18 @@ namespace UnicornStore.AspNet
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>(Configuration)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.ConfigureFacebookAuthentication(options =>
+            {
+                options.AppId = "1593240960890768";
+                options.AppSecret = Configuration.Get("secrets:facebook:appSecret");
+            });
+
+            services.ConfigureGoogleAuthentication(options =>
+            {
+                options.ClientId = "140672572048-92ggg4tb5ihr7ffats86pk4cgecg0cn4.apps.googleusercontent.com";
+                options.ClientSecret = Configuration.Get("secrets:google:clientSecret");
+            });
 
             // Add MVC services to the services container.
             services.AddMvc();
@@ -75,6 +88,8 @@ namespace UnicornStore.AspNet
 
             // Add cookie-based authentication to the request pipeline.
             app.UseIdentity();
+            app.UseFacebookAuthentication();
+            app.UseGoogleAuthentication();
 
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>

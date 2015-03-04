@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -22,8 +20,6 @@ namespace UnicornStore.AspNet.Controllers
         public UserManager<ApplicationUser> UserManager { get; private set; }
         public SignInManager<ApplicationUser> SignInManager { get; private set; }
 
-        // GET: /Account/Login
-        [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
@@ -31,104 +27,79 @@ namespace UnicornStore.AspNet.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public ActionResult ExternalLogin(string provider, string returnUrl = null)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-                if (result.Succeeded)
-                {
-                    return RedirectToLocal(returnUrl);
-                }
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl });
+            var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return new ChallengeResult(provider, properties);
+        }
 
-                ModelState.AddModelError("", "Invalid username or password.");
-                return View(model);
+        [AllowAnonymous]
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl = null)
+        {
+            var loginInfo = await SignInManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            var result = await SignInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+            else
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                ViewBag.LoginProvider = loginInfo.LoginProvider;
+                var email = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.Email);
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            }
         }
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Manage");
+            }
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var info = await SignInManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    return View("ExternalLoginFailure");
+                }
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    result = await UserManager.AddLoginAsync(user, info);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToLocal(returnUrl);
+                    }
                 }
-                else
+
+                foreach (var error in result.Errors)
                 {
-                    AddErrors(result);
+                    ModelState.AddModelError("", error.Description);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
 
-        //
-        // GET: /Account/Manage
-        [HttpGet]
-        public IActionResult Manage(ManageMessageId? message = null)
-        {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
-        }
-
-        //
-        // POST: /Account/Manage
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Manage(ManageUserViewModel model)
-        {
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            if (ModelState.IsValid)
-            {
-                var user = await GetCurrentUserAsync();
-                var result = await UserManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
-                }
-                else
-                {
-                    AddErrors(result);
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult LogOff()
@@ -137,28 +108,7 @@ namespace UnicornStore.AspNet.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        #region Helpers
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
-        }
-
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await UserManager.FindByIdAsync(Context.User.Identity.GetUserId());
-        }
-
-        public enum ManageMessageId
-        {
-            ChangePasswordSuccess,
-            Error
-        }
-
-        private IActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
@@ -169,6 +119,5 @@ namespace UnicornStore.AspNet.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        #endregion
     }
 }
