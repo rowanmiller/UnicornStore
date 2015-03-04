@@ -1,12 +1,12 @@
 {
-    "Data": {
-        "DefaultConnection": { 
-            "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-UnicornStore.AspNet-e34f52f0-fbc2-4727-9dc4-3f7c069e2714;Trusted_Connection=True;MultipleActiveResultSets=true"
-        }
-    },
-    "EntityFramework": {
-        "ApplicationDbContext": {
-            "ConnectionString": "name=Data:DefaultConnection:ConnectionString"
-        }
-    }
+    //"Data": {
+    //    "DefaultConnection": { 
+    //        "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-UnicornStore.AspNet-e34f52f0-fbc2-4727-9dc4-3f7c069e2714;Trusted_Connection=True;MultipleActiveResultSets=true"
+    //    }
+    //},
+    //"EntityFramework": {
+    //    "ApplicationDbContext": {
+    //        "ConnectionString": "name=Data:DefaultConnection:ConnectionString"
+    //    }
+    //}
 }
