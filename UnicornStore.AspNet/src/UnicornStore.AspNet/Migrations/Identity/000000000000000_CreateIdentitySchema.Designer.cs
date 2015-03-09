@@ -2,9 +2,9 @@ using System;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
-using UnicornStore.AspNet.Models;
+using UnicornStore.AspNet.Models.Identity;
 
-namespace UnicornStore.AspNet.Migrations
+namespace UnicornStore.AspNet.Migrations.Identity
 {
     [ContextType(typeof(ApplicationDbContext))]
     partial class CreateIdentitySchema

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Security;
-using UnicornStore.AspNet.Models;
+using UnicornStore.AspNet.Models.Identity;
 
 namespace UnicornStore.AspNet.Controllers
 {

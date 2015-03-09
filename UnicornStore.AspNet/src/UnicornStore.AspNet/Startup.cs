@@ -12,7 +12,7 @@ using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
-using UnicornStore.AspNet.Models;
+using UnicornStore.AspNet.Models.Identity;
 
 namespace UnicornStore.AspNet
 {
