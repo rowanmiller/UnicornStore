@@ -13,6 +13,7 @@ using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
 using UnicornStore.AspNet.Models.Identity;
+using UnicornStore.AspNet.Models.UnicornStore;
 
 namespace UnicornStore.AspNet
 {
@@ -35,6 +36,7 @@ namespace UnicornStore.AspNet
             // Add EF services to the services container.
             services.AddEntityFramework(Configuration)
                 .AddSqlServer()
+                .AddDbContext<UnicornStoreContext>()
                 .AddDbContext<ApplicationDbContext>();
 
             // Add Identity services to the services container.
