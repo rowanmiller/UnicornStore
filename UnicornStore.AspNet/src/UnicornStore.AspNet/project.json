@@ -3,25 +3,25 @@
     "webroot": "wwwroot",
     "version": "1.0.0-*",
     "dependencies": {
-        "EntityFramework.SqlServer": "7.0.0-beta4-12415",
-        "EntityFramework.Commands": "7.0.0-beta4-12415",
-        "Microsoft.AspNet.Mvc": "6.0.0-beta4-12928",
-        /* "Microsoft.AspNet.Mvc.WebApiCompatShim": "6.0.0-beta4-12928", */
-        "Microsoft.AspNet.Diagnostics": "1.0.0-beta4-12329",
-        "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta4-12329",
-        "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta4-11802",
-        "Microsoft.AspNet.Security.Cookies": "1.0.0-beta4-11751",
-		"Microsoft.AspNet.Security.Facebook": "1.0.0-beta4-11751",
-		"Microsoft.AspNet.Security.Google": "1.0.0-beta4-11751",
-        "Microsoft.AspNet.Server.IIS": "1.0.0-beta4-11185",
-        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta4-11608",
-        "Microsoft.AspNet.StaticFiles": "1.0.0-beta4-11410",
-        "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta4-55",
-        "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4-10919",
-        "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta4-11733",
-        "Microsoft.Framework.Logging": "1.0.0-beta4-10930",
-        "Microsoft.Framework.Logging.Console": "1.0.0-beta4-10930",
-        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta3"
+        "EntityFramework.SqlServer": "7.0.0-beta4-12528",
+        "EntityFramework.Commands": "7.0.0-beta4-12528",
+        "Microsoft.AspNet.Mvc": "6.0.0-beta4-13049",
+        /* "Microsoft.AspNet.Mvc.WebApiCompatShim": "6.0.0-beta4-13049", */
+        "Microsoft.AspNet.Authentication.Cookies": "1.0.0-beta4-11850",
+		"Microsoft.AspNet.Authentication.Facebook": "1.0.0-beta4-11850",
+		"Microsoft.AspNet.Authentication.Google": "1.0.0-beta4-11850",
+        "Microsoft.AspNet.Diagnostics": "1.0.0-beta4-12427",
+        "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta4-12427",
+        "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta4-11877",
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta4-11260",
+        "Microsoft.AspNet.Server.WebListener": "1.0.0-beta4-11680",
+        "Microsoft.AspNet.StaticFiles": "1.0.0-beta4-11485",
+        "Microsoft.AspNet.Tooling.Razor": "1.0.0-beta4-109",
+        "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta4-10965",
+        "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta4-11797",
+        "Microsoft.Framework.Logging": "1.0.0-beta4-10986",
+        "Microsoft.Framework.Logging.Console": "1.0.0-beta4-10986",
+        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-beta3" 
     },
     "commands": {
         /* Change the port number when you are self hosting this application */
@@ -30,8 +30,8 @@
         "ef":  "EntityFramework.Commands"
     },
     "frameworks": {
-        "aspnet50": { },
-        "aspnetcore50": { }
+        "dnx451": { },
+        "dnxcore50": { }
     },
     "exclude": [
         "wwwroot",

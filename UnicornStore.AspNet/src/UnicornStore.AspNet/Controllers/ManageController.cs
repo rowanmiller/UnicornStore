@@ -3,8 +3,8 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Security;
 using UnicornStore.AspNet.Models.Identity;
+using Microsoft.AspNet.Authorization;
 
 namespace UnicornStore.AspNet.Controllers
 {
@@ -26,7 +26,7 @@ namespace UnicornStore.AspNet.Controllers
                 message == ManageMessageId.Error ? "An error has occurred."
                 : "";
 
-            var user = await UserManager.FindByIdAsync(Context.User.Identity.GetUserId());
+            var user = await UserManager.FindByIdAsync(Context.User.GetUserId());
             var model = new IndexViewModel
             {
                 Logins = await UserManager.GetLoginsAsync(user),
@@ -40,7 +40,7 @@ namespace UnicornStore.AspNet.Controllers
         public async Task<IActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message = ManageMessageId.Error;
-            var user = await UserManager.FindByIdAsync(Context.User.Identity.GetUserId());
+            var user = await UserManager.FindByIdAsync(Context.User.GetUserId());
             if (user != null)
             {
                 var result = await UserManager.RemoveLoginAsync(user, loginProvider, providerKey);
@@ -60,13 +60,13 @@ namespace UnicornStore.AspNet.Controllers
                 : message == ManageMessageId.AddLoginSuccess ? "The external login was added."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
-            var user = await UserManager.FindByIdAsync(Context.User.Identity.GetUserId());
+            var user = await UserManager.FindByIdAsync(Context.User.GetUserId());
             if (user == null)
             {
                 return View("Error");
             }
             var userLogins = await UserManager.GetLoginsAsync(user);
-            var otherLogins = SignInManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+            var otherLogins = SignInManager.GetExternalAuthenticationSchemes().Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider)).ToList();
             ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
             {
@@ -80,19 +80,19 @@ namespace UnicornStore.AspNet.Controllers
         public ActionResult LinkLogin(string provider)
         {
             var redirectUrl = Url.Action("LinkLoginCallback", "Manage");
-            var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, User.Identity.GetUserId());
+            var properties = SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, User.GetUserId());
             return new ChallengeResult(provider, properties);
         }
 
         public async Task<ActionResult> LinkLoginCallback()
         {
-            var user = await UserManager.FindByIdAsync(Context.User.Identity.GetUserId());
+            var user = await UserManager.FindByIdAsync(Context.User.GetUserId());
             if (user == null)
             {
                 return View("Error");
             }
 
-            var loginInfo = await SignInManager.GetExternalLoginInfoAsync(User.Identity.GetUserId());
+            var loginInfo = await SignInManager.GetExternalLoginInfoAsync(User.GetUserId());
             if (loginInfo == null)
             {
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });

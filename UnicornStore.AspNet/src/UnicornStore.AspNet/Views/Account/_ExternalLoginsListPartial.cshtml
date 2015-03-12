@@ -1,10 +1,10 @@
 ﻿@using UnicornStore.AspNet.Models.Identity;
-@using Microsoft.AspNet.Http.Security;
+@using Microsoft.AspNet.Http.Authentication;
 @using Microsoft.AspNet.Identity;
 @model ExternalLoginListViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @{
-    var loginProviders = SignInManager.GetExternalAuthenticationTypes();
+    var loginProviders = SignInManager.GetExternalAuthenticationSchemes();
     using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
     {
         @Html.AntiForgeryToken()
@@ -12,7 +12,7 @@
             <p>
                 @foreach (AuthenticationDescription p in loginProviders)
                 {
-                    <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                    <button type="submit" class="btn btn-default" id="@p.AuthenticationScheme" name="provider" value="@p.AuthenticationScheme" title="Log in using your @p.Caption account">@p.AuthenticationScheme</button>
                 }
             </p>
         </div>

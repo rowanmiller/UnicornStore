@@ -3,8 +3,8 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Security;
 using UnicornStore.AspNet.Models.Identity;
+using Microsoft.AspNet.Authorization;
 
 namespace UnicornStore.AspNet.Controllers
 {
@@ -55,7 +55,7 @@ namespace UnicornStore.AspNet.Controllers
             {
                 ViewBag.ReturnUrl = returnUrl;
                 ViewBag.LoginProvider = loginInfo.LoginProvider;
-                var email = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.Email);
+                var email = loginInfo.ExternalPrincipal.FindFirstValue(ClaimTypes.Email);
                 return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
             }
         }
