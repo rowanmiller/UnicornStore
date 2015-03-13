@@ -7,9 +7,19 @@ using UnicornStore.AspNet.Models.Identity;
 namespace UnicornStore.AspNet.Migrations.Identity
 {
     [ContextType(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class PreApprovals
     {
-        public override IModel Model
+        public override string Id
+        {
+            get { return "20150313205653_PreApprovals"; }
+        }
+        
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta4-12528"; }
+        }
+        
+        public override IModel Target
         {
             get
             {

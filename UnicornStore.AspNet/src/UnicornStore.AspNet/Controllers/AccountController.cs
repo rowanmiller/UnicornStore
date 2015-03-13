@@ -1,20 +1,24 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using UnicornStore.AspNet.Models.Identity;
-using Microsoft.AspNet.Authorization;
 
 namespace UnicornStore.AspNet.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly ApplicationDbContext db;
+
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            db = context;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -85,6 +89,15 @@ namespace UnicornStore.AspNet.Controllers
                     result = await UserManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        // TODO Should block when user has manually entered email rather than being
+                        //      returned from external login provider
+                        foreach (var role in db.PreApprovals
+                            .Where(p => p.UserEmail == user.Email)
+                            .Select(p => p.Role)
+                            .ToList())
+                        {
+                            await UserManager.AddToRoleAsync(user, role);
+                        }
                         await SignInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }

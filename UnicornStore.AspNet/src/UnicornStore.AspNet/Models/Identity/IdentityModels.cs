@@ -15,6 +15,8 @@ namespace UnicornStore.AspNet.Models.Identity
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<PreApproval> PreApprovals { get; set; }
+
         protected override void OnConfiguring(DbContextOptions options)
         {
             options.UseSqlServer();
@@ -23,6 +25,9 @@ namespace UnicornStore.AspNet.Models.Identity
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<PreApproval>().ForRelational().Table("AspNetPreApprovals");
+            builder.Entity<PreApproval>().Key(p => new { p.UserEmail, p.Role });
         }
     }
 }

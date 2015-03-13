@@ -6,7 +6,7 @@ using UnicornStore.AspNet.Models.UnicornStore;
 
 namespace UnicornStore.AspNet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ManageProductsController : Controller
     {
         private UnicornStoreContext db = new UnicornStoreContext();
