@@ -9,5 +9,6 @@ namespace UnicornStore.AspNet.Models.UnicornStore
         public string Description { get; set; }
         public decimal MSRP { get; set; }
         public decimal CurrentPrice { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

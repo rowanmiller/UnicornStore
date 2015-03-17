@@ -1,10 +1,10 @@
 @model IEnumerable<UnicornStore.AspNet.Models.UnicornStore.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Products";
 }
 
-<h2>Index</h2>
+<h2>Manage Products</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,29 +12,23 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CurrentPrice)
+            @Html.DisplayNameFor(modelItem => modelItem.DisplayName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(modelItem => modelItem.CurrentPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DisplayName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MSRP)
+            @Html.DisplayNameFor(modelItem => modelItem.MSRP)
         </th>
         <th></th>
     </tr>
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CurrentPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrentPrice)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MSRP)
