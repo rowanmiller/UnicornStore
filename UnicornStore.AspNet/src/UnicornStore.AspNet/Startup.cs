@@ -78,6 +78,7 @@ namespace UnicornStore.AspNet
                 app.UseBrowserLink();
                 app.UseErrorPage(ErrorPageOptions.ShowAll);
                 app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
+                app.EnsureSampleData();
             }
             else
             {
