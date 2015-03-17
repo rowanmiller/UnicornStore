@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using UnicornStore.AspNet.Models.UnicornStore;
 
@@ -42,6 +43,7 @@ namespace UnicornStore.AspNet.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "DisplayName");
             return View();
         }
 
@@ -74,6 +76,7 @@ namespace UnicornStore.AspNet.Controllers
                 return new HttpStatusCodeResult(404);
             }
 
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "DisplayName", product.CategoryId);
             return View(product);
         }
 
