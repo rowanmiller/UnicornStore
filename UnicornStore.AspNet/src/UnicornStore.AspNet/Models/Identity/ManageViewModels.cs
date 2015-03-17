@@ -6,7 +6,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 
 namespace UnicornStore.AspNet.Models.Identity
 {
-    public class IndexViewModel
+    public class ManageAccountViewModel
     {
         public IList<UserLoginInfo> Logins { get; set; }
     }
