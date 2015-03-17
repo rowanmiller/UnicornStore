@@ -18,6 +18,14 @@ textarea {
     max-width: 280px;
 }
 
+.btn-login {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+    width: 200px;
+    text-align: left;
+    padding: 6px;
+}
 
 /* CAROUSEL
 -------------------------------------------------- */
