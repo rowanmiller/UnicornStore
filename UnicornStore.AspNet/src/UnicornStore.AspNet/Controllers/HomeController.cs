@@ -2,14 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Mvc;
+using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.AspNet.ViewModels.Home;
 
 namespace UnicornStore.AspNet.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private UnicornStoreContext db;
+
+        public HomeController(UnicornStoreContext context)
         {
-            return View();
+            db = context;
+        }
+
+        public IActionResult Index() 
+        {
+            var ads = db.WebsiteAds
+                .Where(a => a.Start == null || a.Start <= DateTime.Now.ToUniversalTime())
+                .Where(a => a.End == null || a.End >= DateTime.Now.ToUniversalTime());
+
+            return View(new IndexViewModel
+            {
+                TopLevelCategories = ShopController.GetTopLevelCategories(db).ToList(),
+                CurrentAds = ads.ToList()
+            });
         }
 
         public IActionResult About()

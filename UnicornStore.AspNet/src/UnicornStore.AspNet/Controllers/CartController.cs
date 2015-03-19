@@ -12,7 +12,7 @@ namespace UnicornStore.AspNet.Controllers
     [Authorize]
     public class CartController : Controller
     {
-        private UnicornStoreContext db = new UnicornStoreContext();
+        private UnicornStoreContext db;
 
         public CartController(UnicornStoreContext context)
         {

@@ -29,6 +29,17 @@ namespace UnicornStore.AspNet.Models.UnicornStore
 
                 context.SaveChanges();
             }
+
+            if(!context.WebsiteAds.Any())
+            {
+                var kitchenAndDining = context.Categories.Single(c => c.DisplayName == "Kitchen & Dining");
+                var clothing = context.Categories.Single(c => c.DisplayName == "Clothing");
+
+                context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/DemoApplication.png", TagLine = "Unicorn Store is a demo application for Entity Framework 7", Details = "See github.com/rowanmiller/UnicornStore for details", Url = "http://github.com/rowanmiller/UnicornStore" });
+                context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/GotUnicorn.png", TagLine = "We've got you covered... literally", Details = "Checkout our range of clothing sporting our flagship unicorn", Url = "/Shop/Category/" + clothing.CategoryId.ToString() });
+                context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/JavaHeart.png", TagLine = "Drink and eat in style with our range of unicorn wares", Url = "/Shop/Category/" + kitchenAndDining.CategoryId.ToString() });
+                context.SaveChanges();
+            }
         }
     }
 }
