@@ -1,0 +1,14 @@
+@model UnicornStore.AspNet.Models.UnicornStore.Product
+
+    <div class="panel panel-default" style="height: 140px;">
+        <div class="panel-body">
+            <div style="text-align: center;">
+                    @Html.ActionLink(Model.DisplayName, "Product", "Shop", new { id = Model.ProductId })
+                <br />
+                <img src="@Url.Content(Model.ImageUrl)" width="80" />
+            </div>
+    </div>
+</div>
+
+
+

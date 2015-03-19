@@ -37,9 +37,9 @@
                             (save $@(Model.Product.MSRP - Model.Product.CurrentPrice))
                         </p>
                     }
+                    @Html.ActionLink("Add to Cart", "Add", "Cart", new { productId = Model.Product.ProductId })
                     <p>@Model.Product.Description</p>
                 </div>
-
             </div>
         </div>
     </div>

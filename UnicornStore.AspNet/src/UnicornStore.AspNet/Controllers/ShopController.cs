@@ -32,7 +32,7 @@ namespace UnicornStore.AspNet.Controllers
             return View(new IndexViewModel
             {
                 FeaturedProducts = products,
-                TopLevelCategories = GetTopLevelCategories()
+                TopLevelCategories = GetTopLevelCategories(db)
             });
         }
 
@@ -89,7 +89,7 @@ namespace UnicornStore.AspNet.Controllers
             {
                 Product = product,
                 CategoryHierarchy = GetCategoryHierarchy(product.CategoryId),
-                TopLevelCategories = GetTopLevelCategories()
+                TopLevelCategories = GetTopLevelCategories(db)
             });
         }
 
@@ -111,7 +111,7 @@ namespace UnicornStore.AspNet.Controllers
                 .Where(p => categoryIds.Contains(p.CategoryId));
         }
 
-        private IEnumerable<Category> GetTopLevelCategories()
+        internal static IEnumerable<Category> GetTopLevelCategories(UnicornStoreContext db)
         {
             return db.Categories
                 .Where(c => c.ParentCategoryId == null)
@@ -154,6 +154,5 @@ namespace UnicornStore.AspNet.Controllers
                     .Where(c => c.Children != null)
                     .SelectMany(c => GetAllCategoryIdsIncludingChildren(c.Children)));
         }
-
     }
 }

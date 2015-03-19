@@ -5,14 +5,14 @@
     @foreach (var item in Model)
     {
         <p>
-            <strong>@Html.ActionLink(item.DisplayName, "Category", new { id = item.CategoryId })</strong>
+            <strong>@Html.ActionLink(item.DisplayName, "Category", "Shop", new { id = item.CategoryId })</strong>
             @if (item.Children.Any())
             {
                 @foreach (var child in item.Children)
                 {
                     <br />
                     <em>
-                        @Html.ActionLink(child.DisplayName, "Category", new { id = child.CategoryId })
+                        @Html.ActionLink(child.DisplayName, "Category", "Shop", new { id = child.CategoryId })
                     </em>
                 }
             }

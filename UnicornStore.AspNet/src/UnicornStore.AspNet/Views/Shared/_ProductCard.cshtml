@@ -4,7 +4,7 @@
         <div class="panel-body">
             <div style="text-align: center;">
                 <p title="@Model.DisplayName">
-                    @Html.ActionLink(Model.DisplayName, "Product", new { id = Model.ProductId })
+                    @Html.ActionLink(Model.DisplayName, "Product", "Shop", new { id = Model.ProductId })
                 </p>
                 @if (Model.CurrentPrice == Model.MSRP)
                 {
