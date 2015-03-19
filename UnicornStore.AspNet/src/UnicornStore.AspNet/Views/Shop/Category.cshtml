@@ -1,0 +1,49 @@
+@model UnicornStore.AspNet.ViewModels.Shop.CategoryViewModel
+
+@{
+    ViewBag.Title = Model.Category.DisplayName;
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="well">
+                <h4>@Model.Category.DisplayName</h4>
+                
+                <p>
+                    @if (Model.Children != null)
+                    {
+                        @foreach (var child in Model.Children)
+                        {
+                            <em>
+                                @Html.ActionLink(child.DisplayName, "Category", new { id = child.CategoryId })
+                            </em>
+                            <br />
+                        }
+                    }
+                </p>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div>
+                <ul class="breadcrumb">
+                    @foreach (var item in Model.ParentHierarchy)
+                    {
+                        <li>@Html.ActionLink(item.DisplayName, "Category", new { id = item.CategoryId })</li>
+                    }
+                    <li class="active">@Model.Category.DisplayName</li>
+                </ul>
+                <h2>@Model.Category.DisplayName</h2>
+                <div class="row">
+                    @foreach (var item in Model.Products)
+                    {
+                        <div class="col-md-3">
+                            @Html.Partial("_productCard", item)
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

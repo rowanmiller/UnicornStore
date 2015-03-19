@@ -1,0 +1,46 @@
+@model UnicornStore.AspNet.ViewModels.Shop.ProductViewModel
+
+@{
+    ViewBag.Title = Model.Product.DisplayName;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.Partial("_CategorySidebar", Model.TopLevelCategories)
+        </div>
+        <div class="col-md-10">
+            <ul class="breadcrumb">
+                @foreach (var item in Model.CategoryHierarchy)
+                {
+                    <li>@Html.ActionLink(item.DisplayName, "Category", new { id = item.CategoryId })</li>
+                }
+                <li class="active">@Model.Product.DisplayName</li>
+            </ul>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="@Url.Content(Model.Product.ImageUrl)" />
+                </div>
+                <div class="col-md-8">
+                    <h2>@Model.Product.DisplayName</h2>
+                    @if (Model.Product.CurrentPrice == Model.Product.MSRP)
+                    {
+                        <p>
+                            <span style="font-size: xx-large">$@Model.Product.CurrentPrice</span>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            <span class="text-success" style="font-size: xx-large">$@Model.Product.CurrentPrice</span><br />
+                            <span class="text-danger"><del>$@Model.Product.MSRP</del></span>
+                            (save $@(Model.Product.MSRP - Model.Product.CurrentPrice))
+                        </p>
+                    }
+                    <p>@Model.Product.Description</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
