@@ -13,11 +13,14 @@
                     <li>@Html.ActionLink("Checkout", "Checkout", "Cart")</li>
                 </ul>
             </li>
-            <li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">@User.GetUserName()<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("My Orders", "Index", "Orders")</li>
+                    <li>@Html.ActionLink("My Account", "ManageAccount", "Account")</li>
+                </ul>
             </li>
-            <li>
-                @Html.ActionLink("Hello " + User.GetUserName() + "!", "ManageAccount", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
+           
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }

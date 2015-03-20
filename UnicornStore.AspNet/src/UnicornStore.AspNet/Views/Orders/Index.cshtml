@@ -1,0 +1,47 @@
+@using UnicornStore.AspNet.Models.UnicornStore
+@model IEnumerable<Order>
+
+@{
+    ViewBag.Title = "Manage Products";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>My Orders</h2>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(modelItem => modelItem.DisplayId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(modelItem => modelItem.OrderPlaced)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(modelItem => modelItem.Total)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(modelItem => modelItem.State)
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.DisplayId, "Details", new { orderId = item.OrderId })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderPlaced)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Total)
+                        </td>
+                        <td>
+                            @item.State.GetDisplayName()
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

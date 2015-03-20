@@ -16,7 +16,7 @@ namespace UnicornStore.AspNet.Models.UnicornStore
 
     public static class OrderStateExtensions
     {
-        public static string DisplayName(this OrderState state)
+        public static string GetDisplayName(this OrderState state)
         {
             switch (state)
             {

@@ -23,7 +23,9 @@ namespace UnicornStore.AspNet.Controllers
         public IActionResult Index()
         {
             var orders = db.Orders
-                .Where(o => o.Username == User.GetUserName());
+                .Include(o => o.Lines)
+                .Where(o => o.Username == User.GetUserName())
+                .Where(o => o.State != OrderState.CheckingOut);
 
             return View(orders);
         }
