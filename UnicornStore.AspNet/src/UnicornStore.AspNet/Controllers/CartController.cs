@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Principal;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
 using UnicornStore.AspNet.Models.UnicornStore;
 using UnicornStore.AspNet.ViewModels.Cart;
 
@@ -19,7 +20,7 @@ namespace UnicornStore.AspNet.Controllers
             db = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(IndexMessage message = IndexMessage.None)
         {
             var items = db.CartItems
                 .Where(i => i.Username == User.GetUserName())
@@ -28,7 +29,8 @@ namespace UnicornStore.AspNet.Controllers
             return View(new IndexViewModel
             {
                 CartItems = items,
-                TopLevelCategories = ShopController.GetTopLevelCategories(db)
+                TopLevelCategories = ShopController.GetTopLevelCategories(db),
+                Message = message
             });
         }
 
@@ -66,11 +68,7 @@ namespace UnicornStore.AspNet.Controllers
 
             db.SaveChanges();
 
-            return View(new AddViewModel
-            {
-                CartItem = item,
-                TopLevelCategories = ShopController.GetTopLevelCategories(db)
-            });
+            return RedirectToAction("Index", new { message = IndexMessage.ItemAdded });
         }
 
         public IActionResult Remove(int productId)
@@ -87,7 +85,99 @@ namespace UnicornStore.AspNet.Controllers
             db.CartItems.Remove(item);
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { message = IndexMessage.ItemRemoved });
+        }
+
+        public IActionResult Checkout()
+        {
+            var items = db.CartItems
+                .Where(i => i.Username == User.GetUserName())
+                .Include(i => i.Product)
+                .ToList();
+
+            var order = new Order
+            {
+                CheckoutBegan = DateTime.Now.ToUniversalTime(),
+                Username = User.GetUserName(),
+                Total = items.Sum(i => i.PricePerUnit * i.Quantity),
+                State = OrderState.CheckingOut,
+                Lines = items.Select(i => new OrderLine
+                {
+                    ProductId = i.ProductId,
+                    Product = i.Product,
+                    Quantity = i.Quantity,
+                    PricePerUnit = i.PricePerUnit,
+                }).ToList()
+            };
+
+            db.ChangeTracker.TrackGraph(order, e => e.State = EntityState.Added);
+            db.SaveChanges();
+
+            // TODO workaround for https://github.com/aspnet/EntityFramework/issues/1449
+            var orderFixed = db.Orders
+                .AsNoTracking()
+                .Include(o => o.Lines).ThenInclude(ol => ol.Product)
+                .Single(o => o.OrderId == order.OrderId);
+
+            return View(new CheckoutViewModel
+            {
+                Order = orderFixed
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Checkout(CheckoutViewModel formOrder)
+        {
+            var order = db.Orders
+                .Include(o => o.Lines)
+                .SingleOrDefault(o => o.OrderId == formOrder.Order.OrderId);
+
+            if (order == null)
+            {
+                return new HttpStatusCodeResult(404);
+            }
+
+            if (order.Username != User.GetUserName())
+            {
+                return new HttpStatusCodeResult(403);
+            }
+
+            if (order.State != OrderState.CheckingOut)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+
+            // Place order
+            order.ShippingAddressee = formOrder.Order.ShippingAddressee;
+            order.ShippingAddressLineOne = formOrder.Order.ShippingAddressLineOne;
+            order.ShippingAddressLineTwo = formOrder.Order.ShippingAddressLineTwo;
+            order.ShippingCityOrTown = formOrder.Order.ShippingCityOrTown;
+            order.ShippingStateOrProvince = formOrder.Order.ShippingStateOrProvince;
+            order.ShippingZipOrPostalCode = formOrder.Order.ShippingZipOrPostalCode;
+            order.ShippingCountry = formOrder.Order.ShippingCountry;
+
+            order.State = OrderState.Placed;
+            order.OrderPlaced = DateTime.Now.ToUniversalTime();
+
+            db.SaveChanges();
+
+            // Remove items from cart
+            var cartItems = db.CartItems
+                .Where(i => i.Username == User.GetUserName())
+                .ToList();
+
+            foreach (var item in cartItems)
+            {
+                if (order.Lines.Any(l => l.ProductId == item.ProductId))
+                {
+                    db.CartItems.Remove(item);
+                }
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Details", "Orders", new { orderId = order.OrderId, showConfirmation = true });
         }
     }
 }

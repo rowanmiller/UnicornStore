@@ -6,8 +6,14 @@
     {
         @Html.AntiForgeryToken()
         <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Cart<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("View Cart", "Index", "Cart")</li>
+                    <li>@Html.ActionLink("Checkout", "Checkout", "Cart")</li>
+                </ul>
+            </li>
             <li>
-                @Html.ActionLink("My Cart", "Index", "Cart")
             </li>
             <li>
                 @Html.ActionLink("Hello " + User.GetUserName() + "!", "ManageAccount", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })

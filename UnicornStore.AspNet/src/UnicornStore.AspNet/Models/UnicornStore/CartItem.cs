@@ -2,7 +2,7 @@
 
 namespace UnicornStore.AspNet.Models.UnicornStore
 {
-    public class CartItem
+    public class CartItem : ILineItem
     {
         public int CartItemId { get; set; }
         public int Quantity { get; set; }

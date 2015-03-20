@@ -1,5 +1,5 @@
-@model UnicornStore.AspNet.ViewModels.Cart.IndexViewModel
-
+@using UnicornStore.AspNet.ViewModels.Cart
+@model IndexViewModel
 @{
     ViewBag.Title = "Cart";
 }
@@ -9,41 +9,52 @@
         <div class="col-md-2">
             @Html.Partial("_CategorySidebar", Model.TopLevelCategories)
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8">
             <p></p>
+
+            @if (Model.Message != IndexMessage.None)
+            {
+                <div class="alert alert-success">
+                    @Model.Message.GetMessage()
+                </div>
+            }
+
+            @if (Model.CartItems.Any())
+            {
+                <p>
+                    @Html.ActionLink("Proceed to Checkout", "Checkout", new { }, new { Class = "btn btn-default" })
+                </p>
+            }
+
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">@Model.CartItems.Count() products in your cart</h3>
                 </div>
                 <div class="panel-body">
-                    @foreach (var item in Model.CartItems)
+                    @if (!Model.CartItems.Any())
                     {
-                        <div class="row">
-                            <div class="col-md-9">
-                                <h4>@item.Product.DisplayName</h4>
-                                <dl class="dl-horizontal">
-                                    <dt>Quantity in cart:</dt>
-                                    <dd>@item.Quantity</dd>
-                                    <dt>Unit Price:</dt>
-                                    <dd>$@item.PricePerUnit</dd>
-                                    <dt>Total cost:</dt>
-                                    <dd>$@(item.Quantity * item.PricePerUnit)</dd>
-                                    <dd>@Html.ActionLink("Remove from cart", "Remove", new { productId = @item.ProductId })</dd>
-                                </dl>
-                            </div>
-                            <div class="col-md-3">
-                                @Html.Partial("_ProductCardThumb", item.Product)
-                            </div>
-                        </div>
-                        <hr />
+                        <em>There are no items in your cart, perhaps you would like to @Html.ActionLink("browse the store", "Index", "Shop")</em>
                     }
-                    <div >
-                        <h4>
-                            Total: $@Model.CartItems.Sum(item => item.Quantity * item.PricePerUnit)
-                        </h4>
-                    </div>
+                    else
+                    {
+                        <span style="font-size: large">Cart Total $@Model.CartItems.Sum(item => item.Quantity * item.PricePerUnit)</span>
+
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <hr />
+                            @Html.Partial("_LineItem", item)
+                            @Html.ActionLink("Remove from cart", "Remove", new { productId = @item.ProductId })
+                        }
+                    }
                 </div>
             </div>
+
+            @if (Model.CartItems.Any())
+            {
+                <p>
+                    @Html.ActionLink("Proceed to Checkout", "Checkout", new { }, new { Class = "btn btn-default" })
+                </p>
+            }
         </div>
     </div>
 </div>

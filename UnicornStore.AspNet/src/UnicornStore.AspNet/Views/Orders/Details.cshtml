@@ -1,0 +1,52 @@
+@model UnicornStore.AspNet.ViewModels.Orders.DetailsViewModel
+@using UnicornStore.AspNet.Models.UnicornStore
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<p>
+</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            @if (Model.ShowConfirmation)
+            {
+                <div class="alert alert-success">
+                    <b>Order successfully submitted!</b> We'll get your items packed up and shipped to you as soon as possible.
+                </div>
+            }
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Order #@Model.Order.DisplayId</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span style="font-size: x-large">$@Model.Order.Total</span>
+                                <br />@Model.Order.State.DisplayName()
+                            </div>
+                            <div class="col-md-4">
+                                <strong>@Model.Order.ShippingAddressee</strong>
+                                <br />@Model.Order.ShippingAddressLineOne
+                                @if (!string.IsNullOrWhiteSpace(Model.Order.ShippingAddressLineTwo))
+                                {
+                                    <br />@Model.Order.ShippingAddressLineTwo
+                                }
+                                <br />@Model.Order.ShippingCityOrTown
+                                <br />@Model.Order.ShippingStateOrProvince @Model.Order.ShippingZipOrPostalCode
+                                <br />@Model.Order.ShippingCountry
+                            </div>
+                        </div>
+                        @foreach (var item in Model.Order.Lines)
+                        {
+                            <hr />
+                            @Html.Partial("_LineItem", item)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
