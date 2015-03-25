@@ -7,9 +7,19 @@ using UnicornStore.AspNet.Models.UnicornStore;
 namespace UnicornStore.AspNet.Migrations.UnicornStore
 {
     [ContextType(typeof(UnicornStoreContext))]
-    partial class UnicornStoreContextModelSnapshot : ModelSnapshot
+    partial class SplitShippingDetails
     {
-        public override IModel Model
+        public override string Id
+        {
+            get { return "20150325205402_SplitShippingDetails"; }
+        }
+        
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta4-12528"; }
+        }
+        
+        public override IModel Target
         {
             get
             {

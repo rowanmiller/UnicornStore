@@ -34,6 +34,7 @@ namespace UnicornStore.AspNet.Controllers
         {
             var order = db.Orders
                 .Include(o => o.Lines).ThenInclude(ol => ol.Product)
+                .Include(o => o.ShippingDetails)
                 .SingleOrDefault(o => o.OrderId == orderId);
 
             if (order == null)

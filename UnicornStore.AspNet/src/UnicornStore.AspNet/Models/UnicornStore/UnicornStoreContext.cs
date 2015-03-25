@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Data.Entity;
 
 namespace UnicornStore.AspNet.Models.UnicornStore
@@ -16,15 +18,25 @@ namespace UnicornStore.AspNet.Models.UnicornStore
             options.UseSqlServer();
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.Entity<Category>()
+            builder.Entity<Category>()
                 .HasOne(c => c.ParentCategory)
                 .WithMany(c => c.Children)
                 .ForeignKey(c => c.ParentCategoryId);
 
-            modelBuilder.Entity<OrderLine>()
+            builder.Entity<OrderLine>()
                 .Key(ol => new { ol.OrderId, ol.ProductId });
+
+            builder.Entity<OrderShippingDetails>()
+                .Key(d => d.OrderId);
+
+            builder.Entity<Order>()
+                .HasOne(o => o.ShippingDetails)
+                .WithOne()
+                .ForeignKey<OrderShippingDetails>(d => d.OrderId);
+
+            builder.Entity<OrderShippingDetails>().ConfigureAddress();
         }
     }
 }

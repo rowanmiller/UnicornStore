@@ -26,15 +26,15 @@
                                 <br />@Model.Order.State.GetDisplayName()
                             </div>
                             <div class="col-md-4">
-                                <strong>@Model.Order.ShippingAddressee</strong>
-                                <br />@Model.Order.ShippingAddressLineOne
-                                @if (!string.IsNullOrWhiteSpace(Model.Order.ShippingAddressLineTwo))
+                                <strong>@Model.Order.ShippingDetails.Addressee</strong>
+                                <br />@Model.Order.ShippingDetails.LineOne
+                                @if (!string.IsNullOrWhiteSpace(Model.Order.ShippingDetails.LineTwo))
                                 {
-                                    <br />@Model.Order.ShippingAddressLineTwo
+                                    <br />@Model.Order.ShippingDetails.LineTwo
                                 }
-                                <br />@Model.Order.ShippingCityOrTown
-                                <br />@Model.Order.ShippingStateOrProvince @Model.Order.ShippingZipOrPostalCode
-                                <br />@Model.Order.ShippingCountry
+                                <br />@Model.Order.ShippingDetails.CityOrTown
+                                <br />@Model.Order.ShippingDetails.StateOrProvince @Model.Order.ShippingDetails.ZipOrPostalCode
+                                <br />@Model.Order.ShippingDetails.Country
                             </div>
                         </div>
                         @foreach (var item in Model.Order.Lines)

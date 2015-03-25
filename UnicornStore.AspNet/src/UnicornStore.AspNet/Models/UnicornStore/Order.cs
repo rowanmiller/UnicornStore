@@ -15,21 +15,6 @@ namespace UnicornStore.AspNet.Models.UnicornStore
         [Display(Name ="Status")]
         public OrderState State { get; set; }
 
-        [Display(Name ="Addressee")]
-        public string ShippingAddressee { get; set; }
-        [Display(Name ="Line One")]
-        public string ShippingAddressLineOne { get; set; }
-        [Display(Name ="Line Two")]
-        public string ShippingAddressLineTwo { get; set; }
-        [Display(Name = "City/Town")]
-        public string ShippingCityOrTown { get; set; }
-        [Display(Name ="State/Province")]
-        public string ShippingStateOrProvince { get; set; }
-        [Display(Name ="Zip/Postal Code")]
-        public string ShippingZipOrPostalCode { get; set; }
-        [Display(Name ="Country")]
-        public string ShippingCountry { get; set; }
-
         [Display(Name ="Order #")]
         public string DisplayId
         {
@@ -37,5 +22,7 @@ namespace UnicornStore.AspNet.Models.UnicornStore
         }
 
         public List<OrderLine> Lines { get; set; }
+
+        public OrderShippingDetails ShippingDetails { get; set; }
     }
 }

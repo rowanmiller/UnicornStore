@@ -8,7 +8,7 @@
 </p>
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8">
             <h2>Checkout</h2>
             <p>One page, three steps, and your products are on their way!</p>
             <div class="panel panel-primary">
@@ -19,11 +19,11 @@
                     <div class="container">
                         <span style="font-size: large">Order Total $@Model.Order.Total</span>
                         @foreach (var item in Model.Order.Lines)
-            {
+                            {
                             <hr />
                             @Html.Partial("_LineItem", item)
                             @Html.ActionLink("Remove from cart", "Remove", new { productId = @item.ProductId })
-                        }
+                            }
                     </div>
                 </div>
             </div>
@@ -36,55 +36,80 @@
                         <h3 class="panel-title">Step 2: Shipping details</h3>
                     </div>
                     <div class="panel-body">
+                        <div class="row">
+                            @foreach (var address in Model.UserAddresses)
+                                {
+                                <div class="col-md-3">
+                                    <div class="well well-sm">
+                                        <strong>@address.Addressee</strong>
+                                        <br />@address.LineOne
+                                        @if (!string.IsNullOrWhiteSpace(address.LineTwo))
+                                            {
+                                            <br />@address.LineTwo
+                                            }
+                                        <br />@address.CityOrTown
+                                        <br />@address.StateOrProvince @address.ZipOrPostalCode
+                                        <br />@address.Country
+                                        <br /><a onclick="javascript: useAddress('@address.Addressee', '@address.LineOne', '@address.LineTwo', '@address.CityOrTown', '@address.StateOrProvince', '@address.ZipOrPostalCode', '@address.Country')">Ship to this address</a>
+                                    </div>
+                                </div>
+                                }
+                        </div>
                         <div class="form-horizontal">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Order.ShippingAddressee, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Order.ShippingAddressee, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Order.ShippingAddressee, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Order.ShippingDetails.Addressee, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Order.ShippingDetails.Addressee, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order.ShippingDetails.Addressee, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <hr />
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Order.ShippingAddressLineOne, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Order.ShippingAddressLineOne, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Order.ShippingAddressLineOne, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Order.ShippingDetails.LineOne, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Order.ShippingDetails.LineOne, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order.ShippingDetails.LineOne, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Order.ShippingAddressLineTwo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Order.ShippingAddressLineTwo, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Order.ShippingAddressLineTwo, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Order.ShippingDetails.LineTwo, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Order.ShippingDetails.LineTwo, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order.ShippingDetails.LineTwo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Order.ShippingCityOrTown, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Order.ShippingCityOrTown, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Order.ShippingCityOrTown, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Order.ShippingDetails.CityOrTown, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Order.ShippingDetails.CityOrTown, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order.ShippingDetails.CityOrTown, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Order.ShippingStateOrProvince, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Order.ShippingStateOrProvince, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Order.ShippingStateOrProvince, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Order.ShippingDetails.StateOrProvince, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Order.ShippingDetails.StateOrProvince, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order.ShippingDetails.StateOrProvince, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Order.ShippingZipOrPostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Order.ShippingZipOrPostalCode, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Order.ShippingZipOrPostalCode, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Order.ShippingDetails.ZipOrPostalCode, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Order.ShippingDetails.ZipOrPostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order.ShippingDetails.ZipOrPostalCode, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Order.ShippingCountry, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Order.ShippingCountry, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Order.ShippingCountry, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Order.ShippingDetails.Country, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.Order.ShippingDetails.Country, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Order.ShippingDetails.Country, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.RememberAddress, htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.RememberAddress, new { htmlAttributes = new { } })
                                 </div>
                             </div>
                             @Html.HiddenFor(model => model.Order.OrderId)
@@ -112,7 +137,23 @@
                 </div>
 
                 <input type="submit" value="Place My Order" class="btn panel-primary" />
-            }
+                }
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function useAddress(addressee, lineOne, lineTwo, cityOrTown, stateOrProvince, zipOrPostalCode, country) {
+            $("#Order_ShippingDetails_Addressee").val(addressee);
+            $("#Order_ShippingDetails_LineOne").val(lineOne);
+            $("#Order_ShippingDetails_LineTwo").val(lineTwo);
+            $("#Order_ShippingDetails_CityOrTown").val(cityOrTown);
+            $("#Order_ShippingDetails_StateOrProvince").val(stateOrProvince);
+            $("#Order_ShippingDetails_ZipOrPostalCode").val(zipOrPostalCode);
+            $("#Order_ShippingDetails_Country").val(country);
+            $("#RememberAddress").prop('checked', false);
+        }
+    </script>
+}

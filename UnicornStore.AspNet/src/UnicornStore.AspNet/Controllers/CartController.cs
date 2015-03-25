@@ -5,6 +5,8 @@ using System.Security.Principal;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
+using UnicornStore.AspNet.Models;
+using UnicornStore.AspNet.Models.Identity;
 using UnicornStore.AspNet.Models.UnicornStore;
 using UnicornStore.AspNet.ViewModels.Cart;
 
@@ -14,10 +16,12 @@ namespace UnicornStore.AspNet.Controllers
     public class CartController : Controller
     {
         private UnicornStoreContext db;
+        private ApplicationDbContext identityDb;
 
-        public CartController(UnicornStoreContext context)
+        public CartController(UnicornStoreContext context, ApplicationDbContext identityContext)
         {
             db = context;
+            identityDb = identityContext;
         }
 
         public IActionResult Index(IndexMessage message = IndexMessage.None)
@@ -119,9 +123,16 @@ namespace UnicornStore.AspNet.Controllers
                 .Include(o => o.Lines).ThenInclude(ol => ol.Product)
                 .Single(o => o.OrderId == order.OrderId);
 
+            orderFixed.ShippingDetails = new OrderShippingDetails();
+
+            var addresses = identityDb.UserAddresses
+                .Where(a => a.UserId == User.GetUserId())
+                .ToList();
+
             return View(new CheckoutViewModel
             {
-                Order = orderFixed
+                Order = orderFixed,
+                UserAddresses = addresses
             });
         }
 
@@ -149,18 +160,18 @@ namespace UnicornStore.AspNet.Controllers
             }
 
             // Place order
-            order.ShippingAddressee = formOrder.Order.ShippingAddressee;
-            order.ShippingAddressLineOne = formOrder.Order.ShippingAddressLineOne;
-            order.ShippingAddressLineTwo = formOrder.Order.ShippingAddressLineTwo;
-            order.ShippingCityOrTown = formOrder.Order.ShippingCityOrTown;
-            order.ShippingStateOrProvince = formOrder.Order.ShippingStateOrProvince;
-            order.ShippingZipOrPostalCode = formOrder.Order.ShippingZipOrPostalCode;
-            order.ShippingCountry = formOrder.Order.ShippingCountry;
-
+            order.ShippingDetails = formOrder.Order.ShippingDetails.CloneTo<OrderShippingDetails>();
             order.State = OrderState.Placed;
             order.OrderPlaced = DateTime.Now.ToUniversalTime();
-
             db.SaveChanges();
+
+            if(formOrder.RememberAddress)
+            {
+                var address = formOrder.Order.ShippingDetails.CloneTo<UserAddress>();
+                address.UserId = User.GetUserId();
+                identityDb.UserAddresses.Add(address);
+                identityDb.SaveChanges();
+            }
 
             // Remove items from cart
             var cartItems = db.CartItems
