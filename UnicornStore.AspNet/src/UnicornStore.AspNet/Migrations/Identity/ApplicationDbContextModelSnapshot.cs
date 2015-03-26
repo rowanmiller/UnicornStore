@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Metadata.Builders;
 using Microsoft.Data.Entity.Relational.Migrations.Infrastructure;
 using UnicornStore.AspNet.Models.Identity;
 
@@ -13,121 +14,181 @@ namespace UnicornStore.AspNet.Migrations.Identity
         {
             get
             {
-                var builder = new BasicModelBuilder();
+                var builder = new BasicModelBuilder()
+                    .Annotation("SqlServer:ValueGeneration", "Sequence");
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityRole", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
                     {
                         b.Property<string>("ConcurrencyStamp")
-                            .ConcurrencyToken();
+                            .ConcurrencyToken()
+                            .Annotation("OriginalValueIndex", 0);
                         b.Property<string>("Id")
-                            .GenerateValueOnAdd();
-                        b.Property<string>("Name");
-                        b.Property<string>("NormalizedName");
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Property<string>("Name")
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Property<string>("NormalizedName")
+                            .Annotation("OriginalValueIndex", 3);
                         b.Key("Id");
-                        b.ForRelational().Table("AspNetRoles");
+                        b.Annotation("Relational:TableName", "AspNetRoles");
                     });
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityRoleClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
-                        b.Property<string>("ClaimType");
-                        b.Property<string>("ClaimValue");
+                        b.Property<string>("ClaimType")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("ClaimValue")
+                            .Annotation("OriginalValueIndex", 1);
                         b.Property<int>("Id")
-                            .GenerateValueOnAdd();
-                        b.Property<string>("RoleId");
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 2)
+                            .Annotation("SqlServer:ValueGeneration", "Default");
+                        b.Property<string>("RoleId")
+                            .Annotation("OriginalValueIndex", 3);
                         b.Key("Id");
-                        b.ForRelational().Table("AspNetRoleClaims");
+                        b.Annotation("Relational:TableName", "AspNetRoleClaims");
                     });
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityUserClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
-                        b.Property<string>("ClaimType");
-                        b.Property<string>("ClaimValue");
+                        b.Property<string>("ClaimType")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("ClaimValue")
+                            .Annotation("OriginalValueIndex", 1);
                         b.Property<int>("Id")
-                            .GenerateValueOnAdd();
-                        b.Property<string>("UserId");
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 2)
+                            .Annotation("SqlServer:ValueGeneration", "Default");
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 3);
                         b.Key("Id");
-                        b.ForRelational().Table("AspNetUserClaims");
+                        b.Annotation("Relational:TableName", "AspNetUserClaims");
                     });
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityUserLogin`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
-                        b.Property<string>("LoginProvider");
-                        b.Property<string>("ProviderDisplayName");
-                        b.Property<string>("ProviderKey");
-                        b.Property<string>("UserId");
+                        b.Property<string>("LoginProvider")
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("ProviderDisplayName")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Property<string>("ProviderKey")
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 3);
                         b.Key("LoginProvider", "ProviderKey");
-                        b.ForRelational().Table("AspNetUserLogins");
+                        b.Annotation("Relational:TableName", "AspNetUserLogins");
                     });
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityUserRole`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
-                        b.Property<string>("RoleId");
-                        b.Property<string>("UserId");
+                        b.Property<string>("RoleId")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 1);
                         b.Key("UserId", "RoleId");
-                        b.ForRelational().Table("AspNetUserRoles");
+                        b.Annotation("Relational:TableName", "AspNetUserRoles");
                     });
                 
                 builder.Entity("UnicornStore.AspNet.Models.Identity.ApplicationUser", b =>
                     {
-                        b.Property<int>("AccessFailedCount");
+                        b.Property<int>("AccessFailedCount")
+                            .Annotation("OriginalValueIndex", 0);
                         b.Property<string>("ConcurrencyStamp")
-                            .ConcurrencyToken();
-                        b.Property<string>("Email");
-                        b.Property<bool>("EmailConfirmed");
+                            .ConcurrencyToken()
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Property<string>("Email")
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Property<bool>("EmailConfirmed")
+                            .Annotation("OriginalValueIndex", 3);
                         b.Property<string>("Id")
-                            .GenerateValueOnAdd();
-                        b.Property<bool>("LockoutEnabled");
-                        b.Property<DateTimeOffset?>("LockoutEnd");
-                        b.Property<string>("NormalizedEmail");
-                        b.Property<string>("NormalizedUserName");
-                        b.Property<string>("PasswordHash");
-                        b.Property<string>("PhoneNumber");
-                        b.Property<bool>("PhoneNumberConfirmed");
-                        b.Property<string>("SecurityStamp");
-                        b.Property<bool>("TwoFactorEnabled");
-                        b.Property<string>("UserName");
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 4);
+                        b.Property<bool>("LockoutEnabled")
+                            .Annotation("OriginalValueIndex", 5);
+                        b.Property<DateTimeOffset?>("LockoutEnd")
+                            .Annotation("OriginalValueIndex", 6);
+                        b.Property<string>("NormalizedEmail")
+                            .Annotation("OriginalValueIndex", 7);
+                        b.Property<string>("NormalizedUserName")
+                            .Annotation("OriginalValueIndex", 8);
+                        b.Property<string>("PasswordHash")
+                            .Annotation("OriginalValueIndex", 9);
+                        b.Property<string>("PhoneNumber")
+                            .Annotation("OriginalValueIndex", 10);
+                        b.Property<bool>("PhoneNumberConfirmed")
+                            .Annotation("OriginalValueIndex", 11);
+                        b.Property<string>("SecurityStamp")
+                            .Annotation("OriginalValueIndex", 12);
+                        b.Property<bool>("TwoFactorEnabled")
+                            .Annotation("OriginalValueIndex", 13);
+                        b.Property<string>("UserName")
+                            .Annotation("OriginalValueIndex", 14);
                         b.Key("Id");
-                        b.ForRelational().Table("AspNetUsers");
+                        b.Annotation("Relational:TableName", "AspNetUsers");
                     });
                 
                 builder.Entity("UnicornStore.AspNet.Models.Identity.PreApproval", b =>
                     {
-                        b.Property<string>("ApprovedBy");
-                        b.Property<DateTime>("ApprovedOn");
-                        b.Property<string>("Role");
-                        b.Property<string>("UserEmail");
+                        b.Property<string>("ApprovedBy")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<DateTime>("ApprovedOn")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Property<string>("Role")
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Property<string>("UserEmail")
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 3);
                         b.Key("UserEmail", "Role");
-                        b.ForRelational().Table("AspNetPreApprovals");
+                        b.Annotation("Relational:TableName", "AspNetPreApprovals");
                     });
                 
                 builder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
                     {
-                        b.Property<string>("Addressee");
-                        b.Property<string>("CityOrTown");
-                        b.Property<string>("Country");
-                        b.Property<string>("LineOne");
-                        b.Property<string>("LineTwo");
-                        b.Property<string>("StateOrProvince");
+                        b.Property<string>("Addressee")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("CityOrTown")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Property<string>("Country")
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Property<string>("LineOne")
+                            .Annotation("OriginalValueIndex", 3);
+                        b.Property<string>("LineTwo")
+                            .Annotation("OriginalValueIndex", 4);
+                        b.Property<string>("StateOrProvince")
+                            .Annotation("OriginalValueIndex", 5);
                         b.Property<int>("UserAddressId")
-                            .GenerateValueOnAdd();
-                        b.Property<string>("UserId");
-                        b.Property<string>("ZipOrPostalCode");
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 6)
+                            .Annotation("SqlServer:ValueGeneration", "Default");
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 7);
+                        b.Property<string>("ZipOrPostalCode")
+                            .Annotation("OriginalValueIndex", 8);
                         b.Key("UserAddressId");
-                        b.ForRelational().Table("AspNetUserAddresses");
+                        b.Annotation("Relational:TableName", "AspNetUserAddresses");
                     });
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityRoleClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
-                        b.ForeignKey("Microsoft.AspNet.Identity.IdentityRole", "RoleId");
+                        b.ForeignKey("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", "RoleId");
                     });
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityUserClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
                         b.ForeignKey("UnicornStore.AspNet.Models.Identity.ApplicationUser", "UserId");
                     });
                 
-                builder.Entity("Microsoft.AspNet.Identity.IdentityUserLogin`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
+                        b.ForeignKey("UnicornStore.AspNet.Models.Identity.ApplicationUser", "UserId");
+                    });
+                
+                builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
+                    {
+                        b.ForeignKey("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", "RoleId");
                         b.ForeignKey("UnicornStore.AspNet.Models.Identity.ApplicationUser", "UserId");
                     });
                 

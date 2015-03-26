@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Identity;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Framework.DependencyInjection;
 
 namespace UnicornStore.AspNet.Models.Identity

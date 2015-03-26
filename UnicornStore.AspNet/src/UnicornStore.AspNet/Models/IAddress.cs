@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Linq;
-using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Metadata.Builders;
 
 namespace UnicornStore.AspNet.Models
 {
@@ -37,7 +37,7 @@ namespace UnicornStore.AspNet.Models
             return to;
         }
 
-        public static void ConfigureAddress<TAddress>(this ModelBuilder.EntityBuilder<TAddress> builder)
+        public static void ConfigureAddress<TAddress>(this EntityTypeBuilder<TAddress> builder)
             where TAddress : class, IAddress
         {
             var propertyMethod = builder.GetType()
@@ -45,12 +45,12 @@ namespace UnicornStore.AspNet.Models
                         .MakeGenericMethod(typeof(string));
 
             var requiredProps = builder.Metadata.Properties
-                .Where(p => p.PropertyType == typeof(string))
+                .Where(p => p.ClrType == typeof(string))
                 .Where(p => p.Name != nameof(IAddress.LineTwo));
 
             foreach (var item in requiredProps)
             {
-                var propertyBuilder = ((ModelBuilder.EntityBuilder.PropertyBuilder)propertyMethod
+                var propertyBuilder = ((PropertyBuilder)propertyMethod
                     .Invoke(builder, new object[] { item.Name }))
                     .Required();
             }

@@ -1,10 +1,5 @@
 {
-    "EntityFramework": {
-        "ApplicationDbContext": {
-            "ConnectionString": "Server=(localdb)\\v11.0;Database=UnicornStore;Trusted_Connection=True;MultipleActiveResultSets=true"
-        },
-        "UnicornStoreContext": {
-            "ConnectionString": "Server=(localdb)\\v11.0;Database=UnicornStore;Trusted_Connection=True;MultipleActiveResultSets=true"
-        }
+    "ConnectionStrings": {
+        "UnicornStore": "Server=(localdb)\\v11.0;Database=UnicornStore;Trusted_Connection=True;MultipleActiveResultSets=true"
     }
 }

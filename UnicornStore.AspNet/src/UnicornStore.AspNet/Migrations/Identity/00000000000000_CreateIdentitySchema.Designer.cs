@@ -8,11 +8,11 @@ using UnicornStore.AspNet.Models.Identity;
 namespace UnicornStore.AspNet.Migrations.Identity
 {
     [ContextType(typeof(ApplicationDbContext))]
-    partial class PreApprovals
+    partial class CreateIdentitySchema
     {
         public override string Id
         {
-            get { return "20150313205653_PreApprovals"; }
+            get { return "00000000000000_CreateIdentitySchema"; }
         }
         
         public override string ProductVersion
@@ -137,22 +137,6 @@ namespace UnicornStore.AspNet.Migrations.Identity
                             .Annotation("OriginalValueIndex", 14);
                         b.Key("Id");
                         b.Annotation("Relational:TableName", "AspNetUsers");
-                    });
-                
-                builder.Entity("UnicornStore.AspNet.Models.Identity.PreApproval", b =>
-                    {
-                        b.Property<string>("ApprovedBy")
-                            .Annotation("OriginalValueIndex", 0);
-                        b.Property<DateTime>("ApprovedOn")
-                            .Annotation("OriginalValueIndex", 1);
-                        b.Property<string>("Role")
-                            .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 2);
-                        b.Property<string>("UserEmail")
-                            .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 3);
-                        b.Key("UserEmail", "Role");
-                        b.Annotation("Relational:TableName", "AspNetPreApprovals");
                     });
                 
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>

@@ -18,7 +18,7 @@ namespace UnicornStore.AspNet.Migrations.Identity
                     LineOne = x.Column("nvarchar(max)"),
                     LineTwo = x.Column("nvarchar(max)", nullable: true),
                     StateOrProvince = x.Column("nvarchar(max)"),
-                    UserAddressId = x.Column("int", annotations: new Dictionary<string, string> { { "SqlServer:ValueGeneration", "Identity" } }),
+                    UserAddressId = x.Column("int"),
                     UserId = x.Column("nvarchar(450)"),
                     ZipOrPostalCode = x.Column("nvarchar(max)")
                 })

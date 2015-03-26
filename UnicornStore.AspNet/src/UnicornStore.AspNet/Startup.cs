@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Routing;
-using Microsoft.AspNet.Authentication.Cookies;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-using Microsoft.Framework.Logging.Console;
 using UnicornStore.AspNet.Models.Identity;
 using UnicornStore.AspNet.Models.UnicornStore;
 
@@ -27,8 +22,6 @@ namespace UnicornStore.AspNet
                 .AddJsonFile("config.json")
                 .AddJsonFile("secrets.json")
                 .AddEnvironmentVariables();
-
-
         }
 
         public IConfiguration Configuration { get; set; }
@@ -37,13 +30,13 @@ namespace UnicornStore.AspNet
         public void ConfigureServices(IServiceCollection services)
         {
             // Add EF services to the services container.
-            services.AddEntityFramework(Configuration)
+            services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<UnicornStoreContext>()
-                .AddDbContext<ApplicationDbContext>();
+                .AddDbContext<UnicornStoreContext>(options => options.UseSqlServer(Configuration.Get("ConnectionStrings:UnicornStore")))
+                .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.Get("ConnectionStrings:UnicornStore")));
 
             // Add Identity services to the services container.
-            services.AddIdentity<ApplicationUser, IdentityRole>(Configuration)
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.ConfigureFacebookAuthentication(options =>
@@ -75,7 +68,6 @@ namespace UnicornStore.AspNet
             // Add the following to the request pipeline only in development environment.
             if (string.Equals(env.EnvironmentName, "Development", StringComparison.OrdinalIgnoreCase))
             {
-                app.UseBrowserLink();
                 app.UseErrorPage(ErrorPageOptions.ShowAll);
                 app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
                 app.EnsureSampleData();

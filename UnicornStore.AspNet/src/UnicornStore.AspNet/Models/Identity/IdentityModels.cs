@@ -1,12 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Reflection;
-using Microsoft.AspNet.Identity;
+﻿using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Framework.OptionsModel;
 
 namespace UnicornStore.AspNet.Models.Identity
 {
@@ -20,11 +14,6 @@ namespace UnicornStore.AspNet.Models.Identity
     {
         public DbSet<PreApproval> PreApprovals { get; set; }
         public DbSet<UserAddress> UserAddresses { get; set; }
-
-        protected override void OnConfiguring(DbContextOptions options)
-        {
-            options.UseSqlServer();
-        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

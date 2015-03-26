@@ -8,6 +8,7 @@ namespace UnicornStore.AspNet.Migrations.Identity
     {
         public override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence("DefaultSequence", storeType: "bigint");
             migrationBuilder.CreateTable(
                 "AspNetRoles",
                 x => new
@@ -15,15 +16,9 @@ namespace UnicornStore.AspNet.Migrations.Identity
                     ConcurrencyStamp = x.Column("nvarchar(max)", nullable: true),
                     Id = x.Column("nvarchar(450)", nullable: true),
                     Name = x.Column("nvarchar(max)", nullable: true),
-                    NormalizedName = x.Column("nvarchar(max)", nullable: true)})
+                    NormalizedName = x.Column("nvarchar(max)", nullable: true)
+                })
                 .PrimaryKey(x => x.Id, name: "PK_AspNetRoles");
-            migrationBuilder.CreateTable(
-                "AspNetUserRoles",
-                x => new
-                {
-                    RoleId = x.Column("nvarchar(450)", nullable: true),
-                    UserId = x.Column("nvarchar(450)", nullable: true)})
-                .PrimaryKey(x => new { x.UserId, x.RoleId }, name: "PK_AspNetUserRoles");
             migrationBuilder.CreateTable(
                 "AspNetUsers",
                 x => new
@@ -42,7 +37,8 @@ namespace UnicornStore.AspNet.Migrations.Identity
                     PhoneNumberConfirmed = x.Column("bit"),
                     SecurityStamp = x.Column("nvarchar(max)", nullable: true),
                     TwoFactorEnabled = x.Column("bit"),
-                    UserName = x.Column("nvarchar(max)", nullable: true)})
+                    UserName = x.Column("nvarchar(max)", nullable: true)
+                })
                 .PrimaryKey(x => x.Id, name: "PK_AspNetUsers");
             migrationBuilder.CreateTable(
                 "AspNetRoleClaims",
@@ -50,20 +46,22 @@ namespace UnicornStore.AspNet.Migrations.Identity
                 {
                     ClaimType = x.Column("nvarchar(max)", nullable: true),
                     ClaimValue = x.Column("nvarchar(max)", nullable: true),
-                    Id = x.Column("int", annotations: new Dictionary<string, string> { { "SqlServer:ValueGeneration", "Identity" } }),
-                    RoleId = x.Column("nvarchar(450)", nullable: true)})
+                    Id = x.Column("int"),
+                    RoleId = x.Column("nvarchar(450)", nullable: true)
+                })
                 .PrimaryKey(x => x.Id, name: "PK_AspNetRoleClaims")
-                .ForeignKey(x => x.RoleId, "AspNetRoles", principalColumns: new string[] { "Id" }, name: "FK_AspNetRoleClaims_AspNetRoles_RoleId");
+                .ForeignKey(x => x.RoleId, "AspNetRoles", principalColumn: "Id", name: "FK_AspNetRoleClaims_AspNetRoles_RoleId");
             migrationBuilder.CreateTable(
                 "AspNetUserClaims",
                 x => new
                 {
                     ClaimType = x.Column("nvarchar(max)", nullable: true),
                     ClaimValue = x.Column("nvarchar(max)", nullable: true),
-                    Id = x.Column("int", annotations: new Dictionary<string, string> { { "SqlServer:ValueGeneration", "Identity" } }),
-                    UserId = x.Column("nvarchar(450)", nullable: true)})
+                    Id = x.Column("int"),
+                    UserId = x.Column("nvarchar(450)", nullable: true)
+                })
                 .PrimaryKey(x => x.Id, name: "PK_AspNetUserClaims")
-                .ForeignKey(x => x.UserId, "AspNetUsers", principalColumns: new string[] { "Id" }, name: "FK_AspNetUserClaims_AspNetUsers_UserId");
+                .ForeignKey(x => x.UserId, "AspNetUsers", principalColumn: "Id", name: "FK_AspNetUserClaims_AspNetUsers_UserId");
             migrationBuilder.CreateTable(
                 "AspNetUserLogins",
                 x => new
@@ -71,9 +69,20 @@ namespace UnicornStore.AspNet.Migrations.Identity
                     LoginProvider = x.Column("nvarchar(450)", nullable: true),
                     ProviderDisplayName = x.Column("nvarchar(max)", nullable: true),
                     ProviderKey = x.Column("nvarchar(450)", nullable: true),
-                    UserId = x.Column("nvarchar(450)", nullable: true)})
+                    UserId = x.Column("nvarchar(450)", nullable: true)
+                })
                 .PrimaryKey(x => new { x.LoginProvider, x.ProviderKey }, name: "PK_AspNetUserLogins")
-                .ForeignKey(x => x.UserId, "AspNetUsers", principalColumns: new string[] { "Id" }, name: "FK_AspNetUserLogins_AspNetUsers_UserId");
+                .ForeignKey(x => x.UserId, "AspNetUsers", principalColumn: "Id", name: "FK_AspNetUserLogins_AspNetUsers_UserId");
+            migrationBuilder.CreateTable(
+                "AspNetUserRoles",
+                x => new
+                {
+                    RoleId = x.Column("nvarchar(450)", nullable: true),
+                    UserId = x.Column("nvarchar(450)", nullable: true)
+                })
+                .PrimaryKey(x => new { x.UserId, x.RoleId }, name: "PK_AspNetUserRoles")
+                .ForeignKey(x => x.RoleId, "AspNetRoles", principalColumn: "Id", name: "FK_AspNetUserRoles_AspNetRoles_RoleId")
+                .ForeignKey(x => x.UserId, "AspNetUsers", principalColumn: "Id", name: "FK_AspNetUserRoles_AspNetUsers_UserId");
         }
         
         public override void Down(MigrationBuilder migrationBuilder)
@@ -84,6 +93,7 @@ namespace UnicornStore.AspNet.Migrations.Identity
             migrationBuilder.DropTable("AspNetUserLogins");
             migrationBuilder.DropTable("AspNetUserRoles");
             migrationBuilder.DropTable("AspNetUsers");
+            migrationBuilder.DropSequence("DefaultSequence");
         }
     }
 }
