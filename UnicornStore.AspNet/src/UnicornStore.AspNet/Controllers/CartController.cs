@@ -59,14 +59,15 @@ namespace UnicornStore.AspNet.Controllers
             }
             else
             {
-                item = db.CartItems.Add(new CartItem
+                item = new CartItem
                 {
                     ProductId = product.ProductId,
                     PricePerUnit = product.CurrentPrice,
                     Quantity = quantity,
                     Username = User.GetUserName(),
                     PriceCalculated = DateTime.Now.ToUniversalTime()
-                }).Entity;
+                };
+                db.CartItems.Add(item);
             }
 
             db.SaveChanges();

@@ -15,7 +15,7 @@ namespace UnicornStore.AspNet.Migrations.UnicornStore
             get
             {
                 var builder = new BasicModelBuilder()
-                    .Annotation("SqlServer:ValueGeneration", "Sequence");
+                    .Annotation("SqlServer:ValueGeneration", "Identity");
                 
                 builder.Entity("UnicornStore.AspNet.Models.UnicornStore.CartItem", b =>
                     {

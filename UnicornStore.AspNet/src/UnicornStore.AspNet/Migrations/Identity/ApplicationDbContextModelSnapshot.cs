@@ -15,7 +15,7 @@ namespace UnicornStore.AspNet.Migrations.Identity
             get
             {
                 var builder = new BasicModelBuilder()
-                    .Annotation("SqlServer:ValueGeneration", "Sequence");
+                    .Annotation("SqlServer:ValueGeneration", "Identity");
                 
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
                     {

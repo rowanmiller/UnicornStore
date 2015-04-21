@@ -8,16 +8,16 @@ using UnicornStore.AspNet.Models.Identity;
 namespace UnicornStore.AspNet.Migrations.Identity
 {
     [ContextType(typeof(ApplicationDbContext))]
-    partial class PreApprovals
+    partial class UserAddresses
     {
         public override string Id
         {
-            get { return "20150313205653_PreApprovals"; }
+            get { return "20150421224218_UserAddresses"; }
         }
         
         public override string ProductVersion
         {
-            get { return "7.0.0-beta5-12724"; }
+            get { return "7.0.0-beta4-12914"; }
         }
         
         public override IModel Target
@@ -25,7 +25,7 @@ namespace UnicornStore.AspNet.Migrations.Identity
             get
             {
                 var builder = new BasicModelBuilder()
-                    .Annotation("SqlServer:ValueGeneration", "Sequence");
+                    .Annotation("SqlServer:ValueGeneration", "Identity");
                 
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
                     {
@@ -155,6 +155,32 @@ namespace UnicornStore.AspNet.Migrations.Identity
                         b.Annotation("Relational:TableName", "AspNetPreApprovals");
                     });
                 
+                builder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
+                    {
+                        b.Property<string>("Addressee")
+                            .Annotation("OriginalValueIndex", 0);
+                        b.Property<string>("CityOrTown")
+                            .Annotation("OriginalValueIndex", 1);
+                        b.Property<string>("Country")
+                            .Annotation("OriginalValueIndex", 2);
+                        b.Property<string>("LineOne")
+                            .Annotation("OriginalValueIndex", 3);
+                        b.Property<string>("LineTwo")
+                            .Annotation("OriginalValueIndex", 4);
+                        b.Property<string>("StateOrProvince")
+                            .Annotation("OriginalValueIndex", 5);
+                        b.Property<int>("UserAddressId")
+                            .GenerateValueOnAdd()
+                            .Annotation("OriginalValueIndex", 6)
+                            .Annotation("SqlServer:ValueGeneration", "Default");
+                        b.Property<string>("UserId")
+                            .Annotation("OriginalValueIndex", 7);
+                        b.Property<string>("ZipOrPostalCode")
+                            .Annotation("OriginalValueIndex", 8);
+                        b.Key("UserAddressId");
+                        b.Annotation("Relational:TableName", "AspNetUserAddresses");
+                    });
+                
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
                         b.ForeignKey("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", "RoleId");
@@ -173,6 +199,11 @@ namespace UnicornStore.AspNet.Migrations.Identity
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]", b =>
                     {
                         b.ForeignKey("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", "RoleId");
+                        b.ForeignKey("UnicornStore.AspNet.Models.Identity.ApplicationUser", "UserId");
+                    });
+                
+                builder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
+                    {
                         b.ForeignKey("UnicornStore.AspNet.Models.Identity.ApplicationUser", "UserId");
                     });
                 

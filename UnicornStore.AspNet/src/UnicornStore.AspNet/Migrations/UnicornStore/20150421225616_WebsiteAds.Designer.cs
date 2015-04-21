@@ -8,16 +8,16 @@ using UnicornStore.AspNet.Models.UnicornStore;
 namespace UnicornStore.AspNet.Migrations.UnicornStore
 {
     [ContextType(typeof(UnicornStoreContext))]
-    partial class InitialSchema
+    partial class WebsiteAds
     {
         public override string Id
         {
-            get { return "20150326223943_InitialSchema"; }
+            get { return "20150421225616_WebsiteAds"; }
         }
         
         public override string ProductVersion
         {
-            get { return "7.0.0-beta5-12724"; }
+            get { return "7.0.0-beta4-12914"; }
         }
         
         public override IModel Target
@@ -25,7 +25,7 @@ namespace UnicornStore.AspNet.Migrations.UnicornStore
             get
             {
                 var builder = new BasicModelBuilder()
-                    .Annotation("SqlServer:ValueGeneration", "Sequence");
+                    .Annotation("SqlServer:ValueGeneration", "Identity");
                 
                 builder.Entity("UnicornStore.AspNet.Models.UnicornStore.CartItem", b =>
                     {
@@ -57,59 +57,6 @@ namespace UnicornStore.AspNet.Migrations.UnicornStore
                         b.Property<int?>("ParentCategoryId")
                             .Annotation("OriginalValueIndex", 2);
                         b.Key("CategoryId");
-                    });
-                
-                builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Order", b =>
-                    {
-                        b.Property<DateTime>("CheckoutBegan")
-                            .Annotation("OriginalValueIndex", 0);
-                        b.Property<int>("OrderId")
-                            .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 1)
-                            .Annotation("SqlServer:ValueGeneration", "Default");
-                        b.Property<DateTime?>("OrderPlaced")
-                            .Annotation("OriginalValueIndex", 2);
-                        b.Property<int>("State")
-                            .Annotation("OriginalValueIndex", 3);
-                        b.Property<decimal>("Total")
-                            .Annotation("OriginalValueIndex", 4);
-                        b.Property<string>("Username")
-                            .Annotation("OriginalValueIndex", 5);
-                        b.Key("OrderId");
-                    });
-                
-                builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderLine", b =>
-                    {
-                        b.Property<int>("OrderId")
-                            .Annotation("OriginalValueIndex", 0);
-                        b.Property<decimal>("PricePerUnit")
-                            .Annotation("OriginalValueIndex", 1);
-                        b.Property<int>("ProductId")
-                            .Annotation("OriginalValueIndex", 2);
-                        b.Property<int>("Quantity")
-                            .Annotation("OriginalValueIndex", 3);
-                        b.Key("OrderId", "ProductId");
-                    });
-                
-                builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", b =>
-                    {
-                        b.Property<string>("Addressee")
-                            .Annotation("OriginalValueIndex", 0);
-                        b.Property<string>("CityOrTown")
-                            .Annotation("OriginalValueIndex", 1);
-                        b.Property<string>("Country")
-                            .Annotation("OriginalValueIndex", 2);
-                        b.Property<string>("LineOne")
-                            .Annotation("OriginalValueIndex", 3);
-                        b.Property<string>("LineTwo")
-                            .Annotation("OriginalValueIndex", 4);
-                        b.Property<int>("OrderId")
-                            .Annotation("OriginalValueIndex", 5);
-                        b.Property<string>("StateOrProvince")
-                            .Annotation("OriginalValueIndex", 6);
-                        b.Property<string>("ZipOrPostalCode")
-                            .Annotation("OriginalValueIndex", 7);
-                        b.Key("OrderId");
                     });
                 
                 builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Product", b =>
@@ -162,17 +109,6 @@ namespace UnicornStore.AspNet.Migrations.UnicornStore
                 builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Category", b =>
                     {
                         b.ForeignKey("UnicornStore.AspNet.Models.UnicornStore.Category", "ParentCategoryId");
-                    });
-                
-                builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderLine", b =>
-                    {
-                        b.ForeignKey("UnicornStore.AspNet.Models.UnicornStore.Order", "OrderId");
-                        b.ForeignKey("UnicornStore.AspNet.Models.UnicornStore.Product", "ProductId");
-                    });
-                
-                builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", b =>
-                    {
-                        b.ForeignKey("UnicornStore.AspNet.Models.UnicornStore.Order", "OrderId");
                     });
                 
                 builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Product", b =>

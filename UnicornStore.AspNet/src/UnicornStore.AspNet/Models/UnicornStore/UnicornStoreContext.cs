@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Data.Entity;
+﻿using Microsoft.Data.Entity;
 
 namespace UnicornStore.AspNet.Models.UnicornStore
 {

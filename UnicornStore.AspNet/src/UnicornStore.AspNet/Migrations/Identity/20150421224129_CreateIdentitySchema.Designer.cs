@@ -12,12 +12,12 @@ namespace UnicornStore.AspNet.Migrations.Identity
     {
         public override string Id
         {
-            get { return "00000000000000_CreateIdentitySchema"; }
+            get { return "20150421224129_CreateIdentitySchema"; }
         }
         
         public override string ProductVersion
         {
-            get { return "7.0.0-beta5-12724"; }
+            get { return "7.0.0-beta4-12914"; }
         }
         
         public override IModel Target
@@ -25,7 +25,7 @@ namespace UnicornStore.AspNet.Migrations.Identity
             get
             {
                 var builder = new BasicModelBuilder()
-                    .Annotation("SqlServer:ValueGeneration", "Sequence");
+                    .Annotation("SqlServer:ValueGeneration", "Identity");
                 
                 builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
                     {
