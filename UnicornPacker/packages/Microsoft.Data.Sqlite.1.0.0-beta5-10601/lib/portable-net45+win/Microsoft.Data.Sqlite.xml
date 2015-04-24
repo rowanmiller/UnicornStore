@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Data.Sqlite</name>
+    </assembly>
+    <members>
+        <member name="P:Microsoft.Data.Sqlite.SqliteDataReader.Item(System.String)">
+            <remarks>The <paramref name="name"/> parameter is case sensitive.</remarks>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.SqliteDataReader.GetOrdinal(System.String)">
+            <remarks>The <paramref name="name"/> parameter is case sensitive.</remarks>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.CallRequiresOpenConnection">
+            <summary>
+            {methodName} can only be called when the connection is open.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatCallRequiresOpenConnection(System.Object)">
+            <summary>
+            {methodName} can only be called when the connection is open.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.CallRequiresSetCommandText">
+            <summary>
+            CommandText must be set before {methodName} can be called.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatCallRequiresSetCommandText(System.Object)">
+            <summary>
+            CommandText must be set before {methodName} can be called.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.ConnectionStringRequiresClosedConnection">
+            <summary>
+            ConnectionString cannot be set when the connection is open.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatConnectionStringRequiresClosedConnection">
+            <summary>
+            ConnectionString cannot be set when the connection is open.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.DataReaderClosed">
+            <summary>
+            Invalid attempt to call {operation} when reader is closed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatDataReaderClosed(System.Object)">
+            <summary>
+            Invalid attempt to call {operation} when reader is closed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.InvalidCommandBehavior">
+            <summary>
+            The CommandBehavior '{behavior}' is invalid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatInvalidCommandBehavior(System.Object)">
+            <summary>
+            The CommandBehavior '{behavior}' is invalid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.InvalidCommandType">
+            <summary>
+            The CommandType '{commandType}' is invalid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatInvalidCommandType(System.Object)">
+            <summary>
+            The CommandType '{commandType}' is invalid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.InvalidIsolationLevel">
+            <summary>
+            The IsolationLevel '{isolationLevel}' is invalid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatInvalidIsolationLevel(System.Object)">
+            <summary>
+            The IsolationLevel '{isolationLevel}' is invalid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.InvalidParameterDirection">
+            <summary>
+            The ParameterDirection '{direction}' is invalid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatInvalidParameterDirection(System.Object)">
+            <summary>
+            The ParameterDirection '{direction}' is invalid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.KeywordNotSupported">
+            <summary>
+            Keyword not supported: '{keyword}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatKeywordNotSupported(System.Object)">
+            <summary>
+            Keyword not supported: '{keyword}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.NoData">
+            <summary>
+            No data exists for the row/column.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatNoData">
+            <summary>
+            No data exists for the row/column.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.OpenRequiresSetConnectionString">
+            <summary>
+            ConnectionString must be set before Open can be called.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatOpenRequiresSetConnectionString">
+            <summary>
+            ConnectionString must be set before Open can be called.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.ParallelTransactionsNotSupported">
+            <summary>
+            SqliteConnection does not support nested transactions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatParallelTransactionsNotSupported">
+            <summary>
+            SqliteConnection does not support nested transactions.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.ParameterNotFound">
+            <summary>
+            A SqliteParameter with ParameterName '{parameterName}' is not contained by this SqliteParameterCollection.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatParameterNotFound(System.Object)">
+            <summary>
+            A SqliteParameter with ParameterName '{parameterName}' is not contained by this SqliteParameterCollection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.RequiresSet">
+            <summary>
+            {propertyName} must be set.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatRequiresSet(System.Object)">
+            <summary>
+            {propertyName} must be set.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.TransactionCompleted">
+            <summary>
+            This SqliteTransaction has completed; it is no longer usable.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatTransactionCompleted">
+            <summary>
+            This SqliteTransaction has completed; it is no longer usable.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.TransactionConnectionMismatch">
+            <summary>
+            The transaction object is not associated with the connection object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatTransactionConnectionMismatch">
+            <summary>
+            The transaction object is not associated with the connection object.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.TransactionRequired">
+            <summary>
+            Execute requires the command to have a transaction object when the connection assigned to the command is in a pending local transaction.  The Transaction property of the command has not been initialized.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatTransactionRequired">
+            <summary>
+            Execute requires the command to have a transaction object when the connection assigned to the command is in a pending local transaction.  The Transaction property of the command has not been initialized.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Sqlite.Strings.UnknownDataType">
+            <summary>
+            No mapping exists from object type {typeName} to a known managed provider native type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Sqlite.Strings.FormatUnknownDataType(System.Object)">
+            <summary>
+            No mapping exists from object type {typeName} to a known managed provider native type.
+            </summary>
+        </member>
+    </members>
+</doc>
