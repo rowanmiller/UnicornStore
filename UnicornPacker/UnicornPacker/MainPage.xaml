@@ -1,0 +1,83 @@
+﻿<Page
+    x:Class="UnicornPacker.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnicornPacker"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="wideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="641" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Splitter.DisplayMode" Value="Inline"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="narrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Splitter.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <SplitView x:Name="Splitter" IsPaneOpen="True">
+            <SplitView.Pane>
+                <RelativePanel VerticalAlignment="Stretch"  Background="#FF140044">
+                    <StackPanel Margin="10,60,5,5">
+                        <Button Name="ChooseOrders" Click="ChooseOrders_Click" Style="{StaticResource SymbolButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Ellipse Width="50" Height="50" StrokeThickness="2" Stroke="White"></Ellipse>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE71D;" />
+                                </Grid>
+                                <TextBlock Text="Choose Orders" Margin="10,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Name="FillOrder" Click="FillOrder_Click" Style="{StaticResource SymbolButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Ellipse Width="50" Height="50" StrokeThickness="2" Stroke="White"></Ellipse>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE16D;" />
+                                </Grid>
+                                <TextBlock Text="Fill an Order" Margin="10,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                        <Button Name="Sync" Click="Sync_Click" Style="{StaticResource SymbolButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Ellipse Width="50" Height="50" StrokeThickness="2" Stroke="White"></Ellipse>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" />
+                                </Grid>
+                                <TextBlock Text="Sync" Margin="10,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel RelativePanel.AlignBottomWithPanel="True" Margin="10">
+                        <Image Source="Assets/LogoFlipped.png" Stretch="None" HorizontalAlignment="Left" />
+                        <TextBlock Text="Unicorn Packer" Style="{StaticResource HeaderTextStyle}" />
+                        <TextBlock Text="Order shipping for Unicorn Store" Style="{StaticResource TagLineTextStyle}" />
+                    </StackPanel>
+                </RelativePanel>
+            </SplitView.Pane>
+            <RelativePanel>
+                <Frame x:Name="ScenarioFrame" Margin="60,20,0,0" />
+            </RelativePanel>
+        </SplitView>
+        <ToggleButton Style="{StaticResource SymbolButton}" Click="ToggleButton_Click" VerticalAlignment="Top" Margin="0">
+            <ToggleButton.Content>
+                <Border Background="Transparent" Width="40" Height="40">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" />
+                </Border>
+            </ToggleButton.Content>
+        </ToggleButton>
+    </Grid>
+</Page>
