@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Framework.DependencyInjection</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Framework.DependencyInjection.ServiceCollection">
+            <summary>
+            Default implementation of <see cref="T:Microsoft.Framework.DependencyInjection.IServiceCollection"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.DependencyInjection.ServiceCollection.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Framework.DependencyInjection.ServiceCollection.IsReadOnly">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.ServiceCollection.Clear">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.ServiceCollection.Contains(Microsoft.Framework.DependencyInjection.ServiceDescriptor)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.ServiceCollection.CopyTo(Microsoft.Framework.DependencyInjection.ServiceDescriptor[],System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.ServiceCollection.Remove(Microsoft.Framework.DependencyInjection.ServiceDescriptor)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.ServiceCollection.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Framework.DependencyInjection.ServiceProvider">
+            <summary>
+            The default IServiceProvider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.ServiceProvider.GetService(System.Type)">
+            <summary>
+            Gets the service object of the specified type.
+            </summary>
+            <param name="serviceType"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Framework.DependencyInjection.Resources.CannotResolveService">
+            <summary>
+            Unable to resolve service for type '{0}' while attempting to activate '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.Resources.FormatCannotResolveService(System.Object,System.Object)">
+            <summary>
+            Unable to resolve service for type '{0}' while attempting to activate '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.DependencyInjection.Resources.CircularDependencyException">
+            <summary>
+            A circular dependency was detected for the service of type '{0}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.DependencyInjection.Resources.FormatCircularDependencyException(System.Object)">
+            <summary>
+            A circular dependency was detected for the service of type '{0}'.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Framework.DependencyInjection.ServiceLookup.InstanceService">
+            <summary>
+            Summary description for InstanceService
+            </summary>
+        </member>
+        <member name="T:Microsoft.Framework.DependencyInjection.ServiceLookup.IServiceCallSite">
+            <summary>
+            Summary description for IServiceCallSite
+            </summary>
+        </member>
+    </members>
+</doc>
