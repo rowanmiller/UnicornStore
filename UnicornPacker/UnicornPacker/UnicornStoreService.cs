@@ -1,87 +1,44 @@
-﻿using Microsoft.Data.Entity;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using UnicornPacker.Models;
-using Windows.Storage;
-using Windows.UI.Xaml;
 
 namespace UnicornPacker
 {
     class UnicornStoreService
     {
-        public static async Task< IEnumerable<Order>> GetPendingOrders()
-        {
-            await SimulateNetworkHit();
+        private static Uri serviceUri = new Uri("http://localhost:5000/");
 
-            var list = new List<Order>
+        public static async Task<IEnumerable<Order>> GetPendingOrders()
+        {
+            using (var client = new HttpClient { BaseAddress = serviceUri })
             {
-                new Order
+                var response = await client.GetStringAsync("Shipping/PendingOrders");
+                return JsonConvert.DeserializeObject<IEnumerable<Order>>(response);
+            }
+        }
+
+        public static async Task PackingOrders(IEnumerable<int> orderIds)
+        {
+            using (var client = new HttpClient { BaseAddress = serviceUri })
+            {
+                foreach (var id in orderIds)
                 {
-                    OrderId = 1,
-                    Addressee = "Jane Doe",
-                    LineOne = "One Microsoft Way",
-                    CityOrTown = "Redmond",
-                    StateOrProvince = "WA",
-                    ZipOrPostalCode = "98052",
-                    Country = "United States",
-                    Lines = new List<OrderLine>
-                    {
-                        new OrderLine { OrderId = 1, ProductId = 1, ProductName = "Red T-Shirt", Quantity = 2 },
-                        new OrderLine { OrderId = 1, ProductId = 2, ProductName = "Blue T-Shirt", Quantity = 2 }
-                    }
-                },
-                new Order
-                {
-                    OrderId = 2,
-                    Addressee = "John Citizen",
-                    LineOne = "One Microsoft Way",
-                    CityOrTown = "Redmond",
-                    StateOrProvince = "WA",
-                    ZipOrPostalCode = "98052",
-                    Country = "United States",
-                    Lines = new List<OrderLine>
-                    {
-                        new OrderLine { OrderId = 2, ProductId = 1, ProductName = "Orange T-Shirt", Quantity = 2 },
-                        new OrderLine { OrderId = 2, ProductId = 2, ProductName = "Coffee Mug", Quantity = 12 }
-                    }
+                    var response = await client.GetAsync("Shipping/Packing/" + id);
+                    response.EnsureSuccessStatusCode();
                 }
-            };
-
-            using (var db = new OrdersContext())
-            {
-                var orders = db.Orders.Select(o => o.OrderId).ToList();
-                return list.Where(o => !orders.Contains(o.OrderId));
-            }
-        }
-      
-        public static async Task AssignOrders(string employee, IEnumerable<int> orderIds)
-        {
-            await SimulateNetworkHit();
-        }
-
-        public static async Task RecordOrderShipped(int orderId)
-        {
-            await SimulateNetworkHit();
-        }
-
-        public static async Task RecordOrdersShipped(IEnumerable<int> orderIds)
-        {
-            await SimulateNetworkHit();
-        }
-
-        private static async Task SimulateNetworkHit()
-        {
-            using (var client = new HttpClient())
-            {
-                var response = await client.GetAsync("http://bing.com");
-                var text = await response.Content.ReadAsStringAsync();
             }
         }
 
+        public static async Task ShippedOrder(int orderId)
+        {
+            using (var client = new HttpClient { BaseAddress = serviceUri })
+            {
+                var response = await client.GetAsync("Shipping/Shipped/" + orderId);
+                response.EnsureSuccessStatusCode();
+            }
+        }
     }
 }

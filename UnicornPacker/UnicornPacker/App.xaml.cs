@@ -29,10 +29,6 @@ namespace UnicornPacker
                 {
                     db.Database.AsRelational().CreateTables();
                 }
-
-                db.OrderLines.RemoveRange(db.OrderLines);
-                db.Orders.RemoveRange(db.Orders);
-                db.SaveChanges();
             }
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)

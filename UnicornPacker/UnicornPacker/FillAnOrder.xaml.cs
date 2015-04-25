@@ -39,7 +39,7 @@ namespace UnicornPacker
 
                 try
                 {
-                    await UnicornStoreService.RecordOrderShipped(CurrentOrder.OrderId);
+                    await UnicornStoreService.ShippedOrder(CurrentOrder.OrderId);
                     CurrentOrder.IsShippingSynced = true;
                     db.SaveChanges();
                 }

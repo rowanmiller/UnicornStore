@@ -30,7 +30,7 @@ namespace UnicornPacker
 
             try
             {
-                await UnicornStoreService.AssignOrders("rowanmiller", selectedIds);
+                await UnicornStoreService.PackingOrders(selectedIds);
 
                 // Take a local copy of the orders
                 using (var db = new OrdersContext())
@@ -66,6 +66,7 @@ namespace UnicornPacker
 
         private async Task ReLoadPendingOrders()
         {
+            this.Orders.ItemsSource = null;
             this.Message.Visibility = Visibility.Visible;
             this.OrdersPanel.Visibility = Visibility.Collapsed;
 

@@ -29,7 +29,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <TextBlock Name="NoOrders" Text="You don't have any orders assigned." />
+        <TextBlock Name="NoOrders" Text="You don't have any orders assigned." TextWrapping="WrapWholeWords" />
         <StackPanel Name="OrdersPanel">
             <ListView Name="Orders" SelectionChanged="Orders_SelectionChanged" Width="200" HorizontalAlignment="Left">
                 <ListView.ItemContainerStyle>

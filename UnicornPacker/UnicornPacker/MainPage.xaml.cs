@@ -48,12 +48,12 @@ namespace UnicornPacker
                 {
                     try
                     {
-                        await UnicornStoreService.RecordOrdersShipped(orders.Select(o => o.OrderId));
                         foreach (var order in orders)
                         {
+                            await UnicornStoreService.ShippedOrder(order.OrderId);
                             order.IsShippingSynced = true;
+                            db.SaveChanges();
                         }
-                        db.SaveChanges();
 
                         var dialog = new MessageDialog("All shipped orders now recorded in central database.");
                         await dialog.ShowAsync();

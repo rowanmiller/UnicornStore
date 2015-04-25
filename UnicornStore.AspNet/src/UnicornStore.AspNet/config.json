@@ -1,5 +1,5 @@
 {
     "ConnectionStrings": {
-        "UnicornStore": "Server=(localdb)\\v11.0;Database=UnicornStore;Trusted_Connection=True;MultipleActiveResultSets=true"
+        "UnicornStore": "Server=(localdb)\\mssqllocaldb;Database=UnicornStore;Trusted_Connection=True;MultipleActiveResultSets=true"
     }
 }
