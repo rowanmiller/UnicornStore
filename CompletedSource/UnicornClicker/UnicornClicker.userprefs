@@ -1,0 +1,20 @@
+﻿<Properties StartupItem="iOS/UnicornClicker.iOS.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.3" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="UnicornClicker/ScoreHistoryPage.cs">
+    <Files>
+      <File FileName="UnicornClicker/UnicornClicker.cs" Line="38" Column="49" />
+      <File FileName="UnicornClicker/GamePage.cs" Line="66" Column="6" />
+      <File FileName="UnicornClicker/MenuPage.cs" Line="11" Column="18" />
+      <File FileName="UnicornClicker/ScoreHistoryPage.cs" Line="22" Column="38" />
+      <File FileName="UnicornClicker/Model/GameContext.cs" Line="12" Column="39" />
+      <File FileName="UnicornClicker/Model/Game.cs" Line="10" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <RunToCursorBreakpoint file="/Users/romiller/Projects/UnicornClicker/UnicornClicker/ScoreHistoryPage.cs" line="25" column="7" />
+      <RunToCursorBreakpoint file="/Users/romiller/Projects/UnicornClicker/UnicornClicker/ScoreHistoryPage.cs" line="25" column="7" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
