@@ -1,0 +1,33 @@
+﻿@using System.Security.Claims
+
+@if (User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Cart<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("View Cart", "Index", "Cart")</li>
+                    <li>@Html.ActionLink("Checkout", "Checkout", "Cart")</li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">@User.GetUserName()<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("My Orders", "Index", "Orders")</li>
+                    <li>@Html.ActionLink("My Account", "ManageAccount", "Account")</li>
+                </ul>
+            </li>
+           
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
