@@ -21,7 +21,18 @@ namespace XamarinFormsTest
 
 			Content = new StackLayout {
 				VerticalOptions = LayoutOptions.Center,
-				Children = { play, scores }
+				Children = { 
+					new Image{
+						Source = ImageSource.FromFile("UnicornSmall.png")
+					},
+					new Label {
+						Text = "Unicorn Clicker",
+						FontSize = 20,
+						XAlign = TextAlignment.Center
+					},
+					play, 
+					scores
+				}
 			};
 		}
 	}
