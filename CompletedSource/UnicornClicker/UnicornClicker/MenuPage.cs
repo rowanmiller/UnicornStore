@@ -31,7 +31,10 @@ namespace XamarinFormsTest
 						XAlign = TextAlignment.Center
 					},
 					play, 
-					scores
+					scores,
+					new Button{
+						Text = "Visit the Unicorn Store"
+					}
 				}
 			};
 		}
