@@ -36,6 +36,7 @@
                     <Style TargetType="ListViewItem">
                         <Setter Property="BorderBrush" Value="LightGray" />
                         <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Margin" Value="5" />
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
