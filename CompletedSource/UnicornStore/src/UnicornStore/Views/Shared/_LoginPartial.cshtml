@@ -20,7 +20,7 @@
                     <li>@Html.ActionLink("My Account", "ManageAccount", "Account")</li>
                 </ul>
             </li>
-           
+
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }
@@ -28,6 +28,6 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li><a id="loginLink" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
 }

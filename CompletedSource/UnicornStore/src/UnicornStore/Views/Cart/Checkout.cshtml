@@ -50,7 +50,11 @@
                                         <br />@address.CityOrTown
                                         <br />@address.StateOrProvince @address.ZipOrPostalCode
                                         <br />@address.Country
-                                        <br /><a onclick="javascript: useAddress('@address.Addressee', '@address.LineOne', '@address.LineTwo', '@address.CityOrTown', '@address.StateOrProvince', '@address.ZipOrPostalCode', '@address.Country')">Ship to this address</a>
+                                        <br />
+                                        <label>
+                                            <input type="checkbox" onclick="javascript: useAddress('@address.Addressee', '@address.LineOne', '@address.LineTwo', '@address.CityOrTown', '@address.StateOrProvince', '@address.ZipOrPostalCode', '@address.Country')">
+                                            Ship here
+                                        </label>
                                     </div>
                                 </div>
                                 }
