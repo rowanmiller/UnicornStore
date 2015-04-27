@@ -2,11 +2,21 @@
 using Microsoft.AspNet.Builder;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.DependencyInjection;
+using UnicornStore.AspNet.Models.Identity;
 
 namespace UnicornStore.AspNet.Models.UnicornStore
 {
     public static class UnicornStoreExtensions
     {
+        public static void EnsureMigrationsApplied(this IApplicationBuilder app)
+        {
+            DbContext context = app.ApplicationServices.GetService<UnicornStoreContext>();
+            context.Database.AsRelational().ApplyMigrations();
+
+            context = app.ApplicationServices.GetService<ApplicationDbContext>();
+            context.Database.AsRelational().ApplyMigrations();
+        }
+
         public static void EnsureSampleData(this IApplicationBuilder app)
         {
             var context = app.ApplicationServices.GetService<UnicornStoreContext>();

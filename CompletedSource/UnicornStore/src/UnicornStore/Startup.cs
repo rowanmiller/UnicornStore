@@ -70,6 +70,7 @@ namespace UnicornStore.AspNet
             {
                 app.UseErrorPage(ErrorPageOptions.ShowAll);
                 app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
+                app.EnsureMigrationsApplied();
                 app.EnsureSampleData();
             }
             else
