@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EntityFramework.Relational</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.InvalidEnumValue(System.Object,System.Object)">
+            <summary>
+            The value provided for argument '{argumentName}' must be a valid value of enum type '{enumType}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.ModificationFunctionInvalidEntityState(System.Object)">
+            <summary>
+            Can not create a ModificationFunction for an entity in state '{entityState}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.UpdateConcurrencyException(System.Object,System.Object)">
+            <summary>
+            Database operation expected to affect {expectedRows} row(s) but actually affected {actualRows} row(s). Data may have been modified or deleted since entities were loaded. See http://go.microsoft.com/fwlink/?LinkId=527962 for information on understanding and handling optimistic concurrency exceptions.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.MultipleDataStoresConfigured">
+            <summary>
+            Multiple relational data store configurations found. A context can only be configured to use a single data store.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.NoDataStoreConfigured">
+            <summary>
+            No relational data stores are configured. Configure a data store using OnConfiguring or by creating an ImmutableDbContextOptions with a data store configured and passing it to the context.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.ConnectionAndConnectionString">
+            <summary>
+            Both an existing DbConnection and a connection string have been configured. When an existing DbConnection is used the connection string must be set on that connection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.NoConnectionOrConnectionString">
+            <summary>
+            A relational store has been configured without specifying either the DbConnection or connection string to use.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.UnsupportedType(System.Object,System.Object)">
+            <summary>
+            The property '{propertyName}' cannot be mapped because it is of type '{propertyType}' which is currently not supported.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.RelationalNotInUse">
+            <summary>
+            Relational-specific methods can only be used when the context is using a relational data store.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.UpdateStoreException">
+            <summary>
+            An error occurred while updating the entries. See the inner exception for details.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.TransactionAlreadyStarted">
+            <summary>
+            The connection is already in a transaction and cannot participate in another transaction.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.TransactionAssociatedWithDifferentConnection">
+            <summary>
+            The specified transaction is not associated with the current connection. Only transactions associated with the current connection may be used.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.SkipNeedsOrderBy">
+            <summary>
+            A query containing the Skip operator must include at least one OrderBy operation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.SequenceDefinitionMismatch(System.Object)">
+            <summary>
+            The SQL Server sequence '{sequenceName}' was already specified with a different definition.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.RelationalLoggerCreatingDatabase(System.Object)">
+            <summary>
+            Creating database '{databaseName}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.RelationalLoggerOpeningConnection(System.Object)">
+            <summary>
+            Opening connection '{connectionString}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.RelationalLoggerClosingConnection(System.Object)">
+            <summary>
+            Closing connection '{connectionString}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.RelationalLoggerBeginningTransaction(System.Object)">
+            <summary>
+            Beginning transaction with isolation level '{isolationLevel}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.RelationalLoggerCommittingTransaction">
+            <summary>
+            Committing transaction.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.RelationalLoggerRollingbackTransaction">
+            <summary>
+            Rolling back transaction.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.BadSequenceType">
+            <summary>
+            Invalid type for sequence. Valid types are 'Int64' (the default), 'Int32', 'Int16', and 'Byte'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.BadSequenceString">
+            <summary>
+            Unable to deserialize sequence from model metadata. See inner exception for details.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.InvalidMigrationId(System.Object)">
+            <summary>
+            '{migrationId}' is not a valid migration identifier.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.LocalMigrationNotFound(System.Object)">
+            <summary>
+            The history repository includes a migration with the identifier '{migrationId}' but the migration assembly does not contain the corresponding migration class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.MigrationsNotInUse">
+            <summary>
+            Migrations-specific methods can only be used when the context is using a migrations-enabled data store.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.MigratorLoggerApplyingMigration(System.Object)">
+            <summary>
+            Applying migration '{migrationId}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.MigratorLoggerCreatingHistoryTable">
+            <summary>
+            Creating migration history table.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.MigratorLoggerDroppingHistoryTable">
+            <summary>
+            Dropping migration history table.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.MigratorLoggerRevertingMigration(System.Object)">
+            <summary>
+            Reverting migration '{migrationId}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.MigratorLoggerUpToDate">
+            <summary>
+            The database is up to date.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.MissingMigrationMetadata(System.Object)">
+            <summary>
+            '{migrationType}' does not implement IMigrationMetadata.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.MigrationNotFound(System.Object)">
+            <summary>
+            The migration '{migrationName}' was not found.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.StoredProcedureIncludeNotSupported">
+            <summary>
+            The Include operation is not supported when calling a stored procedure.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.UnknownOperation(System.Object,System.Object)">
+            <summary>
+            The current migration SQL generator '{sqlGeneratorType}' is unable to generate SQL for operations of type '{operationType}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.InvalidCommandTimeout">
+            <summary>
+            The specified CommandTimeout value is not valid. It must be a positive number.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.InvalidMaxBatchSize">
+            <summary>
+            The specified MaxBatchSize value is not valid. It must be a positive number.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.UnableToDiscriminate(System.Object)">
+            <summary>
+            Unable to materialize entity of type '{entityType}'. No discriminators were matched.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.DiscriminatorPropertyMustBeOnRoot(System.Object)">
+            <summary>
+            A discriminator property cannot be set for the entity type '{entityType}' because it is not the root of an inheritance hierarchy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.DiscriminatorPropertyNotFound(System.Object,System.Object)">
+            <summary>
+            Unable to set property '{property}' as a discriminator for entity type '{entityType}' because it is not a property of '{entityType}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Data.Entity.Relational.Strings.AmbientTransaction">
+            <summary>
+            An ambient transaction has been detected. Connections opened by Entity Framework will not be enlisted in ambient transactions. To suppress this warning call SuppressAmbientTransactionWarning() when overriding DbContext.OnConfiguring.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Data.Entity.Relational.Strings.PossibleUnintendedUseOfEquals(System.Object,System.Object)">
+            <summary>
+            Possible unintended use of method Equals(object) for arguments of different types: '{left}', '{right}'. This comparison will always return 'false'.
+            </summary>
+        </member>
+    </members>
+</doc>
