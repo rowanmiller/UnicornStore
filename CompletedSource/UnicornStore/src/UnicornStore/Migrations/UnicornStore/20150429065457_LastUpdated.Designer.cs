@@ -8,9 +8,19 @@ using UnicornStore.AspNet.Models.UnicornStore;
 namespace UnicornStore.AspNet.Migrations.UnicornStore
 {
     [ContextType(typeof(UnicornStoreContext))]
-    partial class UnicornStoreContextModelSnapshot : ModelSnapshot
+    partial class LastUpdated
     {
-        public override IModel Model
+        public override string Id
+        {
+            get { return "20150429065457_LastUpdated"; }
+        }
+        
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta4-12943"; }
+        }
+        
+        public override IModel Target
         {
             get
             {
@@ -87,26 +97,20 @@ namespace UnicornStore.AspNet.Migrations.UnicornStore
                 builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", b =>
                     {
                         b.Property<string>("Addressee")
-                            .Required()
                             .Annotation("OriginalValueIndex", 0);
                         b.Property<string>("CityOrTown")
-                            .Required()
                             .Annotation("OriginalValueIndex", 1);
                         b.Property<string>("Country")
-                            .Required()
                             .Annotation("OriginalValueIndex", 2);
                         b.Property<string>("LineOne")
-                            .Required()
                             .Annotation("OriginalValueIndex", 3);
                         b.Property<string>("LineTwo")
                             .Annotation("OriginalValueIndex", 4);
                         b.Property<int>("OrderId")
                             .Annotation("OriginalValueIndex", 5);
                         b.Property<string>("StateOrProvince")
-                            .Required()
                             .Annotation("OriginalValueIndex", 6);
                         b.Property<string>("ZipOrPostalCode")
-                            .Required()
                             .Annotation("OriginalValueIndex", 7);
                         b.Key("OrderId");
                     });

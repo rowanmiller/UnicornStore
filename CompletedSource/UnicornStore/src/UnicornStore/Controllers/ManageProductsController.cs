@@ -4,6 +4,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.AspNet.ViewModels.ManageProducts;
 
 namespace UnicornStore.AspNet.Controllers
 {
@@ -18,8 +19,13 @@ namespace UnicornStore.AspNet.Controllers
         }
 
         // GET: Products
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId)
         {
+            if(categoryId != null)
+            {
+                return View(ShopController.GetProductsInCategory(db, categoryId.Value));
+            }
+
             return View(db.Products.ToList());
         }
 
@@ -123,6 +129,35 @@ namespace UnicornStore.AspNet.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult BulkPriceReduction()
+        {
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "DisplayName");
+            return View(new BulkPriceReductionViewModel { PercentageOffMSRP = 10 });
+        }
+
+        // POST: Products/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult BulkPriceReduction(BulkPriceReductionViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var products = ShopController.GetProductsInCategory(db, model.CategoryId);
+
+                foreach (var product in products)
+                {
+                    var discount = product.MSRP * model.PercentageOffMSRP / 100;
+                    product.CurrentPrice = product.MSRP - discount;
+                }
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index", new { categoryId = model.CategoryId });
+            }
+
+            return View(model);
         }
     }
 }

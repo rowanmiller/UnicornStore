@@ -63,7 +63,7 @@ namespace UnicornStore.AspNet.Controllers
             return View(new CategoryViewModel
             {
                 Category = category,
-                Products = GetProducts(category),
+                Products = GetProductsInCategory(db, category.CategoryId),
                 ParentHierarchy = GetCategoryHierarchy(category.ParentCategoryId),
                 Children = children
             });
@@ -107,7 +107,7 @@ namespace UnicornStore.AspNet.Controllers
             });
         }
 
-        private IEnumerable<Product> GetProducts(Category category)
+        internal static IEnumerable<Product> GetProductsInCategory(UnicornStoreContext db, int categoryId)
         {
             // TODO Look at moving this to a stored procedure or similar when raw SQL is available
             var childTree = db.Categories
@@ -116,9 +116,9 @@ namespace UnicornStore.AspNet.Controllers
                     .ThenInclude(c => c.Children)
                     .ThenInclude(c => c.Children)
                     .ThenInclude(c => c.Children)
-                .Where(c => c.ParentCategoryId == category.CategoryId);
+                .Where(c => c.ParentCategoryId == categoryId);
 
-            var categoryIds = new int[] { category.CategoryId }
+            var categoryIds = new int[] { categoryId }
                 .Union(GetAllCategoryIdsIncludingChildren(childTree));
 
             return db.Products

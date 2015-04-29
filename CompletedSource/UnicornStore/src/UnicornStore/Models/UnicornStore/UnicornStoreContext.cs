@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.Entity;
+﻿using System;
+using System.Linq;
+using Microsoft.Data.Entity;
 
 namespace UnicornStore.AspNet.Models.UnicornStore
 {
@@ -31,6 +33,23 @@ namespace UnicornStore.AspNet.Models.UnicornStore
                 .ForeignKey<OrderShippingDetails>(d => d.OrderId);
 
             builder.Entity<OrderShippingDetails>().ConfigureAddress();
+
+            builder.Entity<CartItem>().Property<DateTime>("LastUpdated");
+        }
+
+        public override int SaveChanges()
+        {
+            this.ChangeTracker.DetectChanges();
+
+            var entries = this.ChangeTracker.Entries<CartItem>()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            foreach (var entry in entries)
+            {
+                entry.Property("LastUpdated").CurrentValue = DateTime.UtcNow;
+            }
+
+            return base.SaveChanges();
         }
     }
 }
