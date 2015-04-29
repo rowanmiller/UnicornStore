@@ -48,6 +48,13 @@
                             </li>
                         }
                     </ul>
+                    <form id="searchForm" class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input id="searchTerm" class="form-control" type="text" placeholder="Search" >
+                        </div>
+                        <button class="btn btn-default" type="submit">Go</button>
+                    </form>
+                    
                     @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
@@ -84,7 +91,15 @@
                     asp-fallback-test="window.Zepto">
             </script>
         </environment>
-
+        <script>
+            $(document).ready(function () {
+                $('#searchForm').submit(function (event) {
+                    var url = '@Url.Action("Search","Shop")?term=' + $('#searchTerm').val()
+                    window.location.href = url;
+                    return false;
+                });
+            })
+        </script>
         @RenderSection("scripts", required: false)
     </body>
 </html>

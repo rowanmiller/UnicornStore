@@ -9,6 +9,8 @@ using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using UnicornStore.AspNet.Models.Identity;
 using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.Logging;
+using UnicornStore.Models;
 
 namespace UnicornStore
 {
@@ -79,6 +81,8 @@ namespace UnicornStore
 
             // Add the console logger.
             loggerfactory.AddConsole(minLevel: LogLevel.Warning);
+
+            loggerfactory.AddProvider(new SqlLoggerProvider());
 
             // Add the following to the request pipeline only in development environment.
             if (env.IsEnvironment("Development"))

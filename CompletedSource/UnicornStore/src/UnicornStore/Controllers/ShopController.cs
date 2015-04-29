@@ -93,6 +93,20 @@ namespace UnicornStore.AspNet.Controllers
             });
         }
 
+        public IActionResult Search(string term)
+        {
+            var products = db.Products
+                .FromSql("SELECT * FROM [dbo].[SearchProducts] (@p0)", term)
+                .OrderBy(p => p.CurrentPrice)
+                .ToList();
+
+            return View(new SearchViewModel
+            {
+                SearchTerm = term,
+                Products = products
+            });
+        }
+
         private IEnumerable<Product> GetProducts(Category category)
         {
             // TODO Look at moving this to a stored procedure or similar when raw SQL is available

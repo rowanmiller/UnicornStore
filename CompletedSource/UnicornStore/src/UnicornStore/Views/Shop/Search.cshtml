@@ -1,0 +1,27 @@
+@model UnicornStore.AspNet.ViewModels.Shop.SearchViewModel
+
+@{
+    ViewBag.Title = Model.SearchTerm;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <div>
+                <ul class="breadcrumb">
+                    <li>Search</li>
+                    <li class="active">@Model.SearchTerm</li>
+                </ul>
+                <h2>@Model.SearchTerm</h2>
+                <div class="row">
+                    @foreach (var item in Model.Products)
+                    {
+                        <div class="col-md-3">
+                            @Html.Partial("_productCard", item)
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
