@@ -37,11 +37,10 @@ namespace UnicornPacker
                 {
                     foreach (var order in selectedOrders)
                     {
-                        db.Orders.Add(order);
-                        db.OrderLines.AddRange(order.Lines);
+                        // TODO copy selected orders to local database
                     }
 
-                    db.SaveChanges();
+
                 }
 
                 // Refresh the page with pending orders

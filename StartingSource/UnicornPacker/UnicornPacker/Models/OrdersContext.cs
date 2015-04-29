@@ -12,7 +12,8 @@ namespace UnicornPacker.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var file = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Orders.db");
-            optionsBuilder.UseSqlite("Data source=" + file);
+            
+            // TODO Setup to use SQLite
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
