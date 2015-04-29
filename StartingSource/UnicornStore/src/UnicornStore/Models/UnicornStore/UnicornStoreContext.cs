@@ -33,8 +33,6 @@ namespace UnicornStore.AspNet.Models.UnicornStore
                 .ForeignKey<OrderShippingDetails>(d => d.OrderId);
 
             builder.Entity<OrderShippingDetails>().ConfigureAddress();
-
-            builder.Entity<CartItem>().Property<DateTime>("LastUpdated");
         }
 
         public override int SaveChanges()
@@ -46,7 +44,7 @@ namespace UnicornStore.AspNet.Models.UnicornStore
 
             foreach (var entry in entries)
             {
-                entry.Property("LastUpdated").CurrentValue = DateTime.UtcNow;
+                // TODO Set auditing information for items
             }
 
             return base.SaveChanges();

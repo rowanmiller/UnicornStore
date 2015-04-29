@@ -82,7 +82,7 @@ namespace UnicornStore
             // Add the console logger.
             loggerfactory.AddConsole(minLevel: LogLevel.Warning);
 
-            loggerfactory.AddProvider(new SqlLoggerProvider());
+            // TODO Add logger for SQL statements
 
             // Add the following to the request pipeline only in development environment.
             if (env.IsEnvironment("Development"))

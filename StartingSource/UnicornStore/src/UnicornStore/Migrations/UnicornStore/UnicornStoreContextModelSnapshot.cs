@@ -23,9 +23,6 @@ namespace UnicornStore.AspNet.Migrations.UnicornStore
                             .GenerateValueOnAdd()
                             .Annotation("OriginalValueIndex", 0)
                             .Annotation("SqlServer:ValueGeneration", "Default");
-                        b.Property<DateTime>("LastUpdated")
-                            .Annotation("OriginalValueIndex", 1)
-                            .Annotation("ShadowIndex", 0);
                         b.Property<DateTime>("PriceCalculated")
                             .Annotation("OriginalValueIndex", 2);
                         b.Property<decimal>("PricePerUnit")

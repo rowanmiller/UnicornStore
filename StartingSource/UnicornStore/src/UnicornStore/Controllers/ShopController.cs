@@ -95,10 +95,8 @@ namespace UnicornStore.AspNet.Controllers
 
         public IActionResult Search(string term)
         {
-            var products = db.Products
-                .FromSql("SELECT * FROM [dbo].[SearchProducts] (@p0)", term)
-                .OrderBy(p => p.CurrentPrice)
-                .ToList();
+            // TODO Find products based on the search term
+            var products = new Product[] { };
 
             return View(new SearchViewModel
             {

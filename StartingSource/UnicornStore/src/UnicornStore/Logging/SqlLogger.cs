@@ -13,7 +13,7 @@ namespace UnicornStore.Logging
             var message = string.Format(
                 "\n\n--{0}\n{1}",
                 DateTime.Now,
-                formatter(state, exception));//.Replace(", [", ",\n  ["));
+                formatter(state, exception));
 
             File.AppendAllText(_logFilePath, message);
         }
