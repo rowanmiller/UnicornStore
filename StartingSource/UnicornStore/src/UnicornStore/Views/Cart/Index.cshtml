@@ -1,0 +1,58 @@
+@using UnicornStore.AspNet.ViewModels.Cart
+@model IndexViewModel
+@{
+    ViewBag.Title = "Cart";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.Partial("_CategorySidebar", Model.TopLevelCategories)
+        </div>
+        <div class="col-md-8">
+            <h2>My Cart</h2>
+
+            @if (Model.Message != IndexMessage.None)
+            {
+                <div class="alert alert-success">
+                    @Model.Message.GetMessage()
+                </div>
+            }
+
+            @if (Model.CartItems.Any())
+            {
+                <p>
+                    @Html.ActionLink("Proceed to Checkout", "Checkout", new { }, new { Class = "btn btn-default" })
+                </p>
+            }
+
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    @if (!Model.CartItems.Any())
+                    {
+                        <em>There are no items in your cart, perhaps you would like to @Html.ActionLink("browse the store", "Index", "Shop")</em>
+                    }
+                    else
+                    {
+                        <span style="font-size: large">Cart Total $@Model.CartItems.Sum(item => item.Quantity * item.PricePerUnit)</span>
+                        <br /><em>@Model.CartItems.Count() items</em>
+
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <hr />
+                            @Html.Partial("_LineItem", item)
+                            @Html.ActionLink("Remove from cart", "Remove", new { productId = @item.ProductId })
+                        }
+                    }
+                </div>
+            </div>
+
+            @if (Model.CartItems.Any())
+            {
+                <p>
+                    @Html.ActionLink("Proceed to Checkout", "Checkout", new { }, new { Class = "btn btn-default" })
+                </p>
+            }
+        </div>
+    </div>
+</div>

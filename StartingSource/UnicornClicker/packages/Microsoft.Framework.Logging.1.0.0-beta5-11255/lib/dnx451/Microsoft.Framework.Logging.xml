@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Framework.Logging</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Framework.Logging.LoggerFactory">
+            <summary>
+            Summary description for LoggerFactory
+            </summary>
+        </member>
+        <member name="T:Microsoft.Framework.Logging.Logger`1">
+            <summary>
+            Delegates to a new <see cref="T:Microsoft.Framework.Logging.ILogger"/> instance using the full name of the given type, created by the
+            provided <see cref="T:Microsoft.Framework.Logging.ILoggerFactory"/>.
+            </summary>
+            <typeparam name="T">The type.</typeparam>
+        </member>
+        <member name="M:Microsoft.Framework.Logging.Logger`1.#ctor(Microsoft.Framework.Logging.ILoggerFactory)">
+            <summary>
+            Creates a new <see cref="T:Microsoft.Framework.Logging.Logger`1"/>.
+            </summary>
+            <param name="factory">The factory.</param>
+        </member>
+    </members>
+</doc>

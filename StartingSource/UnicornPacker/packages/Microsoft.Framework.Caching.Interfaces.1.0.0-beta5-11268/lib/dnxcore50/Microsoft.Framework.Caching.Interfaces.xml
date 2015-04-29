@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Framework.Caching.Interfaces</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Framework.Caching.Memory.CachePreservationPriority">
+            <summary>
+            Specifies how items are prioritized for preservation during a memory pressure triggered cleanup.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Framework.Caching.Memory.EvictionReason.Removed">
+            <summary>
+            Manually
+            </summary>
+        </member>
+        <member name="F:Microsoft.Framework.Caching.Memory.EvictionReason.Replaced">
+            <summary>
+            Overwritten
+            </summary>
+        </member>
+        <member name="F:Microsoft.Framework.Caching.Memory.EvictionReason.Expired">
+            <summary>
+            Timed out
+            </summary>
+        </member>
+        <member name="F:Microsoft.Framework.Caching.Memory.EvictionReason.Triggered">
+            <summary>
+            Event
+            </summary>
+        </member>
+        <member name="F:Microsoft.Framework.Caching.Memory.EvictionReason.Capacity">
+            <summary>
+            GC, overflow
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Caching.Memory.ICacheSetContext.Key">
+            <summary>
+            The key identifying this entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Caching.Memory.ICacheSetContext.State">
+            <summary>
+            The state passed into Set. This can be used to avoid closures.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.ICacheSetContext.SetPriority(Microsoft.Framework.Caching.Memory.CachePreservationPriority)">
+            <summary>
+            Sets the priority for keeping this entry in the cache during a memory pressure triggered cleanup.
+            </summary>
+            <param name="priority"></param>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.ICacheSetContext.SetAbsoluteExpiration(System.DateTimeOffset)">
+            <summary>
+            Sets an absolute expiration date for this entry.
+            </summary>
+            <param name="absolute"></param>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.ICacheSetContext.SetAbsoluteExpiration(System.TimeSpan)">
+            <summary>
+            Sets an absolute expiration time, relative to now.
+            </summary>
+            <param name="relative"></param>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.ICacheSetContext.SetSlidingExpiration(System.TimeSpan)">
+            <summary>
+            Sets how long this entry can be inactive (e.g. not accessed) before it will be removed.
+            This will not extend the entry lifetime beyond the absolute expiration (if set).
+            </summary>
+            <param name="offset"></param>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.ICacheSetContext.AddExpirationTrigger(Microsoft.Framework.Expiration.Interfaces.IExpirationTrigger)">
+            <summary>
+            Expire this entry if the given event occurs.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.ICacheSetContext.RegisterPostEvictionCallback(System.Action{System.String,System.Object,Microsoft.Framework.Caching.Memory.EvictionReason,System.Object},System.Object)">
+            <summary>
+            The given callback will be fired after this entry is evicted from the cache.
+            </summary>
+            <param name="callback"></param>
+            <param name="state"></param>
+        </member>
+        <member name="T:Microsoft.Framework.Caching.Memory.IEntryLink">
+            <summary>
+            Used to flow expiration information from one entry to another. Triggers and minimum absolute expiration will
+            be copied from the dependent entry to the parent entry. The parent entry will not expire if the
+            dependent entry is removed manually, removed due to memory pressure, or expires due to sliding expiration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Caching.Memory.IEntryLink.AbsoluteExpiration">
+            <summary>
+            Gets the minimum absolute expiration for all dependent entries, or null if not set.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Caching.Memory.IEntryLink.Triggers">
+            <summary>
+            Gets all the triggers from the dependent entries.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.IEntryLink.AddExpirationTriggers(System.Collections.Generic.IList{Microsoft.Framework.Expiration.Interfaces.IExpirationTrigger})">
+            <summary>
+            Adds triggers from a dependent entries.
+            </summary>
+            <param name="triggers"></param>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.IEntryLink.SetAbsoluteExpiration(System.DateTimeOffset)">
+            <summary>
+            Sets the absolute expiration for from a dependent entry. The minimum value across all dependent entries
+            will be used.
+            </summary>
+            <param name="absoluteExpiration"></param>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.IMemoryCache.Set(System.String,Microsoft.Framework.Caching.Memory.IEntryLink,System.Object,System.Func{Microsoft.Framework.Caching.Memory.ICacheSetContext,System.Object})">
+            <summary>
+            Create or overwrite an entry in the cache.
+            </summary>
+            <param name="key">A string identifying the entry. This is case sensitive.</param>
+            <param name="link">An entry link used to collect trigger and expiration information from this entry
+            for use in a parent entry.</param>
+            <param name="state">Application state that will be passed to the creation factory.</param>
+            <param name="create">A factory that will create and configure the entry.</param>
+            <returns>The object that was created.</returns>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.IMemoryCache.TryGetValue(System.String,Microsoft.Framework.Caching.Memory.IEntryLink,System.Object@)">
+            <summary>
+            Gets the item associated with this key if present.
+            </summary>
+            <param name="key">A string identifying the requested entry.</param>
+            <param name="link">An entry link used to collect trigger and expiration information from this entry
+            for use in a parent entry.</param>
+            <param name="value">The located value or null.</param>
+            <returns>True if the key was found.</returns>
+        </member>
+        <member name="M:Microsoft.Framework.Caching.Memory.IMemoryCache.Remove(System.String)">
+            <summary>
+            Removes the object associated with the given key.
+            </summary>
+            <param name="key">A string identifying the entry. This is case sensitive.</param>
+        </member>
+        <member name="P:Microsoft.Framework.Expiration.Interfaces.IExpirationTrigger.IsExpired">
+            <summary>
+            Checked each time the key is accessed in the cache.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Framework.Expiration.Interfaces.IExpirationTrigger.ActiveExpirationCallbacks">
+            <summary>
+            Indicates if this trigger will pro-actively trigger callbacks. Callbacks are still guaranteed to fire, eventually.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Framework.Expiration.Interfaces.IExpirationTrigger.RegisterExpirationCallback(System.Action{System.Object},System.Object)">
+            <summary>
+            Registers for a callback that will be invoked when the entries should be expired.
+            IsExpired MUST be set before the callback is invoked.
+            </summary>
+            <param name="callback"></param>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
