@@ -30,8 +30,6 @@ namespace UnicornPacker
 
             try
             {
-                await UnicornStoreService.PackingOrders(selectedIds);
-
                 // Take a local copy of the orders
                 using (var db = new OrdersContext())
                 {
@@ -42,6 +40,8 @@ namespace UnicornPacker
 
 
                 }
+
+                await UnicornStoreService.PackingOrders(selectedIds);
 
                 // Refresh the page with pending orders
                 await ReLoadPendingOrders();

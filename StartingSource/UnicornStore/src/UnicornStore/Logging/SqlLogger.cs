@@ -6,7 +6,7 @@ namespace UnicornStore.Logging
 {
     public class SqlLogger : ILogger
     {
-        private static readonly string _logFilePath = @"C:\temp\DatabaseLog.sql";
+        private static readonly string _logFilePath = @"C:\temp\Database.log";
 
         public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
         {
