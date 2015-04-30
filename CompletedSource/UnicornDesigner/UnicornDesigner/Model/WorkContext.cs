@@ -9,7 +9,8 @@ namespace UnicornDesigner
 
 		protected override void OnConfiguring(DbContextOptionsBuilder builder)
 		{
-			builder.UseNpgsql(@"Server=localhost;User ID=romiller;Database=Work");
+			var connectionString = @"Server=localhost;User ID=romiller;Database=Work";
+			builder.UseNpgsql(connectionString);
 		}
 	} 
 }

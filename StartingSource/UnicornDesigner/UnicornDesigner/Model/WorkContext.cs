@@ -9,7 +9,10 @@ namespace UnicornDesigner
 
 		protected override void OnConfiguring(DbContextOptionsBuilder builder)
 		{
-			builder.UseNpgsql(@"Server=localhost;User ID=romiller;Database=Work");
+			var connectionString = @"Server=localhost;User ID=romiller;Database=Work";
+
+			// TODO Connect to Postgres database
+			builder.UseNpgsql(connectionString);
 		}
 	} 
 }

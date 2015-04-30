@@ -13,6 +13,15 @@ namespace UnicornDesigner
 	partial class MainWindowController
 	{
 		[Outlet]
+		MonoMac.AppKit.NSTextField DescriptionLabel { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSScrollView DetailsSection { get; set; }
+
+		[Outlet]
+		MonoMac.AppKit.NSView DetailsView { get; set; }
+
+		[Outlet]
 		MonoMac.AppKit.NSTableView JobTable { get; set; }
 
 		[Outlet]
@@ -29,19 +38,24 @@ namespace UnicornDesigner
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (DescriptionLabel != null) {
+				DescriptionLabel.Dispose ();
+				DescriptionLabel = null;
+			}
+
+			if (DetailsView != null) {
+				DetailsView.Dispose ();
+				DetailsView = null;
+			}
+
 			if (JobTable != null) {
 				JobTable.Dispose ();
 				JobTable = null;
 			}
 
-			if (StatusLabel != null) {
-				StatusLabel.Dispose ();
-				StatusLabel = null;
-			}
-
-			if (OrderNoLabel != null) {
-				OrderNoLabel.Dispose ();
-				OrderNoLabel = null;
+			if (NewNoteField != null) {
+				NewNoteField.Dispose ();
+				NewNoteField = null;
 			}
 
 			if (NoteTable != null) {
@@ -49,9 +63,19 @@ namespace UnicornDesigner
 				NoteTable = null;
 			}
 
-			if (NewNoteField != null) {
-				NewNoteField.Dispose ();
-				NewNoteField = null;
+			if (OrderNoLabel != null) {
+				OrderNoLabel.Dispose ();
+				OrderNoLabel = null;
+			}
+
+			if (StatusLabel != null) {
+				StatusLabel.Dispose ();
+				StatusLabel = null;
+			}
+
+			if (DetailsSection != null) {
+				DetailsSection.Dispose ();
+				DetailsSection = null;
 			}
 		}
 	}

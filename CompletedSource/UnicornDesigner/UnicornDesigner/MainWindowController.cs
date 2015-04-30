@@ -41,48 +41,57 @@ namespace UnicornDesigner
 		#endregion
 
 		//strongly typed window accessor
-		public new MainWindow Window {
-			get {
+		public new MainWindow Window 
+		{
+			get 
+			{
 				return (MainWindow)base.Window;
 			}
 		}
 
 		public override void AwakeFromNib ()
 		{
-			base.AwakeFromNib ();
-
-			JobTable.Activated += WorkOrderClicked;
+			base.AwakeFromNib ();  
 
 			var orders = _db.WorkOrders
+				.Where(o => o.AssignedTo == User.CurrentUser)
 				.OrderByDescending (o => o.WorkOrderId)
-				.ToList ();
+				.ToList();
 			
 			JobTable.Source = new WorkOrdersViewSource (orders);
+
+			JobTable.Activated += WorkOrderClicked;
 
 			NewNoteField.Activated += AddNote;
 		}
 
 		private void WorkOrderClicked(object sender, EventArgs e)
 		{
-			if (JobTable.ClickedRow > -1) {
+			if (JobTable.ClickedRow > -1) 
+			{
 				_currentOrder = ((WorkOrdersViewSource)JobTable.Source).WorkOrders [JobTable.ClickedRow];
 
 				OrderNoLabel.StringValue = "Job #" + _currentOrder.WorkOrderId.ToString().PadLeft(6, '0');
+				DescriptionLabel.StringValue = _currentOrder.Description;
 
 				var notes = _db.Notes
 					.Where (n => n.WorkOrderId == _currentOrder.WorkOrderId)
 					.ToList ();
-
+				
 				NoteTable.Source = new NoteViewSource (notes);
+
+				DetailsSection.Hidden = false;
 			}
 		}
 		 
 		private void AddNote(object sender, EventArgs e)
 		{
-			if (_currentOrder != null && !string.IsNullOrWhiteSpace (NewNoteField.StringValue)) {
-				var note = new Note {
+			if (_currentOrder != null && !string.IsNullOrWhiteSpace (NewNoteField.StringValue)) 
+			{
+				var note = new Note 
+				{
 					WorkOrderId = _currentOrder.WorkOrderId,
-					Author = "Rowan Miller",
+					Author = User.CurrentUser,
 					Added = DateTime.Now,
 					Content = NewNoteField.StringValue
 				};

@@ -9,6 +9,7 @@
     <RootNamespace>UnicornDesigner</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <AssemblyName>UnicornDesigner</AssemblyName>
+    <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -120,6 +121,7 @@
     <Compile Include="Model\Note.cs" />
     <Compile Include="Model\WorkContext.cs" />
     <Compile Include="WorkOrderViewSource.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainWindow.xib" />
