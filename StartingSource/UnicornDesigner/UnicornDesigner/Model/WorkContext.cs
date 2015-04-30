@@ -12,7 +12,6 @@ namespace UnicornDesigner
 			var connectionString = @"Server=localhost;User ID=romiller;Database=Work";
 
 			// TODO Connect to Postgres database
-			builder.UseNpgsql(connectionString);
 		}
 	} 
 }
