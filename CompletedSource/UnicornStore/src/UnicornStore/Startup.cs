@@ -49,6 +49,8 @@ namespace UnicornStore
                 .AddDbContext<UnicornStoreContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:UnicornStore"]))
                 .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:UnicornStore"]));
 
+            services.AddSingleton<CategoryCache>();
+
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

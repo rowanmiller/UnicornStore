@@ -2,46 +2,50 @@
 @model IEnumerable<Order>
 
 @{
-    ViewBag.Title = "Manage Products";
+    ViewBag.Title = "My Orders";
 }
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <h2>My Orders</h2>
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(modelItem => modelItem.DisplayId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(modelItem => modelItem.OrderPlaced)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(modelItem => modelItem.Total)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(modelItem => modelItem.State)
-                    </th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.ActionLink(item.DisplayId, "Details", new { orderId = item.OrderId })
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OrderPlaced)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Total)
-                        </td>
-                        <td>
-                            @item.State.GetDisplayName()
-                        </td>
-                    </tr>
-                }
-            </table>
+            @foreach (var order in Model)
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <h4>@Html.ActionLink("Order #" + order.DisplayId, "Details", new { orderId = order.OrderId })</h4>
+                        <b>Placed: @order.OrderPlaced.Value.ToShortDateString()</b>
+                        <br />
+                        <br />
+                        @if (order.Lines == null)
+                        {
+                            <div class="alert alert-warning">
+                                <h4>Missing Data</h4>
+                                <p>Order lines were not included in the data passed to the view.</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <table class="table">
+                                @foreach (var line in order.Lines)
+                                {
+                                    <tr>
+                                        <td><img src="@Url.Content(line.Product.ImageUrl)" width="50" /></td>
+                                        <td>@line.Product.DisplayName</td>
+                                        <td>@line.Quantity @@ $@line.PricePerUnit</td>
+                                        <td>$@(line.Quantity * line.PricePerUnit)</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>$@order.Total</b></td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>

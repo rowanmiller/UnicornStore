@@ -8,6 +8,6 @@ namespace UnicornStore.AspNet.ViewModels.Shop
     {
         public Product Product { get; set; }
         public IEnumerable<Category> TopLevelCategories { get; set; }
-        public IEnumerable<CategoryInfo> CategoryHierarchy { get; set; }
+        public IEnumerable<Category> CategoryHierarchy { get; set; }
     }
 }

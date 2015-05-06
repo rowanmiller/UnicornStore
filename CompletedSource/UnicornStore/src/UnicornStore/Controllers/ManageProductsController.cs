@@ -11,19 +11,22 @@ namespace UnicornStore.AspNet.Controllers
     [Authorize(Roles = "Admin")]
     public class ManageProductsController : Controller
     {
-        private UnicornStoreContext db = new UnicornStoreContext();
+        private UnicornStoreContext db;
+        CategoryCache categoryCache;
 
-        public ManageProductsController(UnicornStoreContext context)
+        public ManageProductsController(UnicornStoreContext context, CategoryCache cache)
         {
             db = context;
+            categoryCache = cache;
         }
 
         // GET: Products
         public IActionResult Index(int? categoryId)
         {
-            if(categoryId != null)
+            if (categoryId != null)
             {
-                return View(ShopController.GetProductsInCategory(db, categoryId.Value));
+                var ids = categoryCache.GetThisAndChildIds(categoryId.Value);
+                return View(db.Products.Where(p => ids.Contains(p.CategoryId)));
             }
 
             return View(db.Products.ToList());
@@ -144,7 +147,8 @@ namespace UnicornStore.AspNet.Controllers
         {
             if (ModelState.IsValid)
             {
-                var products = ShopController.GetProductsInCategory(db, model.CategoryId);
+                var ids = categoryCache.GetThisAndChildIds(model.CategoryId);
+                var products = db.Products.Where(p => ids.Contains(p.CategoryId));
 
                 foreach (var product in products)
                 {

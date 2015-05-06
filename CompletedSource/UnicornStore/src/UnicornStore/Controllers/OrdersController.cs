@@ -20,7 +20,7 @@ namespace UnicornStore.AspNet.Controllers
         public IActionResult Index()
         {
             var orders = db.Orders
-                .Include(o => o.Lines)
+                .Include(o => o.Lines).ThenInclude(l => l.Product)
                 .Where(o => o.Username == User.GetUserName())
                 .Where(o => o.State != OrderState.CheckingOut);
 

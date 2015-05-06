@@ -6,7 +6,7 @@ namespace UnicornStore.AspNet.ViewModels.Home
 {
     public class IndexViewModel
     {
-        public List<Category> TopLevelCategories { get; set; }
+        public IEnumerable<Category> TopLevelCategories { get; set; }
         public List<WebsiteAd> CurrentAds { get; set; }
     }
 }

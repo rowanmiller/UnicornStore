@@ -11,7 +11,13 @@ namespace UnicornStore.AspNet.Models.UnicornStore
         public decimal CurrentPrice { get; set; }
         public string ImageUrl { get; set; }
 
+        public decimal Savings
+        {
+            get { return MSRP - CurrentPrice; }
+        }
+
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
     }
 }

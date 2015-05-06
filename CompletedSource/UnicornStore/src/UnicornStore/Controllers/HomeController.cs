@@ -10,10 +10,12 @@ namespace UnicornStore.AspNet.Controllers
     public class HomeController : Controller
     {
         private UnicornStoreContext db;
+        CategoryCache categoryCache;
 
-        public HomeController(UnicornStoreContext context)
+        public HomeController(UnicornStoreContext context, CategoryCache cache)
         {
             db = context;
+            categoryCache = cache;
         }
 
         public IActionResult Index() 
@@ -24,7 +26,7 @@ namespace UnicornStore.AspNet.Controllers
 
             return View(new IndexViewModel
             {
-                TopLevelCategories = ShopController.GetTopLevelCategories(db).ToList(),
+                TopLevelCategories = categoryCache.TopLevel(),
                 CurrentAds = ads.ToList()
             });
         }
