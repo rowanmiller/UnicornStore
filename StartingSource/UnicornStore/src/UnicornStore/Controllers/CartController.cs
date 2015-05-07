@@ -16,23 +16,26 @@ namespace UnicornStore.AspNet.Controllers
     {
         private UnicornStoreContext db;
         private ApplicationDbContext identityDb;
+        CategoryCache categoryCache;
 
-        public CartController(UnicornStoreContext context, ApplicationDbContext identityContext)
+        public CartController(UnicornStoreContext context, ApplicationDbContext identityContext, CategoryCache cache)
         {
             db = context;
             identityDb = identityContext;
+            categoryCache = cache;
         }
 
         public IActionResult Index(IndexMessage message = IndexMessage.None)
         {
             var items = db.CartItems
                 .Where(i => i.Username == User.GetUserName())
-                .Include(i => i.Product);
+                .Include(i => i.Product)
+                .ToList();
 
             return View(new IndexViewModel
             {
                 CartItems = items,
-                TopLevelCategories = ShopController.GetTopLevelCategories(db),
+                TopLevelCategories = categoryCache.TopLevel(),
                 Message = message
             });
         }

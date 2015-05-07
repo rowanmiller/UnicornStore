@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 
 namespace UnicornStore.AspNet.Models.UnicornStore
 {
     public class UnicornStoreContext : DbContext
     {
+        public UnicornStoreContext(DbContextOptions<UnicornStoreContext> options)
+            : base(options)
+        { }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CartItem> CartItems { get; set; }

@@ -11,11 +11,13 @@ namespace UnicornStore.AspNet.Controllers
 {
     public class ShopController : Controller
     {
-        private UnicornStoreContext db = new UnicornStoreContext();
+        private UnicornStoreContext db;
+        CategoryCache categoryCache;
 
-        public ShopController(UnicornStoreContext context)
+        public ShopController(UnicornStoreContext context, CategoryCache cache)
         {
             db = context;
+            categoryCache = cache;
         }
 
         public IActionResult Index()
@@ -32,7 +34,7 @@ namespace UnicornStore.AspNet.Controllers
             return View(new IndexViewModel
             {
                 FeaturedProducts = products,
-                TopLevelCategories = GetTopLevelCategories(db)
+                TopLevelCategories = categoryCache.TopLevel()
             });
         }
 
@@ -43,29 +45,20 @@ namespace UnicornStore.AspNet.Controllers
                 return new HttpStatusCodeResult(404);
             }
 
-            var category = db.Categories
-                .AsNoTracking()
-                .SingleOrDefault(c => c.CategoryId == id);
+            var category = categoryCache.FromKey(id.Value);
 
             if (category == null)
             {
                 return new HttpStatusCodeResult(404);
             }
 
-            var children = db.Categories
-                .Where(c => c.ParentCategoryId == category.CategoryId)
-                .Select(c => new CategoryInfo
-                {
-                    CategoryId = c.CategoryId,
-                    DisplayName = c.DisplayName
-                });
-            
+            var ids = categoryCache.GetThisAndChildIds(id.Value);
             return View(new CategoryViewModel
             {
                 Category = category,
-                Products = GetProductsInCategory(db, category.CategoryId),
-                ParentHierarchy = GetCategoryHierarchy(category.ParentCategoryId),
-                Children = children
+                Products = db.Products.Where(p => ids.Contains(p.CategoryId)),
+                ParentHierarchy = categoryCache.GetHierarchy(category.CategoryId),
+                Children = category.Children
             });
         }
 
@@ -88,8 +81,8 @@ namespace UnicornStore.AspNet.Controllers
             return View(new ProductViewModel
             {
                 Product = product,
-                CategoryHierarchy = GetCategoryHierarchy(product.CategoryId),
-                TopLevelCategories = GetTopLevelCategories(db)
+                CategoryHierarchy = categoryCache.GetHierarchy(product.CategoryId),
+                TopLevelCategories = categoryCache.TopLevel()
             });
         }
 
@@ -103,68 +96,6 @@ namespace UnicornStore.AspNet.Controllers
                 SearchTerm = term,
                 Products = products
             });
-        }
-
-        internal static IEnumerable<Product> GetProductsInCategory(UnicornStoreContext db, int categoryId)
-        {
-            // TODO Look at moving this to a stored procedure or similar when raw SQL is available
-            var childTree = db.Categories
-                .AsNoTracking()
-                .Include(c => c.Children)
-                    .ThenInclude(c => c.Children)
-                    .ThenInclude(c => c.Children)
-                    .ThenInclude(c => c.Children)
-                .Where(c => c.ParentCategoryId == categoryId);
-
-            var categoryIds = new int[] { categoryId }
-                .Union(GetAllCategoryIdsIncludingChildren(childTree));
-
-            return db.Products
-                .Where(p => categoryIds.Contains(p.CategoryId));
-        }
-
-        internal static IEnumerable<Category> GetTopLevelCategories(UnicornStoreContext db)
-        {
-            return db.Categories
-                .Where(c => c.ParentCategoryId == null)
-                .OrderBy(c => c.DisplayName)
-                .Include(c => c.Children);
-        }
-
-        private List<CategoryInfo> GetCategoryHierarchy(int? categoryId)
-        {
-            var parentTree = new List<CategoryInfo>();
-            if (categoryId != null)
-            {
-                // TODO Look at moving this to a stored procedure or similar when raw SQL is available
-                var parent = db.Categories
-                    .AsNoTracking()
-                    .Include(c => c.ParentCategory
-                        .ParentCategory
-                        .ParentCategory
-                        .ParentCategory)
-                    .SingleOrDefault(c => c.CategoryId == categoryId);
-
-                for (var cat = parent; cat != null; cat = cat.ParentCategory)
-                {
-                    parentTree.Insert(0, new CategoryInfo
-                    {
-                        CategoryId = cat.CategoryId,
-                        DisplayName = cat.DisplayName
-                    });
-                }
-            }
-
-            return parentTree;
-        }
-
-        private static IEnumerable<int> GetAllCategoryIdsIncludingChildren(IEnumerable<Category> categories)
-        {
-            return categories
-                .Select(c => c.CategoryId)
-                .Union(categories
-                    .Where(c => c.Children != null)
-                    .SelectMany(c => GetAllCategoryIdsIncludingChildren(c.Children)));
         }
     }
 }
