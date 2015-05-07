@@ -12,13 +12,10 @@ namespace UnicornStore.Tests.Controllers
         [Fact]
         public void GetPendingOrders()
         {
-            var builder = new DbContextOptionsBuilder<UnicornStoreContext>();
-            builder.UseInMemoryStore(persist: true);
-            var options = builder.Options;
-
-            using (var context = new UnicornStoreContext(options))
+            // Arrange
+            using (var context = new UnicornStoreContext())
             {
-                var orders = new List<Order>
+                var testData = new List<Order>
                 {
                     new Order { State = OrderState.CheckingOut, ShippingDetails = new OrderShippingDetails() },
                     new Order { State = OrderState.Placed, ShippingDetails = new OrderShippingDetails() },
@@ -29,16 +26,16 @@ namespace UnicornStore.Tests.Controllers
                     new Order { State = OrderState.Cancelled, ShippingDetails = new OrderShippingDetails() },
                 };
 
-                context.AddRange(orders);
-                context.AddRange(orders.Select(o => o.ShippingDetails));
+                context.AddRange(testData);
+                context.AddRange(testData.Select(p => p.ShippingDetails));
                 context.SaveChanges();
             }
 
-            using (var context = new UnicornStoreContext(options))
+            using (var context = new UnicornStoreContext())
             {
-                var controller = new ShippingController(context);
-                var orders = controller.PendingOrders();
-                Assert.Equal(1, orders.Count());
+                // TODO Act
+
+                // TODO Assert
             }
         }
     }

@@ -7,9 +7,7 @@ namespace UnicornStore.AspNet.Models.UnicornStore
 {
     public class UnicornStoreContext : DbContext
     {
-        public UnicornStoreContext(DbContextOptions<UnicornStoreContext> options)
-            : base(options)
-        { }
+
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -50,6 +48,7 @@ namespace UnicornStore.AspNet.Models.UnicornStore
             foreach (var entry in entries)
             {
                 // TODO Set auditing information for items
+
             }
 
             return base.SaveChanges();
