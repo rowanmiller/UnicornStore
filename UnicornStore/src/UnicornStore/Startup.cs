@@ -16,12 +16,15 @@ namespace UnicornStore
 {
     public class Startup
     {
+        private bool _useFacebookAuth;
+        private bool _useGoogleAuth;
+
         public Startup(IHostingEnvironment env)
         {
             // Setup configuration sources.
             var configuration = new Configuration()
                 .AddJsonFile("config.json")
-                .AddJsonFile("secrets.json")
+                .AddJsonFile("secrets.json", optional: true)
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsEnvironment("Development"))
@@ -56,17 +59,31 @@ namespace UnicornStore
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.ConfigureFacebookAuthentication(options =>
+            // See comments in config.json for info on enabling Facebook auth
+            var facebookId = Configuration.Get("Secrets:Facebook:AppId");
+            var facebookSecret = Configuration.Get("Secrets:Facebook:AppSecret");
+            if (!string.IsNullOrWhiteSpace(facebookId) && !string.IsNullOrWhiteSpace(facebookSecret))
             {
-                options.AppId = "1593240960890768";
-                options.AppSecret = Configuration.Get("secrets:facebook:appSecret");
-            });
+                _useFacebookAuth = true;
+                services.ConfigureFacebookAuthentication(options =>
+                {
+                    options.AppId = facebookId;
+                    options.AppSecret = facebookSecret;
+                });
+            }
 
-            services.ConfigureGoogleAuthentication(options =>
+            // See comments in config.json for info on enabling Google auth
+            var googleId = Configuration.Get("Secrets:Google:ClientId");
+            var googleSecret = Configuration.Get("Secrets:Google:ClientSecret");
+            if (!string.IsNullOrWhiteSpace(googleId) && !string.IsNullOrWhiteSpace(googleSecret))
             {
-                options.ClientId = "140672572048-92ggg4tb5ihr7ffats86pk4cgecg0cn4.apps.googleusercontent.com";
-                options.ClientSecret = Configuration.Get("secrets:google:clientSecret");
-            });
+                _useGoogleAuth = true;
+                services.ConfigureGoogleAuthentication(options =>
+                {
+                    options.ClientId = googleId;
+                    options.ClientSecret = googleSecret;
+                });
+            }
 
             // Add MVC services to the services container.
             services.AddMvc();
@@ -107,8 +124,17 @@ namespace UnicornStore
 
             // Add cookie-based authentication to the request pipeline.
             app.UseIdentity();
-            app.UseFacebookAuthentication();
-            app.UseGoogleAuthentication();
+
+            if (_useFacebookAuth)
+            {
+                app.UseFacebookAuthentication();
+            }
+
+            if (_useGoogleAuth)
+            {
+                app.UseGoogleAuthentication();
+            }
+
             app.EnsureRolesCreated();
 
             // Add MVC to the request pipeline.

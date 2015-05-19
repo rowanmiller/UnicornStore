@@ -4,5 +4,32 @@
   },
   "ConnectionStrings": {
     "UnicornStore": "Server=(localdb)\\mssqllocaldb;Database=UnicornStore;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+
+  /* These are just placeholders to show the settings required to enable authentication
+     For security reasons I would not put your actual credentials in here since you may
+     inadvertently check them into source control etc. 
+  
+     For my local development I have a secrets.json file which is included in .gitignore
+     to ensure it is never checked in. You'll see secrets.json included as an optional
+     config file at the top of startup.cs. Since config follows a last-registered-wins
+     policy the values in secrets.json just override the placeholders here.
+
+     Here's where to create your own credentials to enable auth:
+      - Google: https://console.developers.google.com/project
+      - Facebook: https://developers.facebook.com/apps
+
+     Make sure you list http://localhost:5000 as a valid address for the auth accounts
+     you create since that is where the site will be hosted when you run it locally.
+  */
+  "Auth": {
+    "Google": {
+      "ClientId": "",
+      "ClientSecret": ""
+    },
+    "Facebook": {
+      "AppId": "",
+      "AppSecret": ""
+    }
   }
 }
