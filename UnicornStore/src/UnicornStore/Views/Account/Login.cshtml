@@ -1,0 +1,17 @@
+﻿@using UnicornStore.AspNet.Models.Identity
+@{
+    ViewBag.Title = "Log in";
+}
+
+<h3>Log in using one of the following services</h3>
+<div class="row">
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @await Html.PartialAsync("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+}

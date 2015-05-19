@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="UnicornPacker.ChooseOrders"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnicornPacker"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock Name="Message" TextWrapping="WrapWholeWords" />
+        <StackPanel Name="OrdersPanel" Visibility="Collapsed">
+            <Button Name="AssignOrders" Click="AssignOrders_Click" Style="{StaticResource SymbolButton}" IsEnabled="False">
+                <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Ellipse Width="50" Height="50" StrokeThickness="2" Stroke="{Binding Path=Foreground,ElementName=Icon}"></Ellipse>
+                        <FontIcon Name="Icon" FontFamily="Segoe MDL2 Assets" Glyph="&#xE19F;" />
+                    </Grid>
+                    <TextBlock Text="Assign to Me" Margin="10,0,0,0" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <ListView Name="Orders" SelectionMode="Multiple" SelectionChanged="Orders_SelectionChanged" Margin="0,10">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,10">
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                <TextBlock FontSize="20" Text="Order #" />
+                                <TextBlock FontSize="20" Text="{Binding DisplayId}" />
+                            </StackPanel>
+
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="10" MinWidth="300">
+                                        <TextBlock Text="Ship To:" FontWeight="Bold" />
+                                        <StackPanel Margin="5,0,0,0">
+                                            <TextBlock Text="{Binding Addressee}" />
+                                            <TextBlock Text="{Binding LineOne}" />
+                                            <TextBlock Text="{Binding LineTwo}" Visibility="{Binding LineTwoVisibility}" />
+                                            <TextBlock Text="{Binding CityOrTown}" />
+                                            <TextBlock Text="{Binding StateOrProvince}" />
+                                            <TextBlock Text="{Binding ZipOrPostalCode}" />
+                                            <TextBlock Text="{Binding Country}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="10" MinWidth="300">
+                                        <TextBlock Text="Items:" FontWeight="Bold" />
+                                        <ItemsControl Margin="5,0,0,0" ItemsSource="{Binding Lines}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="0">
+                                                        <TextBlock Text="{Binding Quantity}" />
+                                                        <TextBlock Text="{Binding ProductName}" Margin="3,0,0,0" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Page>

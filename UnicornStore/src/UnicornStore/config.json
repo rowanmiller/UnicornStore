@@ -1,0 +1,8 @@
+{
+  "AppSettings": {
+    "SiteTitle": "UnicornStore"
+  },
+  "ConnectionStrings": {
+    "UnicornStore": "Server=(localdb)\\mssqllocaldb;Database=UnicornStore;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}

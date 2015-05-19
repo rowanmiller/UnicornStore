@@ -1,0 +1,17 @@
+@model UnicornStore.AspNet.Models.UnicornStore.ILineItem
+
+<div class="row">
+    <div class="col-md-2">
+        <img src="@Url.Content(Model.Product.ImageUrl)" width="100" />
+    </div>
+    <div class="col-md-9">
+        <h4>@Html.ActionLink(Model.Product.DisplayName, "Product", "Shop", new { id = Model.Product.ProductId })</h4>
+        <p>
+            @Model.Quantity @@ $@Model.PricePerUnit
+            <br />
+            <span style="font-size: large;">$@(Model.Quantity * Model.PricePerUnit)</span>
+        </p>
+    </div>
+</div>
+
+

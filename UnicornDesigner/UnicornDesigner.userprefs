@@ -1,0 +1,13 @@
+﻿<Properties StartupItem="UnicornDesigner/UnicornDesigner.csproj" MonoDevelop.MonoMac.LastXamMacNagTime="4/28/2015 12:13:08 AM">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="UnicornDesigner/MainWindowController.cs">
+    <Files>
+      <File FileName="UnicornDesigner/MainWindowController.cs" Line="96" Column="45" />
+      <File FileName="UnicornDesigner/NoteViewSource.cs" Line="20" Column="22" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

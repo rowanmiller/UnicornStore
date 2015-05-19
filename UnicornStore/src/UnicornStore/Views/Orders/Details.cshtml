@@ -1,0 +1,50 @@
+@model UnicornStore.AspNet.ViewModels.Orders.DetailsViewModel
+@using UnicornStore.AspNet.Models.UnicornStore
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<p>
+</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>Order #@Model.Order.DisplayId</h2>
+            @if (Model.ShowConfirmation)
+            {
+                <div class="alert alert-success">
+                    <b>Order successfully submitted!</b> We'll get your items packed up and shipped to you as soon as possible.
+                </div>
+            }
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span style="font-size: x-large">$@Model.Order.Total</span>
+                                <br />@Model.Order.State.GetDisplayName()
+                            </div>
+                            <div class="col-md-4">
+                                <strong>@Model.Order.ShippingDetails.Addressee</strong>
+                                <br />@Model.Order.ShippingDetails.LineOne
+                                @if (!string.IsNullOrWhiteSpace(Model.Order.ShippingDetails.LineTwo))
+                                {
+                                    <br />@Model.Order.ShippingDetails.LineTwo
+                                }
+                                <br />@Model.Order.ShippingDetails.CityOrTown
+                                <br />@Model.Order.ShippingDetails.StateOrProvince @Model.Order.ShippingDetails.ZipOrPostalCode
+                                <br />@Model.Order.ShippingDetails.Country
+                            </div>
+                        </div>
+                        @foreach (var item in Model.Order.Lines)
+                        {
+                            <hr />
+                            @Html.Partial("_LineItem", item)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿@using UnicornStore.AspNet.Models.Identity;
+@using Microsoft.AspNet.Http.Authentication;
+@using Microsoft.AspNet.Identity;
+@model ExternalLoginListViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var loginProviders = SignInManager.GetExternalAuthenticationSchemes();
+    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        <div id="socialLoginList">
+            @foreach (AuthenticationDescription p in loginProviders)
+            {
+                <p>
+                    <button type="submit" class="btn btn-login" id="@p.AuthenticationScheme" name="provider" value="@p.AuthenticationScheme" title="Log in using your @p.Caption account"><img src="@string.Format("/images/login/{0}.png", p.AuthenticationScheme)" /> Login with @p.AuthenticationScheme</button>
+                </p>
+            }
+        </div>
+    }
+}
