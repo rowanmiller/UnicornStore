@@ -12,15 +12,11 @@ namespace UnicornStore.AspNet.Models.Identity
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<PreApproval> PreApprovals { get; set; }
         public DbSet<UserAddress> UserAddresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<PreApproval>().ForRelational().Table("AspNetPreApprovals");
-            builder.Entity<PreApproval>().Key(p => new { p.UserEmail, p.Role });
 
             builder.Entity<UserAddress>().ForRelational().Table("AspNetUserAddresses");
             builder.Entity<UserAddress>().ConfigureAddress();

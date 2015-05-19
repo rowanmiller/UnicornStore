@@ -129,22 +129,6 @@ namespace UnicornStore.AspNet.Migrations.Identity
                         b.Annotation("Relational:TableName", "AspNetUsers");
                     });
                 
-                builder.Entity("UnicornStore.AspNet.Models.Identity.PreApproval", b =>
-                    {
-                        b.Property<string>("ApprovedBy")
-                            .Annotation("OriginalValueIndex", 0);
-                        b.Property<DateTime>("ApprovedOn")
-                            .Annotation("OriginalValueIndex", 1);
-                        b.Property<string>("Role")
-                            .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 2);
-                        b.Property<string>("UserEmail")
-                            .GenerateValueOnAdd()
-                            .Annotation("OriginalValueIndex", 3);
-                        b.Key("UserEmail", "Role");
-                        b.Annotation("Relational:TableName", "AspNetPreApprovals");
-                    });
-                
                 builder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
                     {
                         b.Property<string>("Addressee")

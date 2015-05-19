@@ -110,7 +110,6 @@ namespace UnicornStore
             app.UseFacebookAuthentication();
             app.UseGoogleAuthentication();
             app.EnsureRolesCreated();
-            app.ProcessPreApprovedAdmin(Configuration.Get("secrets:preApprovedAdmin"));
 
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>

@@ -89,15 +89,12 @@ namespace UnicornStore.AspNet.Controllers
                     result = await UserManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        // TODO Should block when user has manually entered email rather than being
-                        //      returned from external login provider
-                        foreach (var role in db.PreApprovals
-                            .Where(p => p.UserEmail == user.Email)
-                            .Select(p => p.Role)
-                            .ToList())
+                        // Initial user registered as an admin
+                        if(!UserManager.Users.Any(u => u.Id != user.Id))
                         {
-                            await UserManager.AddToRoleAsync(user, role);
+                            await UserManager.AddToRoleAsync(user, Roles.Admin);
                         }
+
                         await SignInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
