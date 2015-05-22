@@ -1,17 +1,90 @@
-﻿@using UnicornStore.AspNet.Models.Identity
+﻿@model UnicornStore.AspNet.ViewModels.Account.LoginViewModel
+@using System.Collections.Generic
+@using Microsoft.AspNet.Http
+@using Microsoft.AspNet.Http.Authentication
+@inject SignInManager<ApplicationUser> SignInManager
+
 @{
     ViewBag.Title = "Log in";
 }
+<h2>Login</h2>
 
-<h3>Log in using one of the following services</h3>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <section id="socialLoginForm">
-            @await Html.PartialAsync("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            @{
+                var LoginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+                if (LoginProviders.Count == 0)
+                {
+                    <div class="alert alert-warning">
+                        <p>
+                            There are no external authentication services configured. See comments in <strong>config.json</strong> for enabling social logins.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
+
+                        <div id="socialLoginList">
+                            @foreach (AuthenticationDescription p in LoginProviders)
+                            {
+                                <p>
+                                    <button type="submit" style="width: 200px; text-align: left" class="btn btn-default" id="@p.AuthenticationScheme" name="provider" value="@p.AuthenticationScheme" title="Log in using your @p.Caption account"><img src="@string.Format("/images/login/{0}.png", p.AuthenticationScheme)" /> Login with @p.AuthenticationScheme</button>
+                                </p>
+                            }
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+
+        <br />
+        <br />
+
+        <section id="loginForm">
+            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
+                <h4>Login with a UnicornStore account</h4>
+                <hr />
+                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <input asp-for="RememberMe" />
+                            <label asp-for="RememberMe"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+                <p>
+                    <a asp-action="Register">Register as a new user?</a>
+                </p>
+                <p>
+                    <a asp-action="ForgotPassword">Forgot your password?</a>
+                </p>
+            </form>
         </section>
     </div>
 </div>
+
 @section Scripts {
-    <script src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
