@@ -19,8 +19,6 @@ namespace UnicornStore.AspNet.Models.UnicornStore
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ForSqlServer().UseIdentity();
-
             builder.Entity<Category>()
                 .Reference(c => c.ParentCategory)
                 .InverseCollection(c => c.Children)

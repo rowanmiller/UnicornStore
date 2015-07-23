@@ -23,7 +23,7 @@ namespace UnicornStore.Logging
             return true;
         }
 
-        public IDisposable BeginScope(object state)
+        public IDisposable BeginScopeImpl(object state)
         {
             return null;
         }

@@ -1,10 +1,9 @@
-﻿@inject IOptions<AppSettings> AppSettings
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewBag.Title - @AppSettings.Options.SiteTitle</title>
+        <title>@ViewBag.Title - Unicorn Store</title>
 
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
@@ -30,7 +29,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">@AppSettings.Options.SiteTitle</a>
+                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">Unicorn Store</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -38,7 +37,7 @@
                         <li>@Html.ActionLink("Browse Store", "Index", "Shop")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        @if (User.IsInRole(Roles.Admin))
+                        @if (User.IsInRole(UnicornStore.AspNet.Models.Identity.Roles.Admin))
                         {
                             <li class="dropdown">
                                 <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Admin <span class="caret"></span></a>
@@ -64,7 +63,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; 2015 - @AppSettings.Options.SiteTitle</p>
+                <p>&copy; 2015 - Unicorn Store</p>
             </footer>
         </div>
 

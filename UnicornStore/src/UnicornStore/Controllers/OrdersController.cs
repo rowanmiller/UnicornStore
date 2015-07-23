@@ -2,6 +2,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
 using UnicornStore.AspNet.Models.UnicornStore;
 using UnicornStore.AspNet.ViewModels.Orders;
 

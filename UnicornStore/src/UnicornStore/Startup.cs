@@ -4,9 +4,10 @@ using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using Microsoft.Framework.Runtime;
 using UnicornStore.AspNet.Models.Identity;
 using UnicornStore.AspNet.Models.UnicornStore;
 using UnicornStore.Logging;
@@ -19,23 +20,16 @@ namespace UnicornStore
         private bool _useFacebookAuth;
         private bool _useGoogleAuth;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
         {
             // Setup configuration sources.
-            var configuration = new Configuration()
+            var configuration = new ConfigurationBuilder(appEnv.ApplicationBasePath)
                 .AddJsonFile("config.json")
                 .AddJsonFile("secrets.json", optional: true)
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsEnvironment("Development"))
-            {
-                // This reads the configuration keys from the secret store.
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                configuration.AddUserSecrets();
-            }
-
             configuration.AddEnvironmentVariables();
-            Configuration = configuration;
+            Configuration = configuration.Build();
         }
 
         public IConfiguration Configuration { get; set; }
@@ -44,7 +38,7 @@ namespace UnicornStore
         public void ConfigureServices(IServiceCollection services)
         {
             // Add Application settings to the services container.
-            services.Configure<AppSettings>(Configuration.GetSubKey("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetConfigurationSection("AppSettings"));
 
             // Add EF services to the services container.
             services.AddEntityFramework()
@@ -107,7 +101,7 @@ namespace UnicornStore
             if (env.IsEnvironment("Development"))
             {
                 app.UseBrowserLink();
-                app.UseErrorPage(ErrorPageOptions.ShowAll);
+                app.UseErrorPage();
                 app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
                 app.EnsureMigrationsApplied();
                 app.EnsureSampleData();

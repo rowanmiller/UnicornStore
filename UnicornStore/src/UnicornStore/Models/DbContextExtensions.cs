@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Relational.Migrations;
+using Microsoft.Data.Entity.Migrations;
 
 namespace UnicornStore.AspNet.Models
 {
@@ -9,7 +10,7 @@ namespace UnicornStore.AspNet.Models
     {
         public static bool AllMigrationsApplied(this DbContext context)
         {
-            return !((IAccessor<Migrator>)context.Database.AsRelational()).Service.GetUnappliedMigrations().Any();
+            return !((IMigrator)((IAccessor<IServiceProvider>)context).Service.GetService(typeof(IMigrator))).GetUnappliedMigrations().Any();
         }
     }
 }

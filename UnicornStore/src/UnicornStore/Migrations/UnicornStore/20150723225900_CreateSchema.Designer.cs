@@ -7,9 +7,19 @@ using UnicornStore.AspNet.Models.UnicornStore;
 namespace UnicornStore.Migrations.UnicornStore
 {
     [ContextType(typeof(UnicornStoreContext))]
-    partial class UnicornStoreContextModelSnapshot : ModelSnapshot
+    partial class CreateSchema
     {
-        public override void BuildModel(ModelBuilder builder)
+        public override string Id
+        {
+            get { return "20150723225900_CreateSchema"; }
+        }
+
+        public override string ProductVersion
+        {
+            get { return "7.0.0-beta6-13815"; }
+        }
+
+        public override void BuildTargetModel(ModelBuilder builder)
         {
             builder
                 .Annotation("ProductVersion", "7.0.0-beta6-13815")

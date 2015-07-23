@@ -18,7 +18,7 @@ namespace UnicornStore.AspNet.Models.Identity
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<UserAddress>().ForRelational().Table("AspNetUserAddresses");
+            builder.Entity<UserAddress>().ToTable("AspNetUserAddresses");
             builder.Entity<UserAddress>().ConfigureAddress();
         }
     }
