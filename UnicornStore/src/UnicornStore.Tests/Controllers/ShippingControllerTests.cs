@@ -13,7 +13,7 @@ namespace UnicornStore.Tests.Controllers
         public void GetPendingOrders()
         {
             var builder = new DbContextOptionsBuilder<UnicornStoreContext>();
-            builder.UseInMemoryStore(persist: true);
+            builder.UseInMemoryDatabase(persist: true);
             var options = builder.Options;
 
             using (var context = new UnicornStoreContext(options))
