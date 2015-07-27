@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,8 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
+using Microsoft.Data.Entity;
 
 namespace UnicornPacker
 {
@@ -27,20 +25,21 @@ namespace UnicornPacker
     sealed partial class App : Application
     {
         /// <summary>
-        /// Allows tracking page views, exceptions and other telemetry through the Microsoft Application Insights service.
-        /// </summary>
-        public static Microsoft.ApplicationInsights.TelemetryClient TelemetryClient;
-
-        /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            TelemetryClient = new Microsoft.ApplicationInsights.TelemetryClient();
-
+            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
+                Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
+                Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            using (var db = new OrdersContext())
+            {
+                db.Database.ApplyMigrations();
+            }
         }
 
         /// <summary>
@@ -50,46 +49,6 @@ namespace UnicornPacker
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            using (var db = new OrdersContext())
-            {
-                // TODO Workaround for DDL APIs not working on UAP
-                if (!db.Database.AsRelational().HasTables())
-                {
-                    var conn = db.Database.AsRelational().Connection.DbConnection;
-
-                    var orderCmd = conn.CreateCommand();
-                    orderCmd.CommandText = @"
-CREATE TABLE [Order] (
-  OrderId INTEGER PRIMARY KEY,
-  Addressee,
-  LineOne,
-  LineTwo,
-  CityOrTown,
-  StateOrProvince,
-  ZipOrPostalCode,
-  Country,
-  IsShipped,
-  IsShippingSynced
-);";
-
-                    var lineCmd = conn.CreateCommand();
-                    lineCmd.CommandText = @"
-CREATE TABLE OrderLine (
-  OrderId,
-  ProductId,
-  ProductName,
-  Quantity,
-  IsPacked,
-  CONSTRAINT PK_OrderLine PRIMARY KEY (OrderId, ProductId)
-);";
-
-                    conn.Open();
-                    orderCmd.ExecuteNonQuery();
-                    lineCmd.ExecuteNonQuery();
-                    conn.Close();
-
-                }
-            }
 
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
