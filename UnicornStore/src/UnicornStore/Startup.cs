@@ -4,10 +4,10 @@ using Microsoft.AspNet.Diagnostics.Entity;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
+using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
-using Microsoft.Framework.Runtime;
 using UnicornStore.AspNet.Models.Identity;
 using UnicornStore.AspNet.Models.UnicornStore;
 using UnicornStore.Logging;
@@ -38,7 +38,7 @@ namespace UnicornStore
         public void ConfigureServices(IServiceCollection services)
         {
             // Add Application settings to the services container.
-            services.Configure<AppSettings>(Configuration.GetConfigurationSection("AppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // Add EF services to the services container.
             services.AddEntityFramework()
@@ -54,8 +54,8 @@ namespace UnicornStore
                 .AddDefaultTokenProviders();
 
             // See comments in config.json for info on enabling Facebook auth
-            var facebookId = Configuration.Get("Secrets:Facebook:AppId");
-            var facebookSecret = Configuration.Get("Secrets:Facebook:AppSecret");
+            var facebookId = Configuration["Secrets:Facebook:AppId"];
+            var facebookSecret = Configuration["Secrets:Facebook:AppSecret"];
             if (!string.IsNullOrWhiteSpace(facebookId) && !string.IsNullOrWhiteSpace(facebookSecret))
             {
                 _useFacebookAuth = true;
@@ -67,8 +67,8 @@ namespace UnicornStore
             }
 
             // See comments in config.json for info on enabling Google auth
-            var googleId = Configuration.Get("Secrets:Google:ClientId");
-            var googleSecret = Configuration.Get("Secrets:Google:ClientSecret");
+            var googleId = Configuration["Secrets:Google:ClientId"];
+            var googleSecret = Configuration["Secrets:Google:ClientSecret"];
             if (!string.IsNullOrWhiteSpace(googleId) && !string.IsNullOrWhiteSpace(googleSecret))
             {
                 _useGoogleAuth = true;

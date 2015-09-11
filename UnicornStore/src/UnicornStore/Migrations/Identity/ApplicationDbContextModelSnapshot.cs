@@ -1,21 +1,23 @@
 using System;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
 using UnicornStore.AspNet.Models.Identity;
+using Microsoft.Data.Entity.SqlServer.Metadata;
 
 namespace UnicornStore.Migrations.Identity
 {
-    [ContextType(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        public override void BuildModel(ModelBuilder builder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
-            builder
-                .Annotation("ProductVersion", "7.0.0-beta6-13815")
-                .Annotation("SqlServer:ValueGenerationStrategy", "IdentityColumn");
+            modelBuilder
+                .Annotation("ProductVersion", "7.0.0-beta7-15540")
+                .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn);
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRole", b =>
                 {
                     b.Property<string>("Id");
 
@@ -36,7 +38,7 @@ namespace UnicornStore.Migrations.Identity
                     b.Annotation("Relational:TableName", "AspNetRoles");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -52,7 +54,7 @@ namespace UnicornStore.Migrations.Identity
                     b.Annotation("Relational:TableName", "AspNetRoleClaims");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -68,7 +70,7 @@ namespace UnicornStore.Migrations.Identity
                     b.Annotation("Relational:TableName", "AspNetUserClaims");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -83,7 +85,7 @@ namespace UnicornStore.Migrations.Identity
                     b.Annotation("Relational:TableName", "AspNetUserLogins");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -94,7 +96,7 @@ namespace UnicornStore.Migrations.Identity
                     b.Annotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -142,7 +144,7 @@ namespace UnicornStore.Migrations.Identity
                     b.Annotation("Relational:TableName", "AspNetUsers");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
                 {
                     b.Property<int>("UserAddressId")
                         .ValueGeneratedOnAdd();
@@ -175,28 +177,28 @@ namespace UnicornStore.Migrations.Identity
                     b.Annotation("Relational:TableName", "AspNetUserAddresses");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
                 {
                     b.Reference("Microsoft.AspNet.Identity.EntityFramework.IdentityRole")
                         .InverseCollection()
                         .ForeignKey("RoleId");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.Identity.ApplicationUser")
                         .InverseCollection()
                         .ForeignKey("UserId");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.Identity.ApplicationUser")
                         .InverseCollection()
                         .ForeignKey("UserId");
                 });
 
-            builder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole<string>", b =>
                 {
                     b.Reference("Microsoft.AspNet.Identity.EntityFramework.IdentityRole")
                         .InverseCollection()
@@ -207,7 +209,7 @@ namespace UnicornStore.Migrations.Identity
                         .ForeignKey("UserId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.Identity.UserAddress", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.Identity.ApplicationUser")
                         .InverseCollection()

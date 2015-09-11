@@ -10,7 +10,15 @@ namespace UnicornStore.AspNet.Models
     {
         public static bool AllMigrationsApplied(this DbContext context)
         {
-            return !((IMigrator)((IAccessor<IServiceProvider>)context).Service.GetService(typeof(IMigrator))).GetUnappliedMigrations().Any();
+            var applied = ((IHistoryRepository)((IAccessor<IServiceProvider>)context).Service.GetService(typeof(IHistoryRepository)))
+                .GetAppliedMigrations()
+                .Select(m => m.MigrationId);
+
+            var total = ((IMigrationsAssembly)((IAccessor<IServiceProvider>)context).Service.GetService(typeof(IMigrationsAssembly)))
+                .Migrations
+                .Select(m => m.Id);
+
+            return !total.Except(applied).Any();
         }
     }
 }

@@ -1,31 +1,28 @@
 using System;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
 using UnicornStore.AspNet.Models.UnicornStore;
+using Microsoft.Data.Entity.SqlServer.Metadata;
 
 namespace UnicornStore.Migrations.UnicornStore
 {
-    [ContextType(typeof(UnicornStoreContext))]
-    partial class CreateSchema
+    [DbContext(typeof(UnicornStoreContext))]
+    partial class InitialSchema
     {
         public override string Id
         {
-            get { return "20150723225900_CreateSchema"; }
+            get { return "20150911172337_InitialSchema"; }
         }
 
-        public override string ProductVersion
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-            get { return "7.0.0-beta6-13815"; }
-        }
+            modelBuilder
+                .Annotation("ProductVersion", "7.0.0-beta7-15540")
+                .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn);
 
-        public override void BuildTargetModel(ModelBuilder builder)
-        {
-            builder
-                .Annotation("ProductVersion", "7.0.0-beta6-13815")
-                .Annotation("SqlServer:ValueGenerationStrategy", "IdentityColumn");
-
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.CartItem", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.CartItem", b =>
                 {
                     b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd();
@@ -45,7 +42,7 @@ namespace UnicornStore.Migrations.UnicornStore
                     b.Key("CartItemId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Category", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd();
@@ -57,7 +54,7 @@ namespace UnicornStore.Migrations.UnicornStore
                     b.Key("CategoryId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Order", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd();
@@ -75,7 +72,7 @@ namespace UnicornStore.Migrations.UnicornStore
                     b.Key("OrderId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderLine", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderLine", b =>
                 {
                     b.Property<int>("OrderId");
 
@@ -88,7 +85,7 @@ namespace UnicornStore.Migrations.UnicornStore
                     b.Key("OrderId", "ProductId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", b =>
                 {
                     b.Property<int>("OrderId");
 
@@ -115,7 +112,7 @@ namespace UnicornStore.Migrations.UnicornStore
                     b.Key("OrderId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Product", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd();
@@ -135,7 +132,7 @@ namespace UnicornStore.Migrations.UnicornStore
                     b.Key("ProductId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.WebsiteAd", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.WebsiteAd", b =>
                 {
                     b.Property<int>("WebsiteAdId")
                         .ValueGeneratedOnAdd();
@@ -155,21 +152,21 @@ namespace UnicornStore.Migrations.UnicornStore
                     b.Key("WebsiteAdId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.CartItem", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.CartItem", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.UnicornStore.Product")
                         .InverseCollection()
                         .ForeignKey("ProductId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Category", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.Category", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.UnicornStore.Category")
                         .InverseCollection()
                         .ForeignKey("ParentCategoryId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderLine", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderLine", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.UnicornStore.Order")
                         .InverseCollection()
@@ -180,14 +177,14 @@ namespace UnicornStore.Migrations.UnicornStore
                         .ForeignKey("ProductId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.UnicornStore.Order")
                         .InverseReference()
                         .ForeignKey("UnicornStore.AspNet.Models.UnicornStore.OrderShippingDetails", "OrderId");
                 });
 
-            builder.Entity("UnicornStore.AspNet.Models.UnicornStore.Product", b =>
+            modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.Product", b =>
                 {
                     b.Reference("UnicornStore.AspNet.Models.UnicornStore.Category")
                         .InverseCollection()

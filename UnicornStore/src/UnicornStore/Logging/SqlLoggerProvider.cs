@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Framework.Logging;
 
 namespace UnicornStore.Logging
@@ -20,5 +21,8 @@ namespace UnicornStore.Logging
 
             return NullLogger.Instance;
         }
+
+        public void Dispose()
+        { }
     }
 }
