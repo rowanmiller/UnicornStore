@@ -12,15 +12,7 @@ namespace UnicornPacker.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string localDirectory = string.Empty;
-            try
-            {
-                localDirectory = ApplicationData.Current.LocalFolder.Path;
-            }
-            catch (InvalidOperationException)
-            { }
-
-            optionsBuilder.UseSqlite($"Data source={Path.Combine(localDirectory, "Orders001.db")}");
+            optionsBuilder.UseSqlite($"Data source={GetLocalDatabaseFile()}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,5 +24,19 @@ namespace UnicornPacker.Models
             modelBuilder.Entity<OrderLine>()
                 .Key(l => new { l.OrderId, l.ProductId });
         }
+
+        private static string GetLocalDatabaseFile()
+        {
+            string localDirectory = string.Empty;
+            try
+            {
+                localDirectory = ApplicationData.Current.LocalFolder.Path;
+            }
+            catch (InvalidOperationException)
+            { }
+
+            return Path.Combine(localDirectory, "Orders.db");
+        }
+
     }
 }
