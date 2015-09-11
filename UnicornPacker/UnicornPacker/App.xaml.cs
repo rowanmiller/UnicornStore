@@ -38,7 +38,7 @@ namespace UnicornPacker
 
             using (var db = new OrdersContext())
             {
-                db.Database.ApplyMigrations();
+                db.Database.Migrate();
             }
         }
 

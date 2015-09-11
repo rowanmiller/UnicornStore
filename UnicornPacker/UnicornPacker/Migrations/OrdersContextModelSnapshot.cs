@@ -1,20 +1,21 @@
 using System;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
 using UnicornPacker.Models;
 
-namespace UnicornPackerMigrations
+namespace UnicornPacker.Migrations
 {
-    [ContextType(typeof(OrdersContext))]
+    [DbContext(typeof(OrdersContext))]
     partial class OrdersContextModelSnapshot : ModelSnapshot
     {
-        public override void BuildModel(ModelBuilder builder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
-            builder
-                .Annotation("ProductVersion", "7.0.0-beta6-13815");
+            modelBuilder
+                .Annotation("ProductVersion", "7.0.0-beta7-15540");
 
-            builder.Entity("UnicornPacker.Models.Order", b =>
+            modelBuilder.Entity("UnicornPacker.Models.Order", b =>
                 {
                     b.Property<int>("OrderId");
 
@@ -39,7 +40,7 @@ namespace UnicornPackerMigrations
                     b.Key("OrderId");
                 });
 
-            builder.Entity("UnicornPacker.Models.OrderLine", b =>
+            modelBuilder.Entity("UnicornPacker.Models.OrderLine", b =>
                 {
                     b.Property<int>("OrderId");
 
@@ -54,7 +55,7 @@ namespace UnicornPackerMigrations
                     b.Key("OrderId", "ProductId");
                 });
 
-            builder.Entity("UnicornPacker.Models.OrderLine", b =>
+            modelBuilder.Entity("UnicornPacker.Models.OrderLine", b =>
                 {
                     b.Reference("UnicornPacker.Models.Order")
                         .InverseCollection()

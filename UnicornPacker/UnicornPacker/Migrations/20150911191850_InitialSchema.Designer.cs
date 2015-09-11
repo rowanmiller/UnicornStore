@@ -1,30 +1,26 @@
 using System;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations.Infrastructure;
+using Microsoft.Data.Entity.Migrations;
 using UnicornPacker.Models;
 
-namespace UnicornPackerMigrations
+namespace UnicornPacker.Migrations
 {
-    [ContextType(typeof(OrdersContext))]
+    [DbContext(typeof(OrdersContext))]
     partial class InitialSchema
     {
         public override string Id
         {
-            get { return "20150727220657_InitialSchema"; }
+            get { return "20150911191850_InitialSchema"; }
         }
 
-        public override string ProductVersion
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-            get { return "7.0.0-beta6-13815"; }
-        }
+            modelBuilder
+                .Annotation("ProductVersion", "7.0.0-beta7-15540");
 
-        public override void BuildTargetModel(ModelBuilder builder)
-        {
-            builder
-                .Annotation("ProductVersion", "7.0.0-beta6-13815");
-
-            builder.Entity("UnicornPacker.Models.Order", b =>
+            modelBuilder.Entity("UnicornPacker.Models.Order", b =>
                 {
                     b.Property<int>("OrderId");
 
@@ -49,7 +45,7 @@ namespace UnicornPackerMigrations
                     b.Key("OrderId");
                 });
 
-            builder.Entity("UnicornPacker.Models.OrderLine", b =>
+            modelBuilder.Entity("UnicornPacker.Models.OrderLine", b =>
                 {
                     b.Property<int>("OrderId");
 
@@ -64,7 +60,7 @@ namespace UnicornPackerMigrations
                     b.Key("OrderId", "ProductId");
                 });
 
-            builder.Entity("UnicornPacker.Models.OrderLine", b =>
+            modelBuilder.Entity("UnicornPacker.Models.OrderLine", b =>
                 {
                     b.Reference("UnicornPacker.Models.Order")
                         .InverseCollection()

@@ -104,9 +104,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20150727220657_InitialSchema.cs" />
-    <Compile Include="Migrations\20150727220657_InitialSchema.designer.cs">
-      <DependentUpon>20150727220657_InitialSchema.cs</DependentUpon>
+    <Compile Include="Migrations\20150911191850_InitialSchema.cs" />
+    <Compile Include="Migrations\20150911191850_InitialSchema.designer.cs">
+      <DependentUpon>20150911191850_InitialSchema.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\OrdersContextModelSnapshot.cs" />
     <Compile Include="Models\Order.cs" />
