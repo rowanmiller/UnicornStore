@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Framework.Logging;
+using Microsoft.Data.Entity.Update;
+using Microsoft.Data.Entity.Query;
 
 namespace UnicornStore.Logging
 {
@@ -8,8 +10,8 @@ namespace UnicornStore.Logging
     {
         private static readonly string[] _whitelist = new string[]
         {
-                "Microsoft.Data.Entity.Relational.Update.BatchExecutor",
-                "Microsoft.Data.Entity.Query.QueryContextFactory"
+                typeof(BatchExecutor).FullName,
+                typeof(QueryContextFactory).FullName
         };
 
         public ILogger CreateLogger(string name)
