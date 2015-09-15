@@ -16,6 +16,7 @@ namespace UnicornStore.AspNet.Models.UnicornStore
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<WebsiteAd> WebsiteAds { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Recall> Recalls { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +42,13 @@ namespace UnicornStore.AspNet.Models.UnicornStore
                 .AlternateKey(p => p.SKU);
 
             builder.Entity<CartItem>().Property<DateTime>("LastUpdated");
+
+            builder.Entity<Recall>()
+                .Reference(r => r.Product)
+                .InverseCollection()
+                .ForeignKey(r => r.ProductSKU)
+                .PrincipalKey(p => p.SKU)
+                .Required();
         }
 
         public override int SaveChanges()

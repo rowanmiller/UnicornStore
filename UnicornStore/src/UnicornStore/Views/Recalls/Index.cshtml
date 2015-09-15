@@ -1,0 +1,30 @@
+@using UnicornStore.AspNet.Models.UnicornStore
+@model IEnumerable<Recall>
+
+@{
+    ViewBag.Title = "Product Recalls";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>Current Recalls</h2>
+            @if (User.IsInRole(Roles.Admin))
+            {
+                <p>
+                    @Html.ActionLink("Create New", "Create")
+                </p>
+            }
+            @foreach (var recall in Model)
+            {
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">@recall.Product.DisplayName</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p class="lead">@recall.Details</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

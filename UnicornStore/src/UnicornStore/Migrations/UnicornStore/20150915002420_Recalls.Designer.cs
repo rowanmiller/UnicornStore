@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace UnicornStore.Migrations.UnicornStore
 {
     [DbContext(typeof(UnicornStoreContext))]
-    partial class UnicornStoreContextModelSnapshot : ModelSnapshot
+    partial class Recalls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150915002420_Recalls"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")

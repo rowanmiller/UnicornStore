@@ -35,8 +35,8 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("Browse Store", "Index", "Shop")</li>
+                        <li>@Html.ActionLink("Recalls", "Index", "Recalls")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         @if (User.IsInRole(UnicornStore.AspNet.Models.Identity.Roles.Admin))
                         {
                             <li class="dropdown">
