@@ -124,7 +124,11 @@ namespace UnicornStore.Migrations.UnicornStore
 
                     b.Property<decimal>("MSRP");
 
+                    b.Property<string>("SKU");
+
                     b.Key("ProductId");
+
+                    b.AlternateKey("SKU");
                 });
 
             modelBuilder.Entity("UnicornStore.AspNet.Models.UnicornStore.WebsiteAd", b =>

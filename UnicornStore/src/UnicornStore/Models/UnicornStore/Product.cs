@@ -5,6 +5,7 @@ namespace UnicornStore.AspNet.Models.UnicornStore
     public class Product
     {
         public int ProductId { get; set; }
+        public string SKU { get; set; }
         public string DisplayName { get; set; }
         public string Description { get; set; }
         public decimal MSRP { get; set; }
@@ -18,6 +19,5 @@ namespace UnicornStore.AspNet.Models.UnicornStore
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
     }
 }

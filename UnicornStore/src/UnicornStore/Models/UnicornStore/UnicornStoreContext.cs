@@ -37,6 +37,9 @@ namespace UnicornStore.AspNet.Models.UnicornStore
 
             builder.Entity<OrderShippingDetails>().ConfigureAddress();
 
+            builder.Entity<Product>()
+                .AlternateKey(p => p.SKU);
+
             builder.Entity<CartItem>().Property<DateTime>("LastUpdated");
         }
 

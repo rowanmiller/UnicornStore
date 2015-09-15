@@ -71,11 +71,13 @@ namespace UnicornStore.Migrations.UnicornStore
                     Description = table.Column<string>(isNullable: true),
                     DisplayName = table.Column<string>(isNullable: true),
                     ImageUrl = table.Column<string>(isNullable: true),
-                    MSRP = table.Column<decimal>(isNullable: false)
+                    MSRP = table.Column<decimal>(isNullable: false),
+                    SKU = table.Column<string>(isNullable: true, type: "nvarchar(200)")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.ProductId);
+                    table.UniqueConstraint("AK_Product_SKU", x => x.SKU);
                     table.ForeignKey(
                         name: "FK_Product_Category_CategoryId",
                         column: x => x.CategoryId,
