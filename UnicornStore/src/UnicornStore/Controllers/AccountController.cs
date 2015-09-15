@@ -91,6 +91,7 @@ namespace UnicornStore.AspNet.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await RegisterAdminIfFirstUser(user);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
@@ -193,6 +194,8 @@ namespace UnicornStore.AspNet.Controllers
                     result = await UserManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        await RegisterAdminIfFirstUser(user);
+
                         await SignInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
@@ -414,6 +417,14 @@ namespace UnicornStore.AspNet.Controllers
         }
 
         #region Helpers
+
+        private async Task RegisterAdminIfFirstUser(ApplicationUser user)
+        {
+            if(UserManager.Users.Count() == 1)
+            {
+                await UserManager.AddToRoleAsync(user, Roles.Admin);
+            }
+        }
 
         private void AddErrors(IdentityResult result)
         {
