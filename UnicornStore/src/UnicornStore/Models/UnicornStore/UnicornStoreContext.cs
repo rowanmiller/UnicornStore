@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 
-namespace UnicornStore.AspNet.Models.UnicornStore
+namespace UnicornStore.Models.UnicornStore
 {
     public class UnicornStoreContext : DbContext
     {
@@ -21,34 +21,40 @@ namespace UnicornStore.AspNet.Models.UnicornStore
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Category>()
-                .Reference(c => c.ParentCategory)
-                .InverseCollection(c => c.Children)
-                .ForeignKey(c => c.ParentCategoryId);
+                .HasOne(c => c.ParentCategory)
+                .WithMany(c => c.Children)
+                .HasForeignKey(c => c.ParentCategoryId);
 
             builder.Entity<OrderLine>()
-                .Key(ol => new { ol.OrderId, ol.ProductId });
+                .HasKey(ol => new { ol.OrderId, ol.ProductId });
 
             builder.Entity<OrderShippingDetails>()
-                .Key(d => d.OrderId);
+                .HasKey(d => d.OrderId);
 
             builder.Entity<Order>()
-                .Reference(o => o.ShippingDetails)
-                .InverseReference()
-                .ForeignKey<OrderShippingDetails>(d => d.OrderId);
+                .HasOne(o => o.ShippingDetails)
+                .WithOne()
+                .HasForeignKey<OrderShippingDetails>(d => d.OrderId);
+
+            builder.Entity<Order>()
+                .Ignore(o => o.DisplayId);
 
             builder.Entity<OrderShippingDetails>().ConfigureAddress();
 
             builder.Entity<Product>()
-                .AlternateKey(p => p.SKU);
+                .HasAlternateKey(p => p.SKU);
+
+            builder.Entity<Product>() 
+                .Ignore(p => p.Savings);
 
             builder.Entity<CartItem>().Property<DateTime>("LastUpdated");
 
             builder.Entity<Recall>()
-                .Reference(r => r.Product)
-                .InverseCollection()
-                .ForeignKey(r => r.ProductSKU)
-                .PrincipalKey(p => p.SKU)
-                .Required();
+                .HasOne(r => r.Product)
+                .WithMany()
+                .HasForeignKey(r => r.ProductSKU)
+                .HasPrincipalKey(p => p.SKU)
+                .IsRequired();
         }
 
         public override int SaveChanges()

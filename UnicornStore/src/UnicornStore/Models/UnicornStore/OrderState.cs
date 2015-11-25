@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace UnicornStore.AspNet.Models.UnicornStore
+namespace UnicornStore.Models.UnicornStore
 {
     public enum OrderState
     {

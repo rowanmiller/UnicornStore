@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Mvc;
-using UnicornStore.AspNet.Models.UnicornStore;
-using UnicornStore.AspNet.ViewModels.Home;
+using UnicornStore.Models.UnicornStore;
+using UnicornStore.ViewModels.Home;
 
-namespace UnicornStore.AspNet.Controllers
+namespace UnicornStore.Controllers
 {
     public class HomeController : Controller
     {

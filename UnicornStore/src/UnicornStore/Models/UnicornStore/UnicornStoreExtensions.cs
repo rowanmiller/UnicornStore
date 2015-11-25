@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Microsoft.AspNet.Builder;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace UnicornStore.AspNet.Models.UnicornStore
+namespace UnicornStore.Models.UnicornStore
 {
     public static class UnicornStoreExtensions
     {

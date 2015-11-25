@@ -3,10 +3,10 @@ using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
-using UnicornStore.AspNet.Models.UnicornStore;
-using UnicornStore.AspNet.ViewModels.ManageProducts;
+using UnicornStore.Models.UnicornStore;
+using UnicornStore.ViewModels.ManageProducts;
 
-namespace UnicornStore.AspNet.Controllers
+namespace UnicornStore.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class ManageProductsController : Controller

@@ -1,4 +1,4 @@
-﻿namespace UnicornStore.AspNet.Models.UnicornStore
+﻿namespace UnicornStore.Models.UnicornStore
 {
     public class Recall
     {

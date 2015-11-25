@@ -3,10 +3,10 @@ using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
-using UnicornStore.AspNet.Models.UnicornStore;
-using UnicornStore.AspNet.ViewModels.Orders;
+using UnicornStore.Models.UnicornStore;
+using UnicornStore.ViewModels.Orders;
 
-namespace UnicornStore.AspNet.Controllers
+namespace UnicornStore.Controllers
 {
     [Authorize]
     public class OrdersController : Controller

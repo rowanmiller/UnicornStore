@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Linq;
 using Microsoft.Data.Entity.Metadata.Builders;
 
-namespace UnicornStore.AspNet.Models
+namespace UnicornStore.Models
 {
     public interface IAddress
     {
@@ -44,7 +44,7 @@ namespace UnicornStore.AspNet.Models
                         .GetMethod("Property", new Type[] { typeof(string) })
                         .MakeGenericMethod(typeof(string));
 
-            var requiredProps = builder.Metadata.Properties
+            var requiredProps = builder.Metadata.GetProperties()
                 .Where(p => p.ClrType == typeof(string))
                 .Where(p => p.Name != nameof(IAddress.LineTwo));
 
@@ -52,7 +52,7 @@ namespace UnicornStore.AspNet.Models
             {
                 var propertyBuilder = ((PropertyBuilder)propertyMethod
                     .Invoke(builder, new object[] { item.Name }))
-                    .Required();
+                    .IsRequired();
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UnicornStore.AspNet.Models.Identity
+namespace UnicornStore.Models.Identity
 {
     public static class Roles
     {

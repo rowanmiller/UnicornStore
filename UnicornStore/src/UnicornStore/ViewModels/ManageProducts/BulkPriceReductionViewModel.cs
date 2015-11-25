@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UnicornStore.AspNet.ViewModels.ManageProducts
+namespace UnicornStore.ViewModels.ManageProducts
 {
     public class BulkPriceReductionViewModel
     {

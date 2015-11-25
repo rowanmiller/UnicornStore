@@ -1,10 +1,9 @@
 ﻿@using System.Security.Claims
 
-@if (User.Identity.IsAuthenticated)
+@if (User.IsSignedIn())
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-        @Html.AntiForgeryToken()
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Cart<span class="caret"></span></a>
@@ -18,16 +17,16 @@
                 <ul class="dropdown-menu" role="menu">
                     <li>@Html.ActionLink("My Orders", "Index", "Orders")</li>
                     <li>@Html.ActionLink("My Account", "Index", "Manage")</li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>
             </li>
-
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
-    }
+    </form>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a id="loginLink" asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
 }

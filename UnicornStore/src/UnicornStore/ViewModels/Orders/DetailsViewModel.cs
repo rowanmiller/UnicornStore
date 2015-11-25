@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.Models.UnicornStore;
 
-namespace UnicornStore.AspNet.ViewModels.Orders
+namespace UnicornStore.ViewModels.Orders
 {
     public class DetailsViewModel
     {

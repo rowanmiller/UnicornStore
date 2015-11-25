@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.Models.UnicornStore;
 
-namespace UnicornStore.AspNet.ViewModels.Shop
+namespace UnicornStore.ViewModels.Shop
 {
     public class IndexViewModel
     {

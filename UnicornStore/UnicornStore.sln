@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.24711.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{16B11054-F507-4C8C-8011-317EBAE299EE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7828B149-7CE9-4D85-9036-46E7E5D43FA3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3807C81-B758-4301-B175-8B1A7F3A143E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBC5310C-8B71-423E-9B2E-FBC4EC767B94}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "UnicornStore", "src\UnicornStore\UnicornStore.xproj", "{FE035CD7-73CA-42CA-A104-4CDDAF8D274E}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "UnicornStore", "src\UnicornStore\UnicornStore.xproj", "{2527DF71-0992-44C4-9839-9B774903CAE2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "UnicornStore.Tests", "src\UnicornStore.Tests\UnicornStore.Tests.xproj", "{3DD7AF52-DC33-4CC6-8C45-FA943BC7AA15}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "UnicornStore.Tests", "src\UnicornStore.Tests\UnicornStore.Tests.xproj", "{B15D79D0-3CC0-482C-AAE6-AC120EE1B68B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,20 +20,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FE035CD7-73CA-42CA-A104-4CDDAF8D274E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE035CD7-73CA-42CA-A104-4CDDAF8D274E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE035CD7-73CA-42CA-A104-4CDDAF8D274E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE035CD7-73CA-42CA-A104-4CDDAF8D274E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DD7AF52-DC33-4CC6-8C45-FA943BC7AA15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DD7AF52-DC33-4CC6-8C45-FA943BC7AA15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DD7AF52-DC33-4CC6-8C45-FA943BC7AA15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DD7AF52-DC33-4CC6-8C45-FA943BC7AA15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2527DF71-0992-44C4-9839-9B774903CAE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2527DF71-0992-44C4-9839-9B774903CAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2527DF71-0992-44C4-9839-9B774903CAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2527DF71-0992-44C4-9839-9B774903CAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B15D79D0-3CC0-482C-AAE6-AC120EE1B68B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B15D79D0-3CC0-482C-AAE6-AC120EE1B68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B15D79D0-3CC0-482C-AAE6-AC120EE1B68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B15D79D0-3CC0-482C-AAE6-AC120EE1B68B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{FE035CD7-73CA-42CA-A104-4CDDAF8D274E} = {16B11054-F507-4C8C-8011-317EBAE299EE}
-		{3DD7AF52-DC33-4CC6-8C45-FA943BC7AA15} = {16B11054-F507-4C8C-8011-317EBAE299EE}
+		{2527DF71-0992-44C4-9839-9B774903CAE2} = {7828B149-7CE9-4D85-9036-46E7E5D43FA3}
+		{B15D79D0-3CC0-482C-AAE6-AC120EE1B68B} = {7828B149-7CE9-4D85-9036-46E7E5D43FA3}
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace UnicornStore.AspNet.Models.Identity
+namespace UnicornStore.Models.Identity
 {
     public class UserAddress : IAddress
     {

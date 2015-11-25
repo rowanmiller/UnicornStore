@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace UnicornStore.AspNet.Models.UnicornStore
+namespace UnicornStore.Models.UnicornStore
 {
     public class Order
     {

@@ -4,12 +4,12 @@ using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
-using UnicornStore.AspNet.Models;
-using UnicornStore.AspNet.Models.Identity;
-using UnicornStore.AspNet.Models.UnicornStore;
-using UnicornStore.AspNet.ViewModels.Cart;
+using UnicornStore.Models;
+using UnicornStore.Models.Identity;
+using UnicornStore.Models.UnicornStore;
+using UnicornStore.ViewModels.Cart;
 
-namespace UnicornStore.AspNet.Controllers
+namespace UnicornStore.Controllers
 {
     [Authorize]
     public class CartController : Controller
@@ -117,7 +117,7 @@ namespace UnicornStore.AspNet.Controllers
                 }).ToList()
             };
 
-            db.ChangeTracker.TrackGraph(order, e => e.State = EntityState.Added);
+            db.Orders.Add(order);
             db.SaveChanges();
 
             // TODO workaround for https://github.com/aspnet/EntityFramework/issues/1449

@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using System.Linq;
-using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.Models.UnicornStore;
 
 namespace UnicornStore.Controllers
 {

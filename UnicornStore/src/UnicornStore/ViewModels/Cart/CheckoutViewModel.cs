@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using UnicornStore.AspNet.Models.Identity;
-using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.Models.Identity;
+using UnicornStore.Models.UnicornStore;
 
-namespace UnicornStore.AspNet.ViewModels.Cart
+namespace UnicornStore.ViewModels.Cart
 {
     public class CheckoutViewModel
     {

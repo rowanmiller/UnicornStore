@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace UnicornStore.AspNet.Models.Identity
+namespace UnicornStore.Models.Identity
 {
     public static class IdentityExtensions
     {

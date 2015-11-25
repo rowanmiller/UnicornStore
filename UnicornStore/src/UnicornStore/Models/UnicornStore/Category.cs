@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UnicornStore.AspNet.Models.UnicornStore
+namespace UnicornStore.Models.UnicornStore
 {
     public class Category
     {

@@ -4,19 +4,19 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Migrations;
 
-namespace UnicornStore.AspNet.Models
+namespace UnicornStore.Models
 {
     public static class DbContextExtensions
     {
         public static bool AllMigrationsApplied(this DbContext context)
         {
-            var applied = ((IHistoryRepository)((IAccessor<IServiceProvider>)context).Service.GetService(typeof(IHistoryRepository)))
+            var applied = context.GetService<IHistoryRepository>()
                 .GetAppliedMigrations()
                 .Select(m => m.MigrationId);
 
-            var total = ((IMigrationsAssembly)((IAccessor<IServiceProvider>)context).Service.GetService(typeof(IMigrationsAssembly)))
+            var total = context.GetService<IMigrationsAssembly>()
                 .Migrations
-                .Select(m => m.Id);
+                .Select(m => m.Key);
 
             return !total.Except(applied).Any();
         }

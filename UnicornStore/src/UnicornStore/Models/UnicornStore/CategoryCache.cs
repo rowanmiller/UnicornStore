@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.Models.UnicornStore;
 
-namespace UnicornStore.AspNet.Models.UnicornStore
+namespace UnicornStore.Models.UnicornStore
 {
     public class CategoryCache
     {

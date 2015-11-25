@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Data.Entity;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Data.Entity;
-using UnicornStore.AspNet.Controllers;
-using UnicornStore.AspNet.Models.UnicornStore;
+using UnicornStore.Controllers;
+using UnicornStore.Models.UnicornStore;
 using Xunit;
 
 namespace UnicornStore.Tests.Controllers
@@ -13,7 +13,7 @@ namespace UnicornStore.Tests.Controllers
         public void GetPendingOrders()
         {
             var builder = new DbContextOptionsBuilder<UnicornStoreContext>();
-            builder.UseInMemoryDatabase(persist: true);
+            builder.UseInMemoryDatabase();
             var options = builder.Options;
 
             using (var context = new UnicornStoreContext(options))
