@@ -21,8 +21,17 @@ namespace UnicornPacker.Models
                 .Property(o => o.OrderId)
                 .ValueGeneratedNever();
 
+            modelBuilder.Entity<Order>()
+                .Ignore(o => o.DisplayId);
+
+            modelBuilder.Entity<Order>()
+                .Ignore(o => o.LineTwoVisibility);
+
             modelBuilder.Entity<OrderLine>()
-                .Key(l => new { l.OrderId, l.ProductId });
+                .HasKey(l => new { l.OrderId, l.ProductId });
+
+            modelBuilder.Entity<OrderLine>()
+                .Ignore(o => o.ProductDisplayId);
         }
 
         private static string GetLocalDatabaseFile()

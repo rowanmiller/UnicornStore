@@ -1,11 +1,11 @@
 ﻿{
   "dependencies": {
-    "EntityFramework.Commands": "7.0.0-beta7",
-    "EntityFramework.SQLite": "7.0.0-beta7",
+    "EntityFramework.Commands": "7.0.0-rc1-final",
+    "EntityFramework.SQLite": "7.0.0-rc1-final",
     "Microsoft.ApplicationInsights": "1.0.0",
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.0.0",
     "Microsoft.ApplicationInsights.WindowsApps": "1.0.0",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.1-beta-23225",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Newtonsoft.Json": "7.0.1"
   },
   "frameworks": {

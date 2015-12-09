@@ -12,16 +12,16 @@ namespace UnicornPacker.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(isNullable: false),
-                    Addressee = table.Column<string>(isNullable: true),
-                    CityOrTown = table.Column<string>(isNullable: true),
-                    Country = table.Column<string>(isNullable: true),
-                    IsShipped = table.Column<bool>(isNullable: false),
-                    IsShippingSynced = table.Column<bool>(isNullable: false),
-                    LineOne = table.Column<string>(isNullable: true),
-                    LineTwo = table.Column<string>(isNullable: true),
-                    StateOrProvince = table.Column<string>(isNullable: true),
-                    ZipOrPostalCode = table.Column<string>(isNullable: true)
+                    OrderId = table.Column<int>(nullable: false),
+                    Addressee = table.Column<string>(nullable: true),
+                    CityOrTown = table.Column<string>(nullable: true),
+                    Country = table.Column<string>(nullable: true),
+                    IsShipped = table.Column<bool>(nullable: false),
+                    IsShippingSynced = table.Column<bool>(nullable: false),
+                    LineOne = table.Column<string>(nullable: true),
+                    LineTwo = table.Column<string>(nullable: true),
+                    StateOrProvince = table.Column<string>(nullable: true),
+                    ZipOrPostalCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,11 +31,11 @@ namespace UnicornPacker.Migrations
                 name: "OrderLine",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(isNullable: false),
-                    ProductId = table.Column<int>(isNullable: false),
-                    IsPacked = table.Column<bool>(isNullable: false),
-                    ProductName = table.Column<string>(isNullable: true),
-                    Quantity = table.Column<int>(isNullable: false)
+                    OrderId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    IsPacked = table.Column<bool>(nullable: false),
+                    ProductName = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,7 +44,8 @@ namespace UnicornPacker.Migrations
                         name: "FK_OrderLine_Order_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Order",
-                        principalColumn: "OrderId");
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
         }
 

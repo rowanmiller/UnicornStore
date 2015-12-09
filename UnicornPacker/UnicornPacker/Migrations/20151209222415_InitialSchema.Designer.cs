@@ -8,17 +8,13 @@ using UnicornPacker.Models;
 namespace UnicornPacker.Migrations
 {
     [DbContext(typeof(OrdersContext))]
+    [Migration("20151209222415_InitialSchema")]
     partial class InitialSchema
     {
-        public override string Id
-        {
-            get { return "20150911191850_InitialSchema"; }
-        }
-
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Annotation("ProductVersion", "7.0.0-beta7-15540");
+                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348");
 
             modelBuilder.Entity("UnicornPacker.Models.Order", b =>
                 {
@@ -42,7 +38,7 @@ namespace UnicornPacker.Migrations
 
                     b.Property<string>("ZipOrPostalCode");
 
-                    b.Key("OrderId");
+                    b.HasKey("OrderId");
                 });
 
             modelBuilder.Entity("UnicornPacker.Models.OrderLine", b =>
@@ -57,14 +53,14 @@ namespace UnicornPacker.Migrations
 
                     b.Property<int>("Quantity");
 
-                    b.Key("OrderId", "ProductId");
+                    b.HasKey("OrderId", "ProductId");
                 });
 
             modelBuilder.Entity("UnicornPacker.Models.OrderLine", b =>
                 {
-                    b.Reference("UnicornPacker.Models.Order")
-                        .InverseCollection()
-                        .ForeignKey("OrderId");
+                    b.HasOne("UnicornPacker.Models.Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
                 });
         }
     }
