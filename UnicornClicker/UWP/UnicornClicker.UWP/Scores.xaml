@@ -1,0 +1,71 @@
+﻿<Page
+    x:Class="UnicornClicker.UWP.Scores"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnicornClicker.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel 
+            Grid.Row="0" 
+            HorizontalAlignment="Left"
+            Orientation="Horizontal" 
+            Name="Navigation"
+            Visibility="{Binding NavigationVisibility}">
+
+            <Button Click="Back_Click" Style="{StaticResource SymbolButton}">
+                <StackPanel>
+                    <Grid>
+                        <Ellipse Width="50" Height="50" StrokeThickness="2" Stroke="White"></Ellipse>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
+                    </Grid>
+                    <TextBlock Text="Back" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="10" >
+            <TextBlock FontSize="30">Your Top Scores</TextBlock>
+            <ListView ItemsSource="{Binding TopScores}" SelectionMode="None" Margin="0,10">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="25" Text="Clicks per Second:" Margin="0,0,10,0" />
+                                <TextBlock FontSize="25" Text="{Binding ClicksPerSecond}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="18" Text="Played:" Margin="0,0,5,0" />
+                                <TextBlock FontSize="18" Text="{Binding Played}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="18" Text="Duration:" Margin="0,0,5,0" />
+                                <TextBlock FontSize="18" Text="{Binding Duration}" Margin="0,0,5,0" />
+                                <TextBlock FontSize="18" Text="seconds" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="18" Text="Clicks:" Margin="0,0,5,0" />
+                                <TextBlock FontSize="18" Text="{Binding Clicks}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Page>

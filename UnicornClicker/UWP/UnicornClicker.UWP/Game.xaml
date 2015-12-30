@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="UnicornClicker.UWP.Game"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UnicornClicker.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+
+        <StackPanel 
+            Grid.Row="0" 
+            HorizontalAlignment="Left"
+            Orientation="Horizontal" 
+            Name="Navigation"
+            Visibility="{Binding NavigationVisibility}">
+            
+            <Button Click="Back_Click" Style="{StaticResource SymbolButton}">
+                <StackPanel>
+                    <Grid>
+                        <Ellipse Width="50" Height="50" StrokeThickness="2" Stroke="White"></Ellipse>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" />
+                    </Grid>
+                    <TextBlock Text="Back" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button Click="Retry_Click" Style="{StaticResource SymbolButton}">
+                <StackPanel>
+                    <Grid>
+                        <Ellipse Width="50" Height="50" StrokeThickness="2" Stroke="White"></Ellipse>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72C;" />
+                    </Grid>
+                    <TextBlock Text="Retry" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <Button
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Click="Unicorn_Click" 
+            BorderThickness="0"
+            Background="Transparent">
+            
+            <Grid>
+                <Image Source="Assets\Unicorn.png" Opacity="{Binding UnicornOpacity}" />
+                
+                <TextBlock 
+                    Text="{Binding CountdownText}" 
+                    Foreground="White" 
+                    FontSize="180" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" />
+
+            </Grid>
+        </Button>
+
+        <StackPanel 
+            Grid.Row="2"
+            HorizontalAlignment="Center">
+
+            <TextBlock HorizontalAlignment="Center" FontSize="20" Text="{Binding GameTimeText}" />
+            <TextBlock HorizontalAlignment="Center" FontSize="20" Text="{Binding ClickCountText}" />
+        </StackPanel>
+    </Grid>
+</Page>
