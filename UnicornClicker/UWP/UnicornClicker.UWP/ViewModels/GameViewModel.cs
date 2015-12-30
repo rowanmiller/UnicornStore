@@ -7,7 +7,7 @@ namespace UnicornClicker.UWP.ViewModels
 {
     public class GameViewModel : INotifyPropertyChanged
     {
-        private static readonly int DEFAULT_GAME_TIME = 5;
+        private static readonly int DEFAULT_GAME_TIME = 30;
         private static readonly int DEFAULT_COUNTDOWN_TIME = 3;
 
         private DispatcherTimer _countdownTimer;
