@@ -6,10 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
-            @Html.Partial("_CategorySidebar", Model.TopLevelCategories)
-        </div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
                 <ol class="carousel-indicators">
                     @for (int i = 0; i < Model.CurrentAds.Count(); i++)
@@ -26,11 +23,8 @@
                                 <img src="@Url.Content(Model.CurrentAds[i].ImageUrl)" class="img-responsive">
                                 <div class="container">
                                     <div class="carousel-caption">
-                                        <p>
-                                            @Model.CurrentAds[i].TagLine
-                                            <br />
-                                            <span style="font-size: small;">@Model.CurrentAds[i].Details</span>
-                                        </p>
+                                        <h1>@Model.CurrentAds[i].TagLine</h1>
+                                        <span style="font-size: small;">@Model.CurrentAds[i].Details</span>
                                     </div>
                                 </div>
                             </a>
@@ -39,6 +33,127 @@
                     }
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <p class="lead" style="text-align: center;">
+                                    Unicorn Store is a set of applications that show Entity Framework 7 being used to access various databases engines in different .NET applications
+                                </p>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h2>Unicorn Store</h2>
+                                <p class="lead">
+                                    The companies primary e-commerce site... selling all things unicorn and hosted at unicornstore.net
+                                </p>
+                                <p>
+                                    <ul>
+                                        <li>ASP.NET 5</li>
+                                        <li>Entity Framework 7</li>
+                                        <li>Microsoft SQL Server</li>
+                                    </ul>
+                                    <a class="btn btn-success" href="https://github.com/rowanmiller/UnicornStore/tree/master/UnicornStore">View the Code</a>
+                                    <a class="btn btn-info" asp-controller="Shop" >Browse the Store</a>
+                                </p>
+                            </div>
+                            <div class="col-md-5">
+                                <img src="~/images/applications/UnicornStore.png" />
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h2>Unicorn Packer</h2>
+                                <p class="lead">
+                                    The warehouse application used by Unicorn Store workers to pack and ship orders placed thru the website
+                                </p>
+                                <p>
+                                    <ul>
+                                        <li>Universal Windows Platform (UWP)</li>
+                                        <li>Entity Framework 7</li>
+                                        <li>SQLite</li>
+                                        <li>ASP.NET WebAPI</li>
+                                    </ul>
+                                    <a class="btn btn-success" href="https://github.com/rowanmiller/UnicornStore/tree/master/UnicornPacker">View the Code</a>
+                                </p>
+                            </div>
+                            <div class="col-md-5">
+                                <img src="~/images/applications/UnicornPacker.png" />
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h2>Unicorn Clicker</h2>
+                                <p class="lead">
+                                    A mindless game implemented in UWP and available soon in the app store for your Windows 10 device
+                                </p>
+                                <p>
+                                    <ul>
+                                        <li>Universal Windows Platform (UWP)</li>
+                                        <li>Entity Framework 7</li>
+                                        <li>SQLite</li>
+                                    </ul>
+                                    <a class="btn btn-success" href="https://github.com/rowanmiller/UnicornStore/tree/master/UnicornClicker/UWP">View the Code</a>
+                                </p>
+                            </div>
+                            <div class="col-md-5">
+                                <img src="~/images/applications/UnicornClicker.png" />
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h2>Unicorn Designer</h2>
+                                <p class="lead">
+                                    An OSX work order management application for the graphic designers at Unicorn Store
+                                </p>
+                                <p>
+                                    <ul>
+                                        <li>MonoDevelop</li>
+                                        <li>Entity Framework 7</li>
+                                        <li>PostgreSQL (Npgsql provider)</li>
+                                    </ul>
+                                    <a class="btn btn-success" href="https://github.com/rowanmiller/UnicornStore/tree/master/UnicornDesigner">View the Code</a>
+                                </p>
+                            </div>
+                            <div class="col-md-5">
+                                <img src="~/images/applications/UnicornDesigner.png" />
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

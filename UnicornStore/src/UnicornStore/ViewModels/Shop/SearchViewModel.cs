@@ -8,5 +8,6 @@ namespace UnicornStore.ViewModels.Shop
     {
         public string SearchTerm { get; set; }
         public IEnumerable<Product> Products { get; set; }
+        public IEnumerable<Category> TopLevelCategories { get; set; }
     }
 }

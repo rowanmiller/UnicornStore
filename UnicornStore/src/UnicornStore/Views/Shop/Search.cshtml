@@ -6,7 +6,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-2">
+        <div class="col-md-2">
+            @Html.Partial("_CategorySidebar", Model.TopLevelCategories)
+        </div>
+        <div class="col-md-10">
             <div>
                 <ul class="breadcrumb">
                     <li>Search</li>

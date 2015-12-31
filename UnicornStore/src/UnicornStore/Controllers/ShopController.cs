@@ -96,7 +96,8 @@ namespace UnicornStore.Controllers
             return View(new SearchViewModel
             {
                 SearchTerm = term,
-                Products = products
+                Products = products,
+                TopLevelCategories = categoryCache.TopLevel()
             });
         }
     }

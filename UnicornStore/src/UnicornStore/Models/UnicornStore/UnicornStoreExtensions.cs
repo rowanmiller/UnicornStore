@@ -6,9 +6,8 @@ namespace UnicornStore.Models.UnicornStore
 {
     public static class UnicornStoreExtensions
     {
-        public static void EnsureSampleData(this IApplicationBuilder app)
+        public static void EnsureSeedData(this UnicornStoreContext context)
         {
-            var context = app.ApplicationServices.GetService<UnicornStoreContext>();
             if (context.AllMigrationsApplied())
             {
                 if (!context.Products.Any())
@@ -37,9 +36,9 @@ namespace UnicornStore.Models.UnicornStore
                     var kitchenAndDining = context.Categories.Single(c => c.DisplayName == "Kitchen & Dining");
                     var clothing = context.Categories.Single(c => c.DisplayName == "Clothing");
 
-                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/DemoApplication.png", TagLine = "Unicorn Store is a demo application for Entity Framework 7", Details = "See github.com/rowanmiller/UnicornStore for details", Url = "http://github.com/rowanmiller/UnicornStore" });
-                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/GotUnicorn.png", TagLine = "We've got you covered... literally", Details = "Checkout our range of clothing sporting our flagship unicorn", Url = "/Shop/Category/" + clothing.CategoryId.ToString() });
-                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/CoffeeTime.png", TagLine = "Drink and eat in style with our range of unicorn wares", Url = "/Shop/Category/" + kitchenAndDining.CategoryId.ToString() });
+                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/Unicorn.png", TagLine = "Welcome to Unicorn Store", Details = "A series of applications showing EF7 in action", Url = "http://unicornstore.net" });
+                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/GitHub.png", TagLine = "Source code available on GitHub", Details = "github.com/rowanmiller/UnicornStore", Url = "http://github.com/rowanmiller/UnicornStore" });
+                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/UnicornClicker.png", TagLine = "Possibly the lamest game of the year", Details = "Coming soon to the Windows 10 app store" });
                     context.SaveChanges();
                 }
             }

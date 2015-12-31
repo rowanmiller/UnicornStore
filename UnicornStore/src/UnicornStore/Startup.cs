@@ -62,19 +62,18 @@ namespace UnicornStore
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-                    .CreateScope())
-                {
-                    serviceScope.ServiceProvider.GetService<UnicornStoreContext>().Database.Migrate();
-                    serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
-                }
-
-                app.EnsureSampleData();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+            }
+
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<UnicornStoreContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetService<UnicornStoreContext>().EnsureSeedData();
             }
 
             app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
