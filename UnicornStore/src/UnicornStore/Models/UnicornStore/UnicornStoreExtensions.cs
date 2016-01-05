@@ -38,7 +38,7 @@ namespace UnicornStore.Models.UnicornStore
 
                     context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/Unicorn.png", TagLine = "Welcome to Unicorn Store", Details = "A series of applications showing EF7 in action", Url = "http://unicornstore.net" });
                     context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/GitHub.png", TagLine = "Source code available on GitHub", Details = "github.com/rowanmiller/UnicornStore", Url = "http://github.com/rowanmiller/UnicornStore" });
-                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/UnicornClicker.png", TagLine = "Possibly the lamest game of the year", Details = "Coming soon to the Windows 10 app store" });
+                    context.WebsiteAds.Add(new WebsiteAd { ImageUrl = "/images/banners/UnicornClicker.png", TagLine = "Possibly the lamest game of the year", Details = "Available in the Windows 10 app store", Url = "https://www.microsoft.com/en-us/store/apps/unicorn-clicker/9nblggh5jzrk" });
                     context.SaveChanges();
                 }
             }
