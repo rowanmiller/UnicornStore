@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using UnicornStore.Models.UnicornStore;
 using UnicornStore.ViewModels.Shop;
+using UnicornStore.Data;
 
 namespace UnicornStore.Controllers
 {
@@ -42,14 +43,14 @@ namespace UnicornStore.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             var category = categoryCache.FromKey(id.Value);
 
             if (category == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             var ids = categoryCache.GetThisAndChildIds(id.Value);
@@ -66,7 +67,7 @@ namespace UnicornStore.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             var product = db.Products
@@ -75,7 +76,7 @@ namespace UnicornStore.Controllers
 
             if (product == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             return View(new ProductViewModel
