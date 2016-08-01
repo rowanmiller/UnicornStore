@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using Microsoft.Data.Entity.Query;
-using Microsoft.Data.Entity.Update.Internal;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace UnicornStore.Logging
 {

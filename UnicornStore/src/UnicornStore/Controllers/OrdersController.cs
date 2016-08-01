@@ -1,10 +1,11 @@
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UnicornStore.Models.UnicornStore;
 using UnicornStore.ViewModels.Orders;
+using UnicornStore.Data;
 
 namespace UnicornStore.Controllers
 {
@@ -22,7 +23,7 @@ namespace UnicornStore.Controllers
         {
             var orders = db.Orders
                 .Include(o => o.Lines).ThenInclude(l => l.Product)
-                .Where(o => o.Username == User.GetUserName())
+                .Where(o => o.Username == User.Identity.Name)
                 .Where(o => o.State != OrderState.CheckingOut);
 
             return View(orders);
@@ -37,17 +38,17 @@ namespace UnicornStore.Controllers
 
             if (order == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
-            if (order.Username != User.GetUserName())
+            if (order.Username != User.Identity.Name)
             {
-                return new HttpStatusCodeResult(403);
+                return new StatusCodeResult(403);
             }
 
             if (order.State == OrderState.CheckingOut)
             {
-                return new HttpStatusCodeResult(400);
+                return new StatusCodeResult(400);
             }
 
             return View(new DetailsViewModel

@@ -1,11 +1,11 @@
-using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
-using UnicornStore.Models.UnicornStore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using UnicornStore.Data;
 
-namespace UnicornStore.Migrations
+namespace UnicornStore.Data.Migrations.UnicornStore
 {
     [DbContext(typeof(UnicornStoreContext))]
     partial class UnicornStoreContextModelSnapshot : ModelSnapshot
@@ -13,7 +13,7 @@ namespace UnicornStore.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc1-16305")
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.CartItem", b =>
@@ -34,6 +34,10 @@ namespace UnicornStore.Migrations
                     b.Property<string>("Username");
 
                     b.HasKey("CartItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.Category", b =>
@@ -46,6 +50,10 @@ namespace UnicornStore.Migrations
                     b.Property<int?>("ParentCategoryId");
 
                     b.HasKey("CategoryId");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.Order", b =>
@@ -54,8 +62,6 @@ namespace UnicornStore.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CheckoutBegan");
-
-                    b.Property<string>("DisplayId");
 
                     b.Property<DateTime?>("OrderPlaced");
 
@@ -66,6 +72,8 @@ namespace UnicornStore.Migrations
                     b.Property<string>("Username");
 
                     b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.OrderLine", b =>
@@ -79,6 +87,12 @@ namespace UnicornStore.Migrations
                     b.Property<int>("Quantity");
 
                     b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderLine");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.OrderShippingDetails", b =>
@@ -106,6 +120,11 @@ namespace UnicornStore.Migrations
                         .IsRequired();
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("OrderShippingDetails");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.Product", b =>
@@ -125,9 +144,14 @@ namespace UnicornStore.Migrations
 
                     b.Property<decimal>("MSRP");
 
-                    b.Property<string>("SKU");
+                    b.Property<string>("SKU")
+                        .IsRequired();
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.Recall", b =>
@@ -141,6 +165,10 @@ namespace UnicornStore.Migrations
                         .IsRequired();
 
                     b.HasKey("RecallId");
+
+                    b.HasIndex("ProductSKU");
+
+                    b.ToTable("Recalls");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.WebsiteAd", b =>
@@ -161,53 +189,61 @@ namespace UnicornStore.Migrations
                     b.Property<string>("Url");
 
                     b.HasKey("WebsiteAdId");
+
+                    b.ToTable("WebsiteAds");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.CartItem", b =>
                 {
-                    b.HasOne("UnicornStore.Models.UnicornStore.Product")
+                    b.HasOne("UnicornStore.Models.UnicornStore.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.Category", b =>
                 {
-                    b.HasOne("UnicornStore.Models.UnicornStore.Category")
-                        .WithMany()
+                    b.HasOne("UnicornStore.Models.UnicornStore.Category", "ParentCategory")
+                        .WithMany("Children")
                         .HasForeignKey("ParentCategoryId");
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.OrderLine", b =>
                 {
-                    b.HasOne("UnicornStore.Models.UnicornStore.Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
+                    b.HasOne("UnicornStore.Models.UnicornStore.Order", "Order")
+                        .WithMany("Lines")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("UnicornStore.Models.UnicornStore.Product")
+                    b.HasOne("UnicornStore.Models.UnicornStore.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.OrderShippingDetails", b =>
                 {
                     b.HasOne("UnicornStore.Models.UnicornStore.Order")
-                        .WithOne()
-                        .HasForeignKey("UnicornStore.Models.UnicornStore.OrderShippingDetails", "OrderId");
+                        .WithOne("ShippingDetails")
+                        .HasForeignKey("UnicornStore.Models.UnicornStore.OrderShippingDetails", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.Product", b =>
                 {
-                    b.HasOne("UnicornStore.Models.UnicornStore.Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                    b.HasOne("UnicornStore.Models.UnicornStore.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("UnicornStore.Models.UnicornStore.Recall", b =>
                 {
-                    b.HasOne("UnicornStore.Models.UnicornStore.Product")
+                    b.HasOne("UnicornStore.Models.UnicornStore.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductSKU")
-                        .HasPrincipalKey("SKU");
+                        .HasPrincipalKey("SKU")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
