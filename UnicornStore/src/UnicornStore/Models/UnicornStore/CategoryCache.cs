@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnicornStore.Models.UnicornStore;
+using UnicornStore.Data;
 
 namespace UnicornStore.Models.UnicornStore
 {

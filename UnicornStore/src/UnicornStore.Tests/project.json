@@ -1,32 +1,30 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "UnicornStore.Tests Class Library",
   "authors": [ "rowmil" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
-
-  "dependencies": { 
-    "UnicornStore": "",
+  "dependencies": {
+    "UnicornStore": "*",
     "EntityFramework.InMemory": "7.0.0-rc1-final",
-    "xunit": "2.1.0-rc1-build3168",
-    "xunit.runner.dnx": "2.1.0-rc1-build204"
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.CSharp": "4.0.1-rc2-24027",
+    "System.Threading": "4.0.11-rc2-24027",
+    "xunit": "2.1.0-rc2-build3176"
   },
 
   "commands": {
     "test": "xunit.runner.dnx"
   },
-
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": {
-      "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23509",
-        "System.Collections": "4.0.11-beta-23509",
-        "System.Linq": "4.0.1-beta-23509",
-        "System.Runtime": "4.0.21-beta-23509",
-        "System.Threading": "4.0.11-beta-23509"
-      }
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
     }
+  },
+  "packOptions": {
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": ""
   }
 }
