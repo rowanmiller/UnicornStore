@@ -1,6 +1,7 @@
 ﻿using System.Linq;
-using Microsoft.AspNet.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using UnicornStore.Data;
 
 namespace UnicornStore.Models.UnicornStore
 {

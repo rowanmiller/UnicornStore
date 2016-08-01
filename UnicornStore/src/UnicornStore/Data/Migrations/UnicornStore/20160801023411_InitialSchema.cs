@@ -1,16 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity.Migrations;
-using Microsoft.Data.Entity.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace UnicornStore.Migrations
+namespace UnicornStore.Data.Migrations.UnicornStore
 {
     public partial class InitialSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     CategoryId = table.Column<int>(nullable: false)
@@ -20,22 +20,22 @@ namespace UnicornStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.CategoryId);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                     table.ForeignKey(
-                        name: "FK_Category_Category_ParentCategoryId",
+                        name: "FK_Categories_Categories_ParentCategoryId",
                         column: x => x.ParentCategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CheckoutBegan = table.Column<DateTime>(nullable: false),
-                    DisplayId = table.Column<string>(nullable: true),
                     OrderPlaced = table.Column<DateTime>(nullable: true),
                     State = table.Column<int>(nullable: false),
                     Total = table.Column<decimal>(nullable: false),
@@ -43,10 +43,11 @@ namespace UnicornStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                 });
+
             migrationBuilder.CreateTable(
-                name: "WebsiteAd",
+                name: "WebsiteAds",
                 columns: table => new
                 {
                     WebsiteAdId = table.Column<int>(nullable: false)
@@ -60,10 +61,11 @@ namespace UnicornStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WebsiteAd", x => x.WebsiteAdId);
+                    table.PrimaryKey("PK_WebsiteAds", x => x.WebsiteAdId);
                 });
+
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(nullable: false)
@@ -74,19 +76,20 @@ namespace UnicornStore.Migrations
                     DisplayName = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
                     MSRP = table.Column<decimal>(nullable: false),
-                    SKU = table.Column<string>(nullable: true)
+                    SKU = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.ProductId);
-                    table.UniqueConstraint("AK_Product_SKU", x => x.SKU);
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
+                    table.UniqueConstraint("AK_Products_SKU", x => x.SKU);
                     table.ForeignKey(
-                        name: "FK_Product_Category_CategoryId",
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
             migrationBuilder.CreateTable(
                 name: "OrderShippingDetails",
                 columns: table => new
@@ -104,14 +107,15 @@ namespace UnicornStore.Migrations
                 {
                     table.PrimaryKey("PK_OrderShippingDetails", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_OrderShippingDetails_Order_OrderId",
+                        name: "FK_OrderShippingDetails_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
             migrationBuilder.CreateTable(
-                name: "CartItem",
+                name: "CartItems",
                 columns: table => new
                 {
                     CartItemId = table.Column<int>(nullable: false)
@@ -125,14 +129,15 @@ namespace UnicornStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartItem", x => x.CartItemId);
+                    table.PrimaryKey("PK_CartItems", x => x.CartItemId);
                     table.ForeignKey(
-                        name: "FK_CartItem_Product_ProductId",
+                        name: "FK_CartItems_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
             migrationBuilder.CreateTable(
                 name: "OrderLine",
                 columns: table => new
@@ -146,20 +151,21 @@ namespace UnicornStore.Migrations
                 {
                     table.PrimaryKey("PK_OrderLine", x => new { x.OrderId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_OrderLine_Order_OrderId",
+                        name: "FK_OrderLine_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderLine_Product_ProductId",
+                        name: "FK_OrderLine_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
             migrationBuilder.CreateTable(
-                name: "Recall",
+                name: "Recalls",
                 columns: table => new
                 {
                     RecallId = table.Column<int>(nullable: false)
@@ -169,26 +175,77 @@ namespace UnicornStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recall", x => x.RecallId);
+                    table.PrimaryKey("PK_Recalls", x => x.RecallId);
                     table.ForeignKey(
-                        name: "FK_Recall_Product_ProductSKU",
+                        name: "FK_Recalls_Products_ProductSKU",
                         column: x => x.ProductSKU,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "SKU",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_ProductId",
+                table: "CartItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_ParentCategoryId",
+                table: "Categories",
+                column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderLine_OrderId",
+                table: "OrderLine",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderLine_ProductId",
+                table: "OrderLine",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderShippingDetails_OrderId",
+                table: "OrderShippingDetails",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recalls_ProductSKU",
+                table: "Recalls",
+                column: "ProductSKU");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable("CartItem");
-            migrationBuilder.DropTable("OrderLine");
-            migrationBuilder.DropTable("OrderShippingDetails");
-            migrationBuilder.DropTable("Recall");
-            migrationBuilder.DropTable("WebsiteAd");
-            migrationBuilder.DropTable("Order");
-            migrationBuilder.DropTable("Product");
-            migrationBuilder.DropTable("Category");
+            migrationBuilder.DropTable(
+                name: "CartItems");
+
+            migrationBuilder.DropTable(
+                name: "OrderLine");
+
+            migrationBuilder.DropTable(
+                name: "OrderShippingDetails");
+
+            migrationBuilder.DropTable(
+                name: "Recalls");
+
+            migrationBuilder.DropTable(
+                name: "WebsiteAds");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }

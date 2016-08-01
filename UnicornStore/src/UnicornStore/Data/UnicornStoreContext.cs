@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using UnicornStore.Models;
+using UnicornStore.Models.UnicornStore;
 
-namespace UnicornStore.Models.UnicornStore
+namespace UnicornStore.Data
 {
     public class UnicornStoreContext : DbContext
     {
