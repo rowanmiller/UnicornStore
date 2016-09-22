@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
@@ -26,13 +26,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand">UnicornStore</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">UnicornStore</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Shop", "Index", "Shop")</li>
                     <li>@Html.ActionLink("Product Recalls", "Index", "Recalls")</li>
-                    @if (User.IsInRole(Roles.Admin))
+                    @if (User.IsInRole(UnicornStore.Models.Identity.Roles.Admin))
                     {
                         <li class="dropdown">
                             <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Admin <span class="caret"></span></a>
@@ -49,7 +49,6 @@
                     </div>
                     <button class="btn btn-default" type="submit">Go</button>
                 </form>
-
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
@@ -63,7 +62,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2015 - UnicornStore</p>
+            <p>&copy; 2016 - UnicornStore</p>
         </footer>
     </div>
 
@@ -73,11 +72,11 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>

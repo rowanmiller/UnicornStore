@@ -1,25 +1,28 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity;
 using UnicornStore.Models;
 using UnicornStore.Models.Identity;
 using UnicornStore.Models.UnicornStore;
 using UnicornStore.ViewModels.Cart;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace UnicornStore.Controllers
 {
     [Authorize]
     public class CartController : Controller
     {
+        private UserManager<ApplicationUser> userManager;
         private UnicornStoreContext db;
         private ApplicationDbContext identityDb;
-        CategoryCache categoryCache;
+        private CategoryCache categoryCache;
 
-        public CartController(UnicornStoreContext context, ApplicationDbContext identityContext, CategoryCache cache)
+        public CartController(UserManager<ApplicationUser> manager, UnicornStoreContext context, ApplicationDbContext identityContext, CategoryCache cache)
         {
+            userManager = manager;
             db = context;
             identityDb = identityContext;
             categoryCache = cache;
@@ -27,8 +30,10 @@ namespace UnicornStore.Controllers
 
         public IActionResult Index(IndexMessage message = IndexMessage.None)
         {
+            var userId = userManager.GetUserId(User);
+
             var items = db.CartItems
-                .Where(i => i.Username == User.GetUserName())
+                .Where(i => i.UserId == userId)
                 .Include(i => i.Product)
                 .ToList();
 
@@ -42,17 +47,19 @@ namespace UnicornStore.Controllers
 
         public IActionResult Add(int productId, int quantity = 1)
         {
+            var userId = userManager.GetUserId(User);
+
             var product = db.Products
                 .SingleOrDefault(p => p.ProductId == productId);
 
             if (product == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             var item = db.CartItems
                 .SingleOrDefault(i => i.ProductId == product.ProductId
-                                      && i.Username == User.GetUserName());
+                                      && i.UserId == userId);
 
             if (item != null)
             {
@@ -67,7 +74,7 @@ namespace UnicornStore.Controllers
                     ProductId = product.ProductId,
                     PricePerUnit = product.CurrentPrice,
                     Quantity = quantity,
-                    Username = User.GetUserName(),
+                    UserId = userId,
                     PriceCalculated = DateTime.Now.ToUniversalTime()
                 };
                 db.CartItems.Add(item);
@@ -80,13 +87,15 @@ namespace UnicornStore.Controllers
 
         public IActionResult Remove(int productId)
         {
+            var userId = userManager.GetUserId(User);
+
             var item = db.CartItems
                 .SingleOrDefault(i => i.ProductId == productId
-                                      && i.Username == User.GetUserName());
+                                      && i.UserId == userId);
 
             if (item == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             db.CartItems.Remove(item);
@@ -97,15 +106,17 @@ namespace UnicornStore.Controllers
 
         public IActionResult Checkout()
         {
+            var userId = userManager.GetUserId(User);
+
             var items = db.CartItems
-                .Where(i => i.Username == User.GetUserName())
+                .Where(i => i.UserId == userId)
                 .Include(i => i.Product)
                 .ToList();
 
             var order = new Order
             {
                 CheckoutBegan = DateTime.Now.ToUniversalTime(),
-                Username = User.GetUserName(),
+                UserId = userId,
                 Total = items.Sum(i => i.PricePerUnit * i.Quantity),
                 State = OrderState.CheckingOut,
                 Lines = items.Select(i => new OrderLine
@@ -129,7 +140,7 @@ namespace UnicornStore.Controllers
             orderFixed.ShippingDetails = new OrderShippingDetails();
 
             var addresses = identityDb.UserAddresses
-                .Where(a => a.UserId == User.GetUserId())
+                .Where(a => a.UserId == User.Identity.Name)
                 .ToList();
 
             return View(new CheckoutViewModel
@@ -143,23 +154,25 @@ namespace UnicornStore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Checkout(CheckoutViewModel formOrder)
         {
+            var userId = userManager.GetUserId(User);
+
             var order = db.Orders
                 .Include(o => o.Lines)
                 .SingleOrDefault(o => o.OrderId == formOrder.Order.OrderId);
 
             if (order == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
-            if (order.Username != User.GetUserName())
+            if (order.UserId != userId)
             {
-                return new HttpStatusCodeResult(403);
+                return new StatusCodeResult(403);
             }
 
             if (order.State != OrderState.CheckingOut)
             {
-                return new HttpStatusCodeResult(400);
+                return new StatusCodeResult(400);
             }
 
             // Place order
@@ -171,14 +184,14 @@ namespace UnicornStore.Controllers
             if(formOrder.RememberAddress)
             {
                 var address = formOrder.Order.ShippingDetails.CloneTo<UserAddress>();
-                address.UserId = User.GetUserId();
+                address.UserId = userId;
                 identityDb.UserAddresses.Add(address);
                 identityDb.SaveChanges();
             }
 
             // Remove items from cart
             var cartItems = db.CartItems
-                .Where(i => i.Username == User.GetUserName())
+                .Where(i => i.UserId == userId)
                 .ToList();
 
             foreach (var item in cartItems)

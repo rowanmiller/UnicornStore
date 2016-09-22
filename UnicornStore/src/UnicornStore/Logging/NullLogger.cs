@@ -12,7 +12,7 @@ namespace UnicornStore.Logging
             get { return _instance; }
         }
 
-        public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         { }
 
         public bool IsEnabled(LogLevel logLevel)
@@ -20,7 +20,7 @@ namespace UnicornStore.Logging
             return false;
         }
 
-        public IDisposable BeginScopeImpl(object state)
+        public IDisposable BeginScope<TState>(TState state)
         {
             return null;
         }

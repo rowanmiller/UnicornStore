@@ -1,10 +1,11 @@
 using System.Linq;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using UnicornStore.Models.UnicornStore;
 using UnicornStore.ViewModels.ManageProducts;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using UnicornStore.Models.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UnicornStore.Controllers
 {
@@ -37,13 +38,13 @@ namespace UnicornStore.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             Product product = db.Products.Single(m => m.ProductId == id);
             if (product == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             return View(product);
@@ -76,13 +77,13 @@ namespace UnicornStore.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             Product product = db.Products.Single(m => m.ProductId == id);
             if (product == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "DisplayName", product.CategoryId);
@@ -110,13 +111,13 @@ namespace UnicornStore.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             Product product = db.Products.Single(m => m.ProductId == id);
             if (product == null)
             {
-                return new HttpStatusCodeResult(404);
+                return new StatusCodeResult(404);
             }
 
             return View(product);

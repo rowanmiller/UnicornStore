@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using UnicornStore.Models.UnicornStore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UnicornStore.Controllers
 {

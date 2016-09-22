@@ -7,7 +7,7 @@ namespace UnicornStore.Models.UnicornStore
     public class Order
     {
         public int OrderId { get; set; }
-        public string Username { get; set; }
+        public string UserId { get; set; }
         public DateTime CheckoutBegan { get; set; }
         [Display(Name ="Order Placed")]
         public DateTime? OrderPlaced { get; set; }

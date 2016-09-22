@@ -1,9 +1,12 @@
-﻿@using System.Security.Claims
+﻿@using Microsoft.AspNetCore.Identity
+@using UnicornStore.Models.Identity
 
-@if (User.IsSignedIn())
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
 {
-    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-
+    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Cart<span class="caret"></span></a>
@@ -13,7 +16,7 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">@User.GetUserName()<span class="caret"></span></a>
+                <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">@User.Identity.Name<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li>@Html.ActionLink("My Orders", "Index", "Orders")</li>
                     <li>@Html.ActionLink("My Account", "Index", "Manage")</li>
@@ -26,7 +29,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
 }

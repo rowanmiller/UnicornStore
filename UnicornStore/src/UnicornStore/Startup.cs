@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using UnicornStore.Models.Identity;
+using UnicornStore.Models;
 using UnicornStore.Services;
+using UnicornStore.Models.Identity;
 using UnicornStore.Models.UnicornStore;
 using UnicornStore.Logging;
-using UnicornStore.Models;
 
 namespace UnicornStore
 {
@@ -22,24 +22,34 @@ namespace UnicornStore
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("secrets.json", optional: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
+            if (env.IsDevelopment())
+            {
+                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+                builder.AddUserSecrets();
+            }
+
             builder.AddEnvironmentVariables();
-            Configuration = builder.Build().ReloadOnChanged("appsettings.json");
+            Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; set; }
+        public IConfigurationRoot Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<UnicornStoreContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:UnicornStore"]))
-                .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:UnicornStore"]));
+            // Add framework services.
+            services.AddDbContext<UnicornStoreContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UnicornStore")));
 
             services.AddSingleton<CategoryCache>();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UnicornStore")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -47,10 +57,12 @@ namespace UnicornStore
 
             services.AddMvc();
 
+            // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -59,12 +71,11 @@ namespace UnicornStore
 
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseBrowserLink();
 
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
                     serviceScope.ServiceProvider.GetService<UnicornStoreContext>().Database.Migrate();
                     serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
@@ -76,8 +87,6 @@ namespace UnicornStore
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
-
             app.UseStaticFiles();
 
             app.UseIdentity();
@@ -88,10 +97,10 @@ namespace UnicornStore
             var facebookSecret = Configuration["Auth:Facebook:AppSecret"];
             if (!string.IsNullOrWhiteSpace(facebookId) && !string.IsNullOrWhiteSpace(facebookSecret))
             {
-                app.UseFacebookAuthentication(options =>
+                app.UseFacebookAuthentication(new FacebookOptions
                 {
-                    options.AppId = facebookId;
-                    options.AppSecret = facebookSecret;
+                    AppId = facebookId,
+                    AppSecret = facebookSecret
                 });
             }
 
@@ -100,10 +109,10 @@ namespace UnicornStore
             var googleSecret = Configuration["Auth:Google:ClientSecret"];
             if (!string.IsNullOrWhiteSpace(googleId) && !string.IsNullOrWhiteSpace(googleSecret))
             {
-                app.UseGoogleAuthentication(options =>
+                app.UseGoogleAuthentication(new GoogleOptions
                 {
-                    options.ClientId = googleId;
-                    options.ClientSecret = googleSecret;
+                    ClientId = googleId,
+                    ClientSecret = googleSecret
                 });
             }
 
@@ -114,7 +123,5 @@ namespace UnicornStore
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }

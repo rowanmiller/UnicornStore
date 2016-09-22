@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
 using UnicornStore.Models.UnicornStore;
 using UnicornStore.ViewModels.Home;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UnicornStore.Controllers
 {

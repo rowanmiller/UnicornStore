@@ -13,7 +13,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <h4>@Html.ActionLink("Order #" + order.DisplayId, "Details", new { orderId = order.OrderId })</h4>
-                        <b>Placed: @order.OrderPlaced.Value.ToShortDateString()</b>
+                        <b>Placed: @order.OrderPlaced.Value.ToString("d")</b>
                         <br />
                         <br />
                         @if (order.Lines == null)

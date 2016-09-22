@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace UnicornStore.Models.UnicornStore
 {

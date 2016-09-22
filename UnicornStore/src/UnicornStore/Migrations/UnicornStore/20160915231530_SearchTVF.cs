@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace UnicornStore.Migrations
+namespace UnicornStore.Migrations.UnicornStore
 {
     public partial class SearchTVF : Migration
     {
@@ -15,15 +15,15 @@ namespace UnicornStore.Migrations
                                       RETURN
                                       (
                                           SELECT *
-                                          FROM dbo.Product
-                                          WHERE Product.DisplayName LIKE ''%'' + @term + ''%''
-                                          OR Product.Description LIKE ''%'' + @term + ''%''
+                                          FROM dbo.Products
+                                          WHERE Products.DisplayName LIKE ''%'' + @term + ''%''
+                                          OR Products.Description LIKE ''%'' + @term + ''%''
                                       )')");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+
         }
     }
 }
