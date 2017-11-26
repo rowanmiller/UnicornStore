@@ -6,6 +6,8 @@ namespace UnicornStore.Models.UnicornStore
     {
         public static void EnsureSeedData(this UnicornStoreContext context)
         {
+            //in newer versions:
+            //if(!context.Database.GetPendingMigrations().Any())
             if (context.AllMigrationsApplied())
             {
                 if (!context.Products.Any())
